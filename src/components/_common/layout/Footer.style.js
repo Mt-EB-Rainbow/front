@@ -8,6 +8,8 @@ export const FooterBox = styled.div`
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+    position: absolute;
+    bottom: 0;
 `;
 
 export const Text = styled.span`

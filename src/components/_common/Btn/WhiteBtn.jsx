@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 
-const WhiteBtn = ({ text }) => {
+const WhiteBtn = ({ text, onClick }) => {
     return (
         <div>
-            <Btn>{text}</Btn>
+            <Btn onClick={onClick}>{text}</Btn>
         </div>
     );
 };
