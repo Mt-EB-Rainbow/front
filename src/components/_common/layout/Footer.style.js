@@ -1,15 +1,15 @@
 import styled from 'styled-components';
 
 export const FooterBox = styled.div`
-    width: 100%;
+    width: 100vw;
     height: 100px;
     background-color: #f5f5f5;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    position: absolute;
-    bottom: 0;
+    position: relative;
+    /* transform: translateY(-100%); */
 `;
 
 export const Text = styled.span`

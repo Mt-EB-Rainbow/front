@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const NavBox = styled.div`
-    width: calc(100%-32px);
+    width: calc(100vw - 32px);
     height: 80px;
     border-bottom: 1px solid #d8d8d8;
     display: flex;
@@ -10,6 +10,7 @@ export const NavBox = styled.div`
     justify-content: space-between;
     padding-left: 16px;
     padding-right: 16px;
+    position: relative;
 `;
 
 export const Menu = styled.span`

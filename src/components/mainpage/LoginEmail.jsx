@@ -1,6 +1,6 @@
 import PageTitle from '../_common/PageTitle';
 import GreenBtn from '../_common/Btn/GreenBtn';
-import * as S from './Login.style';
+import * as S from './LoginEmail.style';
 
 const LoginEmail = () => {
     return (

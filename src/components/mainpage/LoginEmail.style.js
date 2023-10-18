@@ -3,8 +3,9 @@ import styled from 'styled-components';
 export const Wrapper = styled.div`
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
+    width: 100vw;
+    min-height: calc(100vh - 180.8px);
 `;
 
 export const Text = styled.div`
