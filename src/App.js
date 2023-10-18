@@ -4,7 +4,8 @@ import './style/common.css';
 import MainPage from './pages/MainPage';
 import LoginPage from './pages/LoginPage';
 import Layout from './components/_common/layout/Layout';
-import LoginEmail from './components/mainpage/LoginEmail';
+import SignupPage from './pages/SignupPage';
+import LoginEmailPage from './pages/LoginEmailPage';
 
 function App() {
     return (
@@ -19,8 +20,9 @@ function App() {
                         <Route
                             exact
                             path='/login/email'
-                            element={<LoginEmail />}
+                            element={<LoginEmailPage />}
                         />
+                        <Route exact path='/signup' element={<SignupPage />} />
                     </Routes>
                 </Layout>
             </BrowserRouter>
