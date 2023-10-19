@@ -1,4 +1,4 @@
-import LoginEmail from '../components/mainpage/LoginEmail';
+import LoginEmail from '../components/loginpage/LoginEmail';
 
 const LoginEmailPage = () => {
     return (

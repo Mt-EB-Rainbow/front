@@ -5,7 +5,7 @@ export const Wrapper = styled.div`
     flex-direction: column;
     align-items: center;
     width: 100vw;
-    min-height: calc(100vh - 180.8px);
+    height: 100vh;
 `;
 
 export const Text = styled.div`
