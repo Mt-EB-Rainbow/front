@@ -18,4 +18,7 @@ export const Text = styled.span`
     color: #767676;
     margin-left: 48px;
     margin-right: 48px;
+    & > a {
+        color: #767676;
+    }
 `;

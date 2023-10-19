@@ -15,7 +15,7 @@ const NavBar = () => {
     return (
         <div>
             <NavBox>
-                <WhiteBtn text={'로고'} onClick={goHome} />
+                <WhiteBtn text={'로고'} onClick={goHome} margin={'0px 16px'} />
                 <span>
                     <Menu>프로그램 소개</Menu>
                     <Menu>이력서</Menu>
@@ -23,7 +23,11 @@ const NavBar = () => {
                     <Menu>멘토풀</Menu>
                     <Menu>Q&A 게시판</Menu>
                 </span>
-                <WhiteBtn text={'회원가입 / 로그인'} onClick={goLogin} />
+                <WhiteBtn
+                    text={'회원가입 / 로그인'}
+                    onClick={goLogin}
+                    margin={'0px 16px'}
+                />
             </NavBox>
         </div>
     );
