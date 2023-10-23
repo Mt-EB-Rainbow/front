@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import SignupHeader from './SignupHeader';
-import GreenBtn from '../../_common/Btn/GreenBtn';
+import GreenBtn from '../_common/Btn/GreenBtn';
 import { useNavigate } from 'react-router-dom';
 
 const Signup = () => {
@@ -22,11 +22,26 @@ const Signup = () => {
                     </BoxLeftText>
                     <input
                         type='checkbox'
-                        style={{ width: '15px', height: '15px' }}
+                        style={{ width: '1.8vh', height: '1.8vh' }}
                     />
                     <BoxRightText>동의</BoxRightText>
                 </GrayBox>
-                <GreenBtn text={'다음'} padding={273} onClick={onClickNext} />
+                <GrayBox>
+                    <BoxLeftText>
+                        개인 정보 수집 및 이용에 관한 동의
+                    </BoxLeftText>
+                    <input
+                        type='checkbox'
+                        style={{ width: '1.8vh', height: '1.8vh' }}
+                    />
+                    <BoxRightText>동의</BoxRightText>
+                </GrayBox>
+                <GreenBtn
+                    text={'다음'}
+                    width={40.4}
+                    padding={10}
+                    onClick={onClickNext}
+                />
             </Wrapper>
         </>
     );
@@ -39,16 +54,16 @@ export const Wrapper = styled.div`
     flex-direction: column;
     align-items: center;
     width: 100vw;
-    height: calc(100vh - 180.8px);
+    height: 100vh;
 `;
 
 export const H3 = styled.div`
-    font-size: 20px;
+    font-size: 1.8vh;
     font-weight: 600;
-    margin-bottom: 10px;
+    margin-bottom: 0.9vh;
     display: flex;
     justify-content: start;
-    width: 582px;
+    width: 40.4vw;
 `;
 
 export const GrayBox = styled.div`
@@ -58,20 +73,19 @@ export const GrayBox = styled.div`
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    width: calc(582px - 32px);
-    height: calc(40px - 22px);
-    border-radius: 8px;
-    margin-bottom: 10px;
-
-    padding: 11px 16px 11px 16px;
+    width: calc(40.4vw - 2vw);
+    height: calc(3.7vh - 2vh);
+    border-radius: 0.6vh;
+    margin-bottom: 0.9vh;
+    padding: 1vh 1vw 1vh 1vw;
 `;
 
 export const BoxLeftText = styled.span`
-    font-size: 16px;
+    font-size: 1.5vh;
     font-weight: 300;
 `;
 export const BoxRightText = styled.div`
-    font-size: 16px;
+    font-size: 1.5vh;
     font-weight: 300;
     color: var(--dark-gray);
 `;

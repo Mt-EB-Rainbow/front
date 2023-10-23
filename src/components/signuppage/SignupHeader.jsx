@@ -1,6 +1,6 @@
 import * as S from './SignupHeader.style';
-import PageTitle from '../../_common/PageTitle';
-import { Arrow, Check, Lock, User } from '../../_common/Emoji';
+import PageTitle from '../_common/PageTitle';
+import { Arrow, Check, Lock, User } from '../_common/Emoji';
 
 const SignupHeader = () => {
     return (
