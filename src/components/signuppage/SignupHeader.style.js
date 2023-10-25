@@ -7,6 +7,8 @@ export const ActiveBox = styled.div`
     margin-left: 40px;
     margin-right: 40px;
     position: relative;
+    margin-left: 2.7vw;
+    margin-right: 2.7vw;
 `;
 
 export const UnActiveBox = styled.div`
