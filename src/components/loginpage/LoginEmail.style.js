@@ -5,34 +5,34 @@ export const Wrapper = styled.div`
     flex-direction: column;
     align-items: center;
     width: 100vw;
-    min-height: calc(100vh - 180.8px);
+    height: 100vh;
 `;
 
 export const Text = styled.div`
-    font-size: 16px;
+    font-size: 1.5vh;
     font-family: var(--korean);
     color: var(--dark-gray);
-    margin-bottom: 6px;
+    margin-bottom: 0.5vh;
     display: flex;
     flex-direction: column;
     justify-content: start;
 `;
 
 export const InputEmail = styled.input`
-    width: 378px;
-    height: 54px;
+    width: 26.25vw;
+    height: 5vh;
     box-sizing: border-box;
-    padding: 16px 15px 16px 15px;
-    border-radius: 12px;
-    border: 1px solid var(--gray);
-    font-size: 18px;
+    padding: 1.5vh;
+    border-radius: 1.1vh;
+    border: 0.1em solid var(--gray);
+    font-size: 1.6vh;
     font-weight: 400;
     outline: none;
     color: #3c3d40;
 `;
 
 export const InputWrapper = styled.div`
-    margin-bottom: 40px;
-    width: 378px;
-    margin-top: 40px;
+    margin-bottom: 3.7vh;
+    width: 26.25vw;
+    margin-top: 3.7vh;
 `;
