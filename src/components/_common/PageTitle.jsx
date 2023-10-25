@@ -11,8 +11,8 @@ const PageTitle = ({ text }) => {
 export default PageTitle;
 
 export const Title = styled.div`
-    margin-top: 100px;
+    margin-top: 9.2vh;
     font-family: var(--korean);
-    font-size: 40px;
+    font-size: 3.7vh;
     font-weight: 700;
 `;

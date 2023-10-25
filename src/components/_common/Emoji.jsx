@@ -29,8 +29,8 @@ export const Lock = () => {
     return (
         <>
             <svg
-                width='35'
-                height='39'
+                width='2.4vw'
+                height='3.6vh'
                 viewBox='0 0 35 39'
                 fill='none'
                 xmlns='http://www.w3.org/2000/svg'
@@ -48,8 +48,8 @@ export const User = () => {
     return (
         <>
             <svg
-                width='34'
-                height='33'
+                width='2.3vw'
+                height='3vh'
                 viewBox='0 0 34 33'
                 fill='none'
                 xmlns='http://www.w3.org/2000/svg'
@@ -67,8 +67,8 @@ export const Check = () => {
     return (
         <>
             <svg
-                width='36'
-                height='25'
+                width='2.5vw'
+                height='2.3vh'
                 viewBox='0 0 36 25'
                 fill='none'
                 xmlns='http://www.w3.org/2000/svg'
