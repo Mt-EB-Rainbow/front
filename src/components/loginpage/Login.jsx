@@ -10,27 +10,30 @@ const Login = () => {
     };
 
     const goSignup = () => {
-        navigate('/signup');
+        navigate('/signup01');
     };
 
     return (
         <>
-            <S.Wrapper>
-                <PageTitle text={'로그인'} />
-                <S.InputWrapper>
-                    <S.Text>이메일</S.Text>
-                    <S.InputEmail />
-                </S.InputWrapper>
-                <GreenBtn
-                    text={'이메일로 계속하기'}
-                    padding={117}
-                    onClick={goEmail}
-                />
-                <S.SectionText>혹은</S.SectionText>
-                <S.LoginBtn>Gmail</S.LoginBtn>
-                <S.LoginBtn>Kakao</S.LoginBtn>
-                <S.SignUpText onClick={goSignup}>회원가입하기</S.SignUpText>
-            </S.Wrapper>
+            <S.Container>
+                <S.Wrapper>
+                    <PageTitle text={'로그인'} />
+                    <S.InputWrapper>
+                        <S.Text>이메일</S.Text>
+                        <S.InputEmail />
+                    </S.InputWrapper>
+                    <GreenBtn
+                        text={'이메일로 계속하기'}
+                        padding={8.2}
+                        width={26.25}
+                        onClick={goEmail}
+                    />
+                    <S.SectionText>혹은</S.SectionText>
+                    <S.LoginBtn>Gmail</S.LoginBtn>
+                    <S.LoginBtn>Kakao</S.LoginBtn>
+                    <S.SignUpText onClick={goSignup}>회원가입하기</S.SignUpText>
+                </S.Wrapper>
+            </S.Container>
         </>
     );
 };

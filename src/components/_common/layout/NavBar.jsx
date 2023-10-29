@@ -11,22 +11,25 @@ const NavBar = () => {
     const goHome = () => {
         navigate('/');
     };
+    const goMentorPool = () => {
+        navigate('/mentor/pool');
+    };
 
     return (
         <div>
             <NavBox>
-                <WhiteBtn text={'로고'} onClick={goHome} margin={'0px 16px'} />
+                <WhiteBtn text={'로고'} onClick={goHome} marginSide={'1.1'} />
                 <span>
                     <Menu>프로그램 소개</Menu>
                     <Menu>이력서</Menu>
                     <Menu>합격 이력서</Menu>
-                    <Menu>멘토풀</Menu>
+                    <Menu onClick={goMentorPool}>멘토풀</Menu>
                     <Menu>Q&A 게시판</Menu>
                 </span>
                 <WhiteBtn
                     text={'회원가입 / 로그인'}
                     onClick={goLogin}
-                    margin={'0px 16px'}
+                    marginSide={'1.1'}
                 />
             </NavBox>
         </div>

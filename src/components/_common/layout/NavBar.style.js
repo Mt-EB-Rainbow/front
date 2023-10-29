@@ -2,8 +2,8 @@ import styled from 'styled-components';
 
 export const NavBox = styled.div`
     width: 100vw;
-    height: 60px;
-    border-bottom: 1px solid #d8d8d8;
+    height: 6vh;
+    border-bottom: 0.1em solid #d8d8d8;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -12,11 +12,11 @@ export const NavBox = styled.div`
 `;
 
 export const Menu = styled.span`
-    font-size: 18px;
+    font-size: 1.6vh;
     color: #767676;
     font-weight: 500;
-    padding: 10px 10px 10px 10px;
+    padding: 0.9vh;
     cursor: pointer;
-    margin-left: 30px;
-    margin-right: 30px;
+    margin-left: 2vw;
+    margin-right: 2vw;
 `;

@@ -14,7 +14,7 @@ const LoginEmail = () => {
                     <S.InputEmail />
                 </S.InputWrapper>
 
-                <GreenBtn text={'로그인'} padding={161} />
+                <GreenBtn text={'로그인'} padding={11.2} width={26.25} />
             </S.Wrapper>
         </>
     );
