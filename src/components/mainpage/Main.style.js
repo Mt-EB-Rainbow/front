@@ -10,7 +10,7 @@ S.InfoBox = styled.div`
     @media (max-width: 1193px) {
         width: 100%;
     }
-    @media (max-width: 600px) {
+    @media (max-width: 599px) {
         width: 90%;
         flex-direction: column;
         padding: 20px 0px;
@@ -31,7 +31,7 @@ S.TextBox = styled.div`
     @media (max-width: 1193px) {
         width: 90%;
     }
-    @media (max-width: 600px) {
+    @media (max-width: 599px) {
         margin: 0;
     }
     display: flex;
@@ -40,7 +40,7 @@ S.TextBox = styled.div`
     margin-left: 40px;
 `;
 S.Title = styled.div`
-    @media (max-width: 600px) {
+    @media (max-width: 599px) {
         font-size: 20px;
     }
     color: var(--black);
@@ -49,7 +49,7 @@ S.Title = styled.div`
     margin-bottom: 10px;
 `;
 S.Text = styled.div`
-    @media (max-width: 600px) {
+    @media (max-width: 599px) {
         font-size: 18px;
     }
     color: var(--dark-gray);
@@ -58,7 +58,7 @@ S.Text = styled.div`
     white-space: pre-wrap;
 `;
 S.Button = styled.button`
-    @media (max-width: 600px) {
+    @media (max-width: 599px) {
         height: 60px;
         font-size: 20px;
     }
@@ -74,7 +74,7 @@ S.Button = styled.button`
     border-radius: 20px;
 `;
 S.NewContainer = styled.div`
-    @media (max-width: 600px) {
+    @media (max-width: 599px) {
         flex-direction: column;
         margin-bottom: 40px;
     }
@@ -90,7 +90,7 @@ S.InnerBox = styled(S.InnerContainer)`
     @media (max-width: 1193px) {
         width: calc(50vw - 20px);
     }
-    @media (max-width: 600px) {
+    @media (max-width: 599px) {
         width: 90vw;
         height: 200px;
     }
