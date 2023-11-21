@@ -1,6 +1,7 @@
 import { Router, useNavigate } from 'react-router-dom';
 import WhiteBtn from '../Btn/WhiteBtn';
 import { NavBox, Menu } from './NavBar.style';
+import logo from '../../../assets/logo.svg';
 
 const NavBar = () => {
     const navigate = useNavigate();
@@ -11,20 +12,33 @@ const NavBar = () => {
     const goHome = () => {
         navigate('/');
     };
-    const goMentorPool = () => {
-        navigate('/mentor/pool');
+    const goChildcare = () => {
+        navigate('/childcare');
+    };
+    const goResume = () => {
+        navigate('/resume');
     };
 
     return (
         <div>
             <NavBox>
-                <WhiteBtn text={'로고'} onClick={goHome} marginSide={'1.1'} />
+                <img
+                    src={logo}
+                    alt='로고'
+                    onClick={goHome}
+                    style={{
+                        width: '100px',
+                        marginLeft: '20px',
+                        cursor: 'pointer',
+                    }}
+                />
                 <span>
-                    <Menu>프로그램 소개</Menu>
-                    <Menu>이력서</Menu>
-                    <Menu>합격 이력서</Menu>
-                    <Menu onClick={goMentorPool}>멘토풀</Menu>
-                    <Menu>Q&A 게시판</Menu>
+                    <Menu>직무 백과</Menu>
+                    <Menu>직무 추천</Menu>
+                    <Menu>직업 교육</Menu>
+                    <Menu onClick={goResume}>이력서 작성</Menu>
+                    <Menu onClick={goChildcare}>보육시설 조회</Menu>
+                    <Menu>취업지원 기관 조회</Menu>
                 </span>
                 <WhiteBtn
                     text={'회원가입 / 로그인'}
