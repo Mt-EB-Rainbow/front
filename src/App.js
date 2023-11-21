@@ -11,6 +11,9 @@ import Signup03Page from './pages/Signup03Page';
 import UserInfoPage from './pages/UserInfoPage';
 import MentorPoolPage from './pages/MentorPoolPage';
 import MentorRegistPage from './pages/MentorRegistPage';
+import PassResumePage from './pages/PassResumePage';
+import ChildcarePage from './pages/ChildcarePage';
+import ResumePage from './pages/ResumePage';
 
 function App() {
     return (
@@ -59,6 +62,17 @@ function App() {
                             path='/mentor/regist'
                             element={<MentorRegistPage />}
                         />
+                        <Route
+                            exact
+                            path='/passResume'
+                            element={<PassResumePage />}
+                        />
+                        <Route
+                            exact
+                            path='/childcare'
+                            element={<ChildcarePage />}
+                        />
+                        <Route exact path='/resume' element={<ResumePage />} />
                     </Routes>
                 </Layout>
             </BrowserRouter>
