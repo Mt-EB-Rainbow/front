@@ -11,6 +11,8 @@ import Signup03Page from './pages/Signup03Page';
 import UserInfoPage from './pages/UserInfoPage';
 import MentorPoolPage from './pages/MentorPoolPage';
 import MentorRegistPage from './pages/MentorRegistPage';
+import SupportPage from './pages/SupportPage';
+import TrainingPage from './pages/TrainingPage';
 
 function App() {
     return (
@@ -58,6 +60,18 @@ function App() {
                             exact
                             path='/mentor/regist'
                             element={<MentorRegistPage />}
+                        />
+                        {/* 직업 교육 페이지 */}
+                        <Route
+                            exact
+                            path='/training'
+                            element={<TrainingPage />}
+                        />
+                        {/* 취업 지원 기관 페이지 */}
+                        <Route
+                            exact
+                            path='/support'
+                            element={<SupportPage />}
                         />
                     </Routes>
                 </Layout>
