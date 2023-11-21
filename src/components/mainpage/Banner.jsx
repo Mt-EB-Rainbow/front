@@ -22,8 +22,8 @@ export default function Banner() {
                 pagination={true}
                 mousewheel={false}
                 keyboard={true}
+                loop={true}
                 modules={[Navigation, Pagination, Mousewheel, Keyboard]}
-                className='mySwiper'
             >
                 <SwiperSlide>
                     <img src={banner} />
