@@ -36,7 +36,7 @@ export default GreenBtn;
 const Btn = styled.button`
     background-color: var(--dark-green);
     color: white;
-    padding: 1.5vh ${props => props.padding} 1.5vh ${props => props.padding};
+    padding: 0.75rem ${props => props.padding} 0.75rem ${props => props.padding};
     border: none;
     font-size: 1.8vh;
     font-weight: 500;
