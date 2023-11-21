@@ -13,9 +13,9 @@ import MentorPoolPage from './pages/MentorPoolPage';
 import MentorRegistPage from './pages/MentorRegistPage';
 import SupportPage from './pages/SupportPage';
 import TrainingPage from './pages/TrainingPage';
-import PassResumePage from './pages/PassResumePage';
-import ChildcarePage from './pages/ChildcarePage';
-import ResumePage from './pages/ResumePage';
+// import PassResumePage from './pages/PassResumePage';
+// import ChildcarePage from './pages/ChildcarePage';
+// import ResumePage from './pages/ResumePage';
 
 function App() {
     return (
@@ -76,17 +76,17 @@ function App() {
                             path='/support'
                             element={<SupportPage />}
                         />
-                        <Route
+                        {/* <Route
                             exact
                             path='/passResume'
                             element={<PassResumePage />}
-                        />
-                        <Route
+                        /> */}
+                        {/* <Route
                             exact
                             path='/childcare'
                             element={<ChildcarePage />}
-                        />
-                        <Route exact path='/resume' element={<ResumePage />} />
+                        /> */}
+                        {/* <Route exact path='/resume' element={<ResumePage />} /> */}
                     </Routes>
                 </Layout>
             </BrowserRouter>
