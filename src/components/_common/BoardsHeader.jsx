@@ -18,7 +18,7 @@ const BoardsHeader = ({ length, onClick }) => {
 export default BoardsHeader;
 
 const Wrapper = styled.div`
-    width: 83vw;
+    width: 59.7rem;
     height: 5.2vh;
     border-bottom: 0.1em solid var(--light-gray);
     display: flex;
