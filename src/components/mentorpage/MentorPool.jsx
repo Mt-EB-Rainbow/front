@@ -96,7 +96,10 @@ const MentorPool = () => {
                     />
                 </S.GrayBox>
 
-                <BoardsHeader length={10} />
+                <BoardsHeader
+                    length={10}
+                    placeholder={'제목 또는 작성자명으로 검색'}
+                />
 
                 <S.Boards>
                     <S.Info>

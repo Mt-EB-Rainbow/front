@@ -23,12 +23,12 @@ export const BtnWrapper = styled.div`
 `;
 
 export const GrayBtn = styled.button`
-    width: 15vw;
-    height: 5vh;
+    width: 10.75rem;
+    height: 2.7rem;
     color: var(--dark-gray);
     padding: 1.4vh 2vw 1.4vh 2vw;
     border: 0.1em solid var(--gray);
-    font-size: 1.8vh;
+    font-size: 1rem;
     font-weight: 500;
     border-radius: 90vh;
     font-family: var(--korean);

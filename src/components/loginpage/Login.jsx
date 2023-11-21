@@ -24,9 +24,12 @@ const Login = () => {
                     </S.InputWrapper>
                     <GreenBtn
                         text={'이메일로 계속하기'}
-                        padding={8.2}
-                        width={26.25}
+                        paddingVertical={0.75}
+                        paddingHorizontal={5.9}
+                        width={19}
+                        height={2.7}
                         onClick={goEmail}
+                        radius={5}
                     />
                     <S.SectionText>혹은</S.SectionText>
                     <S.LoginBtn>Gmail</S.LoginBtn>
