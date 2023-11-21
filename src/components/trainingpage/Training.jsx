@@ -31,12 +31,13 @@ const Training = () => {
                                 padding={0.69}
                             />
                             <GreenBtn
-                                padding={2}
+                                paddingHorizontal={1.5}
+                                paddingVertical={1}
                                 text={'검색'}
                                 onClick={doSearch}
-                                width={6.5}
-                                height={7.1}
-                                radius={1.3}
+                                width={4.75}
+                                height={3.2}
+                                radius={0.6}
                             />
                         </S.Content>
                         <S.Content>
@@ -55,24 +56,21 @@ const Training = () => {
                                 marginRight={0.69}
                             />
                             <GreenBtn
-                                padding={2}
+                                padding={1.5}
                                 text={'검색'}
                                 onClick={doSearch}
-                                width={6.5}
-                                height={7.1}
-                                radius={1.3}
+                                width={4.75}
+                                height={3.2}
+                                radius={0.6}
                             />
                         </S.Content>
                     </S.InlineBox>
                 </S.Box>
                 <S.Board>
-                    <BoardsHeader length={videoLength} onClick={doSearch} />
-                    <hr
-                        style={{
-                            height: '0.5px',
-                            background: 'var(--light-gray)',
-                            border: 'none',
-                        }}
+                    <BoardsHeader
+                        length={videoLength}
+                        onClick={doSearch}
+                        placeholder={'제목 및 내용으로 검색'}
                     />
                     <S.Body>
                         {/* @todo map */}

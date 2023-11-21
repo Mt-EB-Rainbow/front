@@ -10,7 +10,7 @@ export const Wrapper = styled.div`
 
 export const Box = styled.div`
     display: flex;
-    width: 82.91vw;
+    width: 59.7rem;
     height: 15.5vh;
     background-color: var(--pale-green);
     justify-content: center;
@@ -51,8 +51,8 @@ export const CardBox = styled.div`
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    margin-right: 2vw;
-    margin-bottom: 4vw;
+    margin-right: 1.5rem;
+    margin-bottom: 1.8rem;
 
     &:nth-child(4n) {
         margin-right: 0;

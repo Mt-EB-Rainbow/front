@@ -15,17 +15,17 @@ const VideoCard = props => {
 export default VideoCard;
 
 export const Wrapper = styled.div`
-    width: 19.16vw;
+    width: 13.75rem;
     height: 29.3vh;
     text-decoration: none;
 `;
 
 export const Thumbnail = styled.div`
     width: 100%;
-    height: 23vh;
+    height: 10.35rem;
     border: none;
-    border-radius: 2.2vh;
-    margin-bottom: 0.69vh;
+    border-radius: 1rem;
+    margin-bottom: 0.5rem;
     background-image: url(${thumbnail});
     background-repeat: no-repeat;
     background-size: contain;
@@ -33,8 +33,8 @@ export const Thumbnail = styled.div`
 
 export const Title = styled.div`
     width: 100%;
-    height: 5.2vh;
+    height: 2.35rem;
     color: var(--black);
-    font-size: 20px;
+    font-size: 1rem;
     font-weight: 600;
 `;

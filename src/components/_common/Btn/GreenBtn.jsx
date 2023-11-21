@@ -2,7 +2,8 @@ import styled from 'styled-components';
 
 // 양옆 패딩값을 props로 넘겨준다
 const GreenBtn = ({
-    padding,
+    paddingHorizontal,
+    paddingVertical,
     text,
     onClick,
     width,
@@ -10,15 +11,17 @@ const GreenBtn = ({
     bottom,
     radius,
 }) => {
-    const paddingProps = `${padding}vw`;
-    const widthProps = `${width}vw`;
-    const heightProps = `${height}vh`;
-    const MarginBottomProps = `${bottom}vh`;
-    const radiusProps = `${radius}vh`;
+    const horizontalProps = `${paddingHorizontal}rem`;
+    const verticalProps = `${paddingVertical}rem`;
+    const widthProps = `${width}rem`;
+    const heightProps = `${height}rem`;
+    const MarginBottomProps = `${bottom}rem`;
+    const radiusProps = `${radius}rem`;
     return (
         <>
             <Btn
-                padding={paddingProps}
+                horizontal={horizontalProps}
+                vertical={verticalProps}
                 width={widthProps}
                 height={heightProps}
                 onClick={onClick}
@@ -36,9 +39,9 @@ export default GreenBtn;
 const Btn = styled.button`
     background-color: var(--dark-green);
     color: white;
-    padding: 0.75rem ${props => props.padding} 0.75rem ${props => props.padding};
+    padding: ${props => props.verticalProps} ${props => props.horizontalProps};
     border: none;
-    font-size: 1.8vh;
+    font-size: 1rem;
     font-weight: 500;
     border-radius: ${props => props.radius};
     cursor: pointer;
