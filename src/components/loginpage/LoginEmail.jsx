@@ -23,10 +23,8 @@ const LoginEmail = () => {
             }
         } catch (err) {
             console.log(err);
-            alert('이메일/비밀번호가 일치하지 않습니다')
-
+            alert('이메일/비밀번호가 일치하지 않습니다');
         }
-
     };
 
     const goSignup = () => {
