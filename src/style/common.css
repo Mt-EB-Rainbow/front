@@ -5,6 +5,7 @@
     padding: 0;
     overflow-x: 0;
     font-family: 'Pretendard', sans-serif;
+    font-size: 20px;
 }
 
 /*
@@ -31,4 +32,15 @@
 
     /* font */
     --korean: 'Pretendard', sans-serif;
+}
+
+:body {
+    padding: 0;
+    margin: 0;
+    font-family: 'Gothic A1', sans-serif;
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+}
+::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera*/
 }
