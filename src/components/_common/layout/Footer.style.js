@@ -13,12 +13,9 @@ export const FooterBox = styled.div`
 `;
 
 export const Text = styled.span`
-    font-size: 1.1vh;
+    font-size: 0.6rem;
     font-family: var(--korean);
     color: #767676;
     margin-left: 3.3vw;
     margin-right: 3.3vw;
-    & > a {
-        color: #767676;
-    }
 `;
