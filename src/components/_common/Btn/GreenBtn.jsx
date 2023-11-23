@@ -1,10 +1,11 @@
 import styled from 'styled-components';
 
 // 양옆 패딩값을 props로 넘겨준다
-const GreenBtn = ({ padding, text, onClick, width, bottom }) => {
+const GreenBtn = ({ padding, text, onClick, width, bottom, top }) => {
     const paddingProps = `${padding}rem`;
     const widthProps = `${width}rem`;
     const MarginBottomProps = `${bottom}rem`;
+    const MarginTopProps = `${top}rem`;
     return (
         <>
             <Btn
@@ -12,6 +13,7 @@ const GreenBtn = ({ padding, text, onClick, width, bottom }) => {
                 width={widthProps}
                 onClick={onClick}
                 bottom={MarginBottomProps}
+                top={MarginTopProps}
             >
                 {text}
             </Btn>
@@ -32,4 +34,5 @@ const Btn = styled.button`
     cursor: pointer;
     width: ${props => props.width};
     margin-bottom: ${props => props.bottom};
+    margin-top: ${props => props.top};
 `;
