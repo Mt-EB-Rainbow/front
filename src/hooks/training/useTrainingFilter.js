@@ -7,7 +7,7 @@ const defaultFilterValues = {
     search: '',
 };
 
-const useTraining = () => {
+const useTrainingFilter = () => {
     const [video, setVideo] = useState([]);
     const [filterValues, setFilterValues] = useState({
         ...defaultFilterValues,
@@ -54,4 +54,4 @@ const useTraining = () => {
     };
 };
 
-export default useTraining;
+export default useTrainingFilter;

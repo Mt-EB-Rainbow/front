@@ -1,12 +1,17 @@
-import { styled } from 'styled-components';
-import thumbnail from '../../../assets/thumbnail.jpeg';
+import styled from 'styled-components';
+// import thumbnail from '../../../assets/thumbnail.jpeg';
 
-const VideoCard = props => {
+const VideoCard = ({ thumbnail, href, title }) => {
     return (
-        <a href={props.href} style={{ textDecoration: 'none' }} target='_blank'>
+        <a
+            href={href}
+            style={{ textDecoration: 'none' }}
+            target='_blank'
+            rel='noopener noreferrer'
+        >
             <Wrapper>
-                <Thumbnail thumbnail={props.Thumbnail} />
-                <Title>{props.title}</Title>
+                <Thumbnail thumbnail={thumbnail} />
+                <Title>{title}</Title>
             </Wrapper>
         </a>
     );
@@ -26,7 +31,7 @@ export const Thumbnail = styled.div`
     border: none;
     border-radius: 1rem;
     margin-bottom: 0.5rem;
-    background-image: url(${thumbnail});
+    background-image: url(${props => props.thumbnail});
     background-repeat: no-repeat;
     background-size: contain;
 `;
