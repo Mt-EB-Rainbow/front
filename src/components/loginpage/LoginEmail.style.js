@@ -8,7 +8,12 @@ export const Wrapper = styled.div`
     height: 100vh;
 `;
 
+export const Box = styled.div`
+    width: 19rem;
+`;
+
 export const Text = styled.div`
+    width: 100%;
     font-size: 1.5vh;
     font-family: var(--korean);
     color: var(--dark-gray);
@@ -19,11 +24,11 @@ export const Text = styled.div`
 `;
 
 export const InputEmail = styled.input`
-    width: 26.25vw;
-    height: 5vh;
+    width: 100%;
+    height: 2.7rem;
     box-sizing: border-box;
-    padding: 1.5vh;
-    border-radius: 1.1vh;
+    padding: 0.8rem 0.75rem;
+    border-radius: 0.6rem;
     border: 0.1em solid var(--gray);
     font-size: 1.6vh;
     font-weight: 400;
@@ -33,6 +38,17 @@ export const InputEmail = styled.input`
 
 export const InputWrapper = styled.div`
     margin-bottom: 3.7vh;
-    width: 26.25vw;
-    margin-top: 3.7vh;
+    width: 100%;
+    margin: 2rem auto;
+`;
+
+export const SignUpText = styled.div`
+    width: 100%;
+    color: var(--green);
+    font-size: 0.8rem;
+    margin: 1.5rem auto;
+    cursor: pointer;
+    font-weight: 500;
+    font-family: var(--korean);
+    text-align: center;
 `;
