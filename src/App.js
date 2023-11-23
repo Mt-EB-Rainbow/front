@@ -17,6 +17,9 @@ import ResumeNewPage from './pages/ResumeNewPage';
 import MentorFeedbackPage from './pages/MentorFeedbackPage';
 import MentorBoardsPage from './pages/MentorBoardsPage';
 
+import RecommendPage from './pages/RecommendPage';
+import DictionaryPage from './pages/DictionaryPage';
+
 function App() {
     return (
         <>
@@ -79,6 +82,16 @@ function App() {
                             exact
                             path='/mentorboards'
                             element={<MentorBoardsPage />}
+                        />
+                        <Route
+                            exact
+                            path='/dictionary'
+                            element={<DictionaryPage />}
+                        />
+                        <Route
+                            exact
+                            path='/recommend'
+                            element={<RecommendPage />}
                         />
                     </Routes>
                 </Layout>
