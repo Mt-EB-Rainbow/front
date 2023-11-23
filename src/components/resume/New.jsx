@@ -37,17 +37,6 @@ const New = ({ isEdit }) => {
         if (title && content) {
             //  백엔드로 post
 
-            // const result = await createBoard({
-            //   variables: {
-            //     createBoardInput: {
-            //       writer: name,
-            //       password, //key값이랑 value 값이 같으면 하나만 써줘도 된다.
-            //       title, // 이걸 shorthand-property 라고 한다.
-            //       contents: content,
-            //     },
-            //   },
-            // });
-            // console.log(result);
             navigate('/resume');
             //작성한 result의 data의 메소드의 id 값을 푸쉬해줄 주소로 넣어준다}
 

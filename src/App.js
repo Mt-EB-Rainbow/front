@@ -4,10 +4,10 @@ import './style/common.css';
 import MainPage from './pages/MainPage';
 import LoginPage from './pages/LoginPage';
 import Layout from './components/_common/layout/Layout';
-import Signup01Page from './pages/Signup01Page';
-import Signup02Page from './components/signuppage/Signup02';
+import Signup02Page from './pages/Signup02Page';
 import LoginEmailPage from './pages/LoginEmailPage';
 import Signup03Page from './pages/Signup03Page';
+import Signup01Page from './pages/Signup01Page';
 
 import SupportPage from './pages/SupportPage';
 import TrainingPage from './pages/TrainingPage';
@@ -20,6 +20,8 @@ import ScrollToTop from './components/_common/ScrollToTop';
 
 import RecommendPage from './pages/RecommendPage';
 import DictionaryPage from './pages/DictionaryPage';
+import MentorSignupPage from './pages/MentorSignupPage';
+import MentorSignup03Page from './pages/MentirSignup03Page';
 
 function App() {
     return (
@@ -53,6 +55,11 @@ function App() {
                             exact
                             path='/signup03'
                             element={<Signup03Page />}
+                        />
+                        <Route
+                            exact
+                            path='/mentorsignup'
+                            element={<MentorSignupPage />}
                         />
 
                         {/* 직업 교육 페이지 */}
@@ -94,6 +101,11 @@ function App() {
                             exact
                             path='/recommend'
                             element={<RecommendPage />}
+                        />
+                        <Route
+                            exact
+                            path='/mentorsignup03'
+                            element={<MentorSignup03Page />}
                         />
                     </Routes>
                 </Layout>

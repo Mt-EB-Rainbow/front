@@ -1,26 +1,20 @@
-import { useNavigate } from 'react-router-dom';
-import GreenBtn from '../_common/Btn/GreenBtn';
-import * as S from './Signup02.style';
-import { useState } from 'react';
-import { SignApi } from '../../api/Signup';
+import * as S from './MentorSignup.style';
 import PageTitle from '../_common/PageTitle';
+import GreenBtn from '../_common/Btn/GreenBtn';
+import { useState } from 'react';
+import { Select } from 'antd';
+import { useNavigate } from 'react-router-dom';
 
-const Signup02 = () => {
+const MentorSignup = () => {
+    const navigate = useNavigate();
+
     const [name, setName] = useState('');
-    const [nickname, setNickname] = useState('');
     const [email, setEmail] = useState('');
     const [pw, setPw] = useState('');
     const [birth, setBirth] = useState('');
 
-    const navigate = useNavigate();
-
-    //회원가입하기
-    const Sign = async e => {
-        e.preventDefault();
-        const res = await SignApi(name, email, pw, nickname, birth);
-        console.log(res);
-        window.scrollTo(0, 0);
-        navigate('/signup03');
+    const go03 = () => {
+        navigate('/mentorsignup03');
     };
 
     return (
@@ -37,12 +31,6 @@ const Signup02 = () => {
                         onChange={e => setName(e.target.value)}
                     />
 
-                    {/* <S.Text>닉네임</S.Text>
-                    <S.InputText
-                        value={nickname}
-                        onChange={e => setNickname(e.target.value)}
-                    /> */}
-
                     <S.Text>이메일</S.Text>
                     <S.InputText
                         value={email}
@@ -56,23 +44,25 @@ const Signup02 = () => {
                     />
                     <S.Text>비밀번호 재확인</S.Text>
                     <S.InputText type='password' />
-                    <S.Text>생년월일</S.Text>
-                    <S.InputText
-                        placeholder='YYYY-MM-DD'
-                        value={birth}
-                        onChange={e => setBirth(e.target.value)}
+                    <S.Text>직무</S.Text>
+                    <Select
+                        defaultValue='직무를 선택해 주세요'
+                        style={{
+                            width: '29.1rem',
+                            height: '2.7rem',
+                            fontSize: '1rem',
+                        }}
                     />
-
                     <GreenBtn
                         text={'다음'}
                         paddingVertical={0.75}
                         paddingHorizontal={13.75}
                         width={29.1}
                         height={2.7}
-                        onClick={Sign}
                         radius={5}
                         top={2}
                         bottom={4}
+                        onClick={go03}
                     />
                 </S.Wrapper>
             </S.Container>
@@ -80,4 +70,4 @@ const Signup02 = () => {
     );
 };
 
-export default Signup02;
+export default MentorSignup;

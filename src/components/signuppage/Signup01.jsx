@@ -1,53 +1,47 @@
-import * as S from './Signup01.style';
-import SignupHeader from './SignupHeader';
-import GreenBtn from '../_common/Btn/GreenBtn';
 import { useNavigate } from 'react-router-dom';
+import GreenBtn from '../_common/Btn/GreenBtn';
+import PageTitle from '../_common/PageTitle';
+import * as S from './Signup01.style';
 
-const Signup = () => {
+const Signup01 = () => {
     const navigate = useNavigate();
 
-    const onClickNext = () => {
+    const goSignup = () => {
         navigate('/signup02');
     };
-
+    const goMentorSignup = () => {
+        navigate('/mentorsignup');
+    };
     return (
         <>
-            <S.Wrapper>
-                <SignupHeader />
-                <S.H3>아래의 필수 약관에 동의해주세요.</S.H3>
+            <S.Container>
+                <S.Wrapper>
+                    <PageTitle text={'회원가입'} />
 
-                <S.GrayBox>
-                    <S.BoxLeftText>
-                        개인 정보 수집 및 이용에 관한 동의
-                    </S.BoxLeftText>
-                    <input
-                        type='checkbox'
-                        style={{ width: '1.8vh', height: '1.8vh' }}
+                    <GreenBtn
+                        text={'구직자 회원가입'}
+                        width={18}
+                        paddingHorizontal={4.25}
+                        paddingVertical={0.77}
+                        height={3.2}
+                        bottom={2.3}
+                        top={3.15}
+                        onClick={goSignup}
+                        radius={1}
                     />
-                    <S.BoxRightText>동의</S.BoxRightText>
-                </S.GrayBox>
-                <S.GrayBox>
-                    <S.BoxLeftText>
-                        개인 정보 수집 및 이용에 관한 동의
-                    </S.BoxLeftText>
-                    <input
-                        type='checkbox'
-                        style={{ width: '1.8vh', height: '1.8vh' }}
+                    <GreenBtn
+                        text={'멘토 회원가입'}
+                        width={18}
+                        paddingHorizontal={4.25}
+                        paddingVertical={0.77}
+                        height={3.2}
+                        radius={1}
+                        onClick={goMentorSignup}
                     />
-                    <S.BoxRightText>동의</S.BoxRightText>
-                </S.GrayBox>
-                <GreenBtn
-                    text={'다음'}
-                    paddingVertical={0.75}
-                    paddingHorizontal={13.75}
-                    width={29.1}
-                    height={2.7}
-                    onClick={onClickNext}
-                    radius={5}
-                />
-            </S.Wrapper>
+                </S.Wrapper>
+            </S.Container>
         </>
     );
 };
 
-export default Signup;
+export default Signup01;
