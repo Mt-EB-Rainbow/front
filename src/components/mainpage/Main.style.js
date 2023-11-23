@@ -7,96 +7,97 @@ S.Wrapper = styled.div`
     align-items: center;
 `;
 S.InfoBox = styled.div`
-    @media (max-width: 1193px) {
+    @media (max-width: 59.7rem) {
         width: 100%;
     }
-    @media (max-width: 599px) {
+    @media (max-width: 30rem) {
         width: 90%;
         flex-direction: column;
-        padding: 20px 0px;
-        gap: 20px;
+        padding: 1rem 0;
+        gap: 1rem;
         height: 100%;
-        margin: 40px 0px;
+        margin: 2rem 0;
     }
-    width: 1194px;
-    height: 175px;
-    border-radius: 20px;
+    width: 59.7rem;
+    height: 8.75rem;
+    border-radius: 1rem;
     background: var(--pale-gray);
-    margin: 80px 0px;
+    margin-top: 4rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
 `;
-S.TextBox = styled.div`
-    @media (max-width: 1193px) {
-        width: 90%;
-    }
-    @media (max-width: 599px) {
-        margin: 0;
-    }
-    display: flex;
-    flex-direction: column;
-    width: 680px;
-    margin-left: 40px;
-`;
 S.Title = styled.div`
-    @media (max-width: 599px) {
-        font-size: 20px;
+    @media (max-width: 30rem) {
+        font-size: 1rem;
     }
     color: var(--black);
-    font-size: ${props => (props.fontSize ? props.fontSize : '24px')};
+    font-size: ${props => (props.fontSize ? props.fontSize : '1.4rem')};
     font-weight: 700;
-    margin-bottom: 10px;
-`;
-S.Text = styled.div`
-    @media (max-width: 599px) {
-        font-size: 18px;
-    }
-    color: var(--dark-gray);
-    font-size: 24px;
-    font-weight: 500;
+    margin-bottom: ${props => (props.marginB ? props.marginB : '0.5rem')};
     white-space: pre-wrap;
 `;
-S.Button = styled.button`
-    @media (max-width: 599px) {
-        height: 60px;
-        font-size: 20px;
+S.Text = styled.div`
+    @media (max-width: 30rem) {
+        font-size: 0.9rem;
     }
-    margin: 0px 40px;
-    width: 284px;
-    height: 84px;
+    color: var(--black);
+    font-size: 1rem;
+    font-weight: 500;
+    width: 17rem;
+`;
+S.Button = styled.button`
+    @media (max-width: 30rem) {
+        height: 3rem;
+        font-size: 1rem;
+    }
+    margin: 0 2rem;
+    width: 14.2rem;
+    height: 4.2rem;
     background-color: var(--white);
     border: 1px var(--gray) solid;
     color: var(--dark-green);
     text-align: center;
-    font-size: 24px;
+    font-size: 1.2rem;
     font-weight: 700;
-    border-radius: 20px;
+    border-radius: 1rem;
 `;
 S.NewContainer = styled.div`
-    @media (max-width: 599px) {
+    @media (max-width: 30rem) {
         flex-direction: column;
-        margin-bottom: 40px;
+        margin-bottom: 2rem;
     }
     display: flex;
-    margin-bottom: 80px;
-    gap: 40px;
+    margin: ${props => (props.margin ? props.margin : '4rem 0')};
+    gap: 1.5rem;
 `;
 S.InnerContainer = styled.div`
     display: flex;
     flex-direction: column;
 `;
-S.InnerBox = styled(S.InnerContainer)`
-    @media (max-width: 1193px) {
-        width: calc(50vw - 20px);
+S.InnerBox = styled.div`
+    @media (max-width: 59.7rem) {
+        width: calc(50vw - 1rem);
     }
-    @media (max-width: 599px) {
+    @media (max-width: 30rem) {
         width: 90vw;
-        height: 200px;
+        height: 10rem;
     }
-    width: 577px;
-    height: 300px;
-    border-radius: 20px;
-    background-color: var(--pale-gray);
+    display: flex;
+    align-items: center;
+    width: 29.1rem;
+    height: 6.75rem;
+    border-radius: 1rem;
+    border: 1px solid var(--gray);
+    background-color: var(--white);
+    &:hover {
+        border: 1px solid var(--dark-green);
+        background-color: var(--pale-green);
+    }
+    margin-bottom: 0.5rem;
+`;
+S.Icon = styled.img`
+    width: ${props => (props.width ? props.width : '3rem')};
+    margin: 0 2rem;
 `;
 export { S };
