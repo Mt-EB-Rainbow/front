@@ -21,10 +21,9 @@ export default BigSearchInput;
 
 const Input = styled.input`
     width: ${props => props.width};
-    color: var(--gray);
-    border: 1px var(--dark-gray) solid;
+    color: var(--black);
+    border: 1px #d9d9d9 solid;
     font-size: 1rem;
-    font-weight: 700;
     border-radius: 0.6rem;
     background-color: var(--white);
     margin-right: ${props => props.marginRight};

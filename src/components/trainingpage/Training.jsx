@@ -1,18 +1,35 @@
 import GreenBtn from '../_common/Btn/GreenBtn';
-import SearchDropdown from '../_common/Dropdown/SearchDropdown';
 import BigSearchInput from '../_common/Input/BigSearchInput';
 import PageTitle from '../_common/PageTitle';
 import * as S from './Training.style';
 import useTraining from '../../hooks/useTraining';
-import SmallSearchInput from '../_common/Input/SmallSearchInput';
 import BoardsHeader from '../_common/BoardsHeader';
 import VideoCard from '../_common/Card/VideoCard';
 import Thumbnail from '../../assets/thumbnail.jpeg';
+import { Select, Space } from 'antd';
+import React, { useState } from 'react';
+
+// select option
+const categoryData = ['취업', '창업'];
+const educationData = {
+    취업: ['전체', '교육, 컨설팅', '상담'],
+    창업: ['전체', '창업 공통', '창업 사례', '창업 전략'],
+};
 
 const Training = () => {
     const { filterValues, submitFilter, videoLength } = useTraining();
     const doSearch = () => {
         console.log('검색');
+    };
+    // Select box
+    const [category, setCategory] = useState(categoryData[0]);
+    const [education, setEducation] = useState(educationData[categoryData[0]]);
+    const onCategoryChange = value => {
+        setCategory(value);
+        setEducation(educationData[category][0]);
+    };
+    const onEducationChange = value => {
+        setEducation(value);
     };
     return (
         <>
@@ -42,20 +59,42 @@ const Training = () => {
                                 />
                             </S.Content>
                             <S.Content>
-                                {/* 카테고리 */}
-                                <SearchDropdown
-                                    initialValues={filterValues}
-                                    onSubmit={submitFilter}
-                                    width={10.8}
-                                    marginRight={0.2}
-                                />
-                                {/* 교육분야 */}
-                                <SearchDropdown
-                                    initialValues={filterValues}
-                                    onSubmit={submitFilter}
-                                    width={10.8}
-                                    marginRight={0.5}
-                                />
+                                <Space
+                                    wrap
+                                    style={{
+                                        marginRight: '0.5rem',
+                                    }}
+                                >
+                                    <Select
+                                        defaultValue='카테고리'
+                                        style={{
+                                            width: '10.4rem',
+                                            height: '3.2rem',
+                                            fontSize: '1rem',
+                                        }}
+                                        onChange={onCategoryChange}
+                                        options={categoryData.map(ct => ({
+                                            label: ct,
+                                            value: ct,
+                                        }))}
+                                    />
+                                    <Select
+                                        defaultValue='교육 분야'
+                                        style={{
+                                            width: '10.4rem',
+                                            height: '3.2rem',
+                                            fontSize: '1rem',
+                                        }}
+                                        value={education}
+                                        onChange={onEducationChange}
+                                        options={educationData[category].map(
+                                            edu => ({
+                                                label: edu,
+                                                value: edu,
+                                            }),
+                                        )}
+                                    />
+                                </Space>
                                 <GreenBtn
                                     padding={1.5}
                                     text={'검색'}

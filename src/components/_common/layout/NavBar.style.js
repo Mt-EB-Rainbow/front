@@ -12,7 +12,7 @@ export const NavBox = styled.div`
 `;
 
 export const Menu = styled.span`
-    font-size: 1.6vh;
+    font-size: 0.9rem;
     color: #767676;
     font-weight: 500;
     padding: 0.9vh;
