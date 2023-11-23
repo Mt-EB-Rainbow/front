@@ -11,7 +11,6 @@ client.defaults.headers.common['Authorization'] = token
     ? `Bearer ${token}`
     : null;
 
-
 export default client;
 
 //refresh token api
@@ -57,7 +56,7 @@ client.interceptors.response.use(
                     originRequest.headers.Authorization = `Bearer ${newAccessToken}`;
                     return client(originRequest);
                     //리프레시 토큰 요청이 실패할때(리프레시 토큰도 만료되었을때 = 재로그인 안내)
-                } else if (response.status === 404 ||response.status === 401 ) {
+                } else if (response.status === 404 || response.status === 401) {
                     alert('다시 로그인해주세요.');
                     window.location.replace('/signin');
                 }
