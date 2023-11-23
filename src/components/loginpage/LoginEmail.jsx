@@ -17,34 +17,45 @@ const LoginEmail = () => {
         console.log(res);
         navigate('/');
     };
+
+    const goSignup = () => {
+        navigate('/signup01');
+    };
     return (
         <>
             <S.Wrapper>
-                <form onSubmit={Login}>
-                    <PageTitle text={'로그인'} />
-                    <S.InputWrapper>
-                        <S.Text>이메일</S.Text>
-                        <S.InputEmail
-                            style={{ marginBottom: '20px' }}
-                            value={email}
-                            onChange={e => setEmail(e.target.value)}
-                        />
-                        <S.Text>비밀번호</S.Text>
-                        <S.InputEmail
-                            value={pw}
-                            onChange={e => setPw(e.target.value)}
-                        />
-                    </S.InputWrapper>
+                <S.Box>
+                    <form onSubmit={Login}>
+                        <PageTitle text={'로그인'} />
+                        <S.InputWrapper>
+                            <S.Text>이메일</S.Text>
+                            <S.InputEmail
+                                style={{ marginBottom: '20px' }}
+                                value={email}
+                                onChange={e => setEmail(e.target.value)}
+                            />
+                            <S.Text>비밀번호</S.Text>
+                            <S.InputEmail
+                                value={pw}
+                                onChange={e => setPw(e.target.value)}
+                            />
+                        </S.InputWrapper>
 
-                    <GreenBtn
-                        text={'이메일로 계속하기'}
-                        paddingVertical={0.75}
-                        paddingHorizontal={5.9}
-                        width={19}
-                        height={2.7}
-                        radius={5}
-                    />
-                </form>
+                        <GreenBtn
+                            text={'이메일로 계속하기'}
+                            paddingVertical={0.75}
+                            paddingHorizontal={5.9}
+                            width={19}
+                            height={2.7}
+                            radius={5}
+                            bottom={0}
+                            top={0}
+                        />
+                        <S.SignUpText onClick={goSignup}>
+                            회원가입하기
+                        </S.SignUpText>
+                    </form>
+                </S.Box>
             </S.Wrapper>
         </>
     );
