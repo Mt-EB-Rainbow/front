@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 
 const WhiteBtn = ({ text, onClick, marginSide, font }) => {
-    const marginSideProps = `${marginSide}vw`;
-    const fontProps = font ? `${font}vh` : '1.6vh';
+    const marginSideProps = `${marginSide}rem`;
+    const fontProps = font ? `${font}rem` : '1rem';
 
     return (
         <div>
@@ -22,12 +22,12 @@ export default WhiteBtn;
 const Btn = styled.button`
     background-color: white;
     color: #018c0d;
-    padding: 1.2vh;
+    padding: 0.5rem;
     font-size: ${props => props.font};
     font-family: var(--korean);
     font-weight: 600;
-    border: 0.1em solid #d8d8d8;
-    border-radius: 0.9vh;
+    border: 0.1rem solid #d8d8d8;
+    border-radius: 0.5rem;
     cursor: pointer;
     margin: 0 ${props => props.marginSide};
     /* margin-left: ${props => props.marginLeft}; */
