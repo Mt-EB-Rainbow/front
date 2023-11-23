@@ -16,6 +16,7 @@ import ResumePage from './pages/ResumePage';
 import ResumeNewPage from './pages/ResumeNewPage';
 import MentorFeedbackPage from './pages/MentorFeedbackPage';
 import MentorBoardsPage from './pages/MentorBoardsPage';
+import ScrollToTop from './components/_common/ScrollToTop';
 
 import RecommendPage from './pages/RecommendPage';
 import DictionaryPage from './pages/DictionaryPage';
@@ -24,6 +25,7 @@ function App() {
     return (
         <>
             <BrowserRouter>
+                <ScrollToTop />
                 <Layout>
                     <Routes>
                         {/* 메인 페이지 */}
