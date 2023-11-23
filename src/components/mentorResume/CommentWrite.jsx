@@ -25,7 +25,9 @@ const CommentWrite = () => {
             <GreenBtn
                 text={'게시하기'}
                 width={10}
-                padding={3.5}
+                height={2.7}
+                paddingHorizontal={3.5}
+                radius={5}
                 top={2.6}
                 bottom={8}
                 onClick={onSubmit}

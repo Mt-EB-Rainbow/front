@@ -17,7 +17,7 @@ export const Wrapper = styled.div`
 export const Box = styled.div`
     display: flex;
     width: 59.7rem;
-    height: 15.5vh;
+    height: 7rem;
     background-color: var(--pale-green);
     justify-content: center;
     align-items: center;

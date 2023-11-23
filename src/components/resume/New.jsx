@@ -99,7 +99,9 @@ const New = ({ isEdit }) => {
                         <GreenBtn
                             text={'직무 찾기'}
                             width={10.75}
-                            padding={2}
+                            paddingHorizontal={2}
+                            height={2.7}
+                            radius={5}
                         />
                     </S.ShortInputWrapper>
                     <S.TitleWapper>
@@ -248,10 +250,13 @@ const New = ({ isEdit }) => {
                     <GreenBtn
                         text={'이력서 저장'}
                         width={10.75}
-                        padding={2.95}
+                        paddingVertical={0.75}
+                        paddingHorizontal={2.95}
                         bottom={7.15}
                         top={6.4}
                         onClick={onSubmit}
+                        height={2.7}
+                        radius={5}
                     />
                 </S.Wrapper>
             </S.Container>

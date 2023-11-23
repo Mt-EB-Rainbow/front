@@ -10,7 +10,7 @@ const Resume = () => {
     const [isResumeExist, setIsResumeExist] = useState(false);
 
     const goNew = () => {
-        navigate('./new');
+        navigate('/new');
     };
 
     return (
@@ -48,9 +48,12 @@ const Resume = () => {
                             <div style={{ marginTop: '5rem' }}>
                                 <GreenBtn
                                     text={'새 이력서 추가'}
-                                    padding={2.25}
+                                    paddingHorizontal={0.75}
                                     width={10.75}
                                     bottom={10}
+                                    onClick={goNew}
+                                    radius={5}
+                                    paddingVertical={2.25}
                                 />
                             </div>
                         </>
@@ -59,10 +62,13 @@ const Resume = () => {
                             <S.Text>아직 등록된 이력서가 없어요.</S.Text>
                             <GreenBtn
                                 text={'새 이력서 추가'}
-                                padding={2.25}
+                                paddingHorizontal={0.75}
                                 width={10.75}
                                 bottom={10}
                                 onClick={goNew}
+                                radius={5}
+                                paddingVertical={2.25}
+                                height={2.7}
                             />
                         </>
                     )}
