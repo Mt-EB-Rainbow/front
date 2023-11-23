@@ -12,6 +12,9 @@ const LoginEmail = () => {
     const [pw, setPw] = useState('');
     const navigate = useNavigate();
 
+    //recoil로 로그인 상태관리
+    const [isLoggedIn, setLoggedIn] = useRecoilState(loginState);
+
     //로그인하기
     const Login = async e => {
         e.preventDefault();
