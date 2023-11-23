@@ -1,0 +1,6 @@
+.ant-switch-checked {
+    background: var(--green) !important;
+}
+.ant-switch-checked:hover {
+    background: var(--dark-green) !important;
+}
