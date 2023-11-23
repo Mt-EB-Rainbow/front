@@ -12,7 +12,7 @@ export const Wrapper = styled.div`
     flex-direction: column;
     align-items: center;
     width: 59.7rem;
-    height: ${props => props.height ? "auto" : "100vh"};
+    height: ${props => (props.height ? 'auto' : '100vh')};
 `;
 
 export const Boards = styled.div`
@@ -36,12 +36,10 @@ export const HeaderWrapper = styled.div`
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-   
 `;
 export const Length = styled.div`
     font-size: 0.8rem;
     font-weight: 600;
-    
 `;
 
 export const Info = styled.div`
