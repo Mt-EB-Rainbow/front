@@ -2,8 +2,12 @@ import PageTitle from '../_common/PageTitle';
 import GreenBtn from '../_common/Btn/GreenBtn';
 import * as S from './Login.style';
 import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 
 const Login = () => {
+    const [email, setEmail] = useState('');
+    const [pw, setPw] = useState('');
+
     const navigate = useNavigate();
     const goEmail = () => {
         navigate('/login/email');
@@ -20,7 +24,10 @@ const Login = () => {
                     <PageTitle text={'로그인'} />
                     <S.InputWrapper>
                         <S.Text>이메일</S.Text>
-                        <S.InputEmail />
+                        <S.InputEmail
+                            value={email}
+                            onChange={e => setEmail(e.target.value)}
+                        />
                     </S.InputWrapper>
                     <GreenBtn
                         text={'이메일로 계속하기'}

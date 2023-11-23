@@ -60,7 +60,7 @@ export const Count = styled.p`
     font-weight: 500;
     line-height: normal;
     position: absolute;
-    margin-top: 15.3rem;
+    margin-top: 15.1rem;
     margin-left: 34rem;
 `;
 
