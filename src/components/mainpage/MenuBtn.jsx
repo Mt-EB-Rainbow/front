@@ -1,8 +1,8 @@
 import { S } from './Main.style';
 import arrow from '../../assets/mainpage/arrow.svg';
-const MenuBtn = ({ title, text, icon }) => {
+const MenuBtn = ({ title, text, icon, onclick }) => {
     return (
-        <S.InnerBox>
+        <S.InnerBox onClick={onclick}>
             <S.Icon src={icon} />
             <S.InnerContainer>
                 <S.Title fontSize='1.2rem' marginB='0.2rem'>
