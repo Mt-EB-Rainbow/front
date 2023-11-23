@@ -22,10 +22,13 @@ const Signup03 = () => {
                 <S.Text>회원가입이 모두 완료되었습니다!</S.Text>
                 <S.BtnWrapper>
                     <GreenBtn
-                        text={'맞춤 정보 입력하기'}
-                        width={15}
-                        padding={2}
+                        text={'직무 추천받기'}
+                        paddingVertical={0.75}
+                        paddingHorizontal={2.45}
+                        width={10.75}
+                        height={2.7}
                         onClick={goInformation}
+                        radius={5}
                     />
                     <S.GrayBtn onClick={goMain}>메인으로 돌아가기</S.GrayBtn>
                 </S.BtnWrapper>

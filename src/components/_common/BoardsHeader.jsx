@@ -1,13 +1,13 @@
 import search from '../../assets/search.svg';
 import styled from 'styled-components';
 
-const BoardsHeader = ({ length, onClick }) => {
+const BoardsHeader = ({ length, onClick, placeholder }) => {
     return (
         <>
             <Wrapper>
                 <Length>총 {length}건</Length>
                 <SearchWrapper>
-                    <SearchInput placeholder='제목 또는 작성자명으로 검색' />
+                    <SearchInput placeholder={placeholder} />
                     <Img src={search} onClick={onClick} />
                 </SearchWrapper>
             </Wrapper>
@@ -18,9 +18,9 @@ const BoardsHeader = ({ length, onClick }) => {
 export default BoardsHeader;
 
 const Wrapper = styled.div`
-    width: 83vw;
-    height: 5.2vh;
-    border-bottom: 0.1em solid var(--light-gray);
+    width: 59.7rem;
+    height: 2.8rem;
+    border-bottom: 0.05rem solid var(--light-gray);
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -29,17 +29,17 @@ const Wrapper = styled.div`
 
 const SearchInput = styled.input`
     width: 22vw;
-    height: 3.7vh;
-    border-radius: 9.2vh;
+    height: 2rem;
+    border-radius: 5rem;
     outline: none;
-    font: 1.5vh;
+    font-size: 0.8rem;
     box-sizing: border-box;
-    padding: 1.1vh 1.1vw;
-    border: 0.1em solid var(--light-gray);
+    padding: 0.6rem 0.75rem 0.55rem;
+    border: 1px solid var(--light-gray);
     margin-right: 1.1vw;
 
     &::placeholder {
-        font-size: 1.5vh;
+        font-size: 0.8rem;
     }
 `;
 
@@ -50,7 +50,7 @@ const SearchWrapper = styled.div`
 `;
 
 const Length = styled.div`
-    font-size: 1.5vh;
+    font-size: 0.8rem;
     font-weight: 600;
 `;
 const Img = styled.img`

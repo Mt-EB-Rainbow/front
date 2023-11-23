@@ -1,0 +1,7 @@
+.ant-checkbox .ant-checkbox-inner {
+    border-color: var(--dark-green);
+}
+.ant-checkbox-checked .ant-checkbox-inner {
+    background-color: var(--dark-green);
+    border-color: var(--dark-green);
+}

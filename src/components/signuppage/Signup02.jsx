@@ -36,9 +36,12 @@ const Signup02 = () => {
                 <div style={{ marginTop: '6.5vh' }}></div>
                 <GreenBtn
                     text={'다음'}
-                    width={40.4}
-                    padding={10}
+                    paddingVertical={0.75}
+                    paddingHorizontal={13.75}
+                    width={29.1}
+                    height={2.7}
                     onClick={onClickNext}
+                    radius={5}
                 />
             </S.Wrapper>
         </>

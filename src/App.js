@@ -8,9 +8,14 @@ import Signup01Page from './pages/Signup01Page';
 import Signup02Page from './components/signuppage/Signup02';
 import LoginEmailPage from './pages/LoginEmailPage';
 import Signup03Page from './pages/Signup03Page';
-import UserInfoPage from './pages/UserInfoPage';
-import MentorPoolPage from './pages/MentorPoolPage';
-import MentorRegistPage from './pages/MentorRegistPage';
+
+import SupportPage from './pages/SupportPage';
+import TrainingPage from './pages/TrainingPage';
+import ChildcarePage from './pages/ChildcarePage';
+import ResumePage from './pages/ResumePage';
+import ResumeNewPage from './pages/ResumeNewPage';
+import MentorFeedbackPage from './pages/MentorFeedbackPage';
+import MentorBoardsPage from './pages/MentorBoardsPage';
 
 function App() {
     return (
@@ -44,20 +49,36 @@ function App() {
                             path='/signup03'
                             element={<Signup03Page />}
                         />
+
+                        {/* 직업 교육 페이지 */}
                         <Route
                             exact
-                            path='/userInfo'
-                            element={<UserInfoPage />}
+                            path='/training'
+                            element={<TrainingPage />}
+                        />
+                        {/* 취업 지원 기관 페이지 */}
+                        <Route
+                            exact
+                            path='/support'
+                            element={<SupportPage />}
+                        />
+
+                        <Route
+                            exact
+                            path='/childcare'
+                            element={<ChildcarePage />}
+                        />
+                        <Route exact path='/resume' element={<ResumePage />} />
+                        <Route exact path='/new' element={<ResumeNewPage />} />
+                        <Route
+                            exact
+                            path='/mentorfeedback'
+                            element={<MentorFeedbackPage />}
                         />
                         <Route
                             exact
-                            path='/mentor/pool'
-                            element={<MentorPoolPage />}
-                        />
-                        <Route
-                            exact
-                            path='/mentor/regist'
-                            element={<MentorRegistPage />}
+                            path='/mentorboards'
+                            element={<MentorBoardsPage />}
                         />
                     </Routes>
                 </Layout>
