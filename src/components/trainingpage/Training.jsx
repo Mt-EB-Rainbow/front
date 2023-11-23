@@ -2,12 +2,14 @@ import GreenBtn from '../_common/Btn/GreenBtn';
 import BigSearchInput from '../_common/Input/BigSearchInput';
 import PageTitle from '../_common/PageTitle';
 import * as S from './Training.style';
-import useTraining from '../../hooks/useTraining';
+import useTrainingFilter from '../../hooks/training/useTrainingFilter';
 import BoardsHeader from '../_common/BoardsHeader';
 import VideoCard from '../_common/Card/VideoCard';
 import Thumbnail from '../../assets/thumbnail.jpeg';
-import { Select, Space } from 'antd';
-import React, { useState } from 'react';
+import { Pagination, Select, Space } from 'antd';
+import React, { useState, useMemo } from 'react';
+import { useNavigate } from 'react-router-dom';
+import useTraining from '../../hooks/training/useTraining';
 
 // select option
 const categoryData = ['취업', '창업'];
@@ -16,11 +18,17 @@ const educationData = {
     창업: ['전체', '창업 공통', '창업 사례', '창업 전략'],
 };
 
+const PROJECTS_PER_PAGE = 12;
+
 const Training = () => {
-    const { filterValues, submitFilter, videoLength } = useTraining();
+    const { currentPage, lastPage, projects, projectsPerPage } = useTraining();
+    const navigate = useNavigate();
+    const videoLength = projectsPerPage.length;
+
     const doSearch = () => {
         console.log('검색');
     };
+
     // Select box
     const [category, setCategory] = useState(categoryData[0]);
     const [education, setEducation] = useState(educationData[categoryData[0]]);
@@ -31,6 +39,7 @@ const Training = () => {
     const onEducationChange = value => {
         setEducation(value);
     };
+
     return (
         <>
             <S.Container>
@@ -113,117 +122,26 @@ const Training = () => {
                             placeholder={'제목 및 내용으로 검색'}
                         />
                         <S.Body>
-                            {/* @todo map */}
-                            <S.CardBox>
-                                <VideoCard
-                                    Thumbnail={Thumbnail}
-                                    href={''}
-                                    title={
-                                        '(자막) [보육/아동복지교사] 기본! 영유아보육 이해하기'
-                                    }
-                                />
-                            </S.CardBox>
-                            <S.CardBox>
-                                <VideoCard
-                                    Thumbnail={Thumbnail}
-                                    href={''}
-                                    title={
-                                        '(자막) [보육/아동복지교사] 기본! 영유아보육 이해하기'
-                                    }
-                                />
-                            </S.CardBox>
-                            <S.CardBox>
-                                <VideoCard
-                                    Thumbnail={Thumbnail}
-                                    href={''}
-                                    title={
-                                        '(자막) [보육/아동복지교사] 기본! 영유아보육 이해하기'
-                                    }
-                                />
-                            </S.CardBox>
-                            <S.CardBox>
-                                <VideoCard
-                                    Thumbnail={Thumbnail}
-                                    href={''}
-                                    title={
-                                        '(자막) [보육/아동복지교사] 기본! 영유아보육 이해하기'
-                                    }
-                                />
-                            </S.CardBox>
-                            <S.CardBox>
-                                <VideoCard
-                                    Thumbnail={Thumbnail}
-                                    href={''}
-                                    title={
-                                        '(자막) [보육/아동복지교사] 기본! 영유아보육 이해하기'
-                                    }
-                                />
-                            </S.CardBox>
-                            <S.CardBox>
-                                <VideoCard
-                                    Thumbnail={Thumbnail}
-                                    href={''}
-                                    title={
-                                        '(자막) [보육/아동복지교사] 기본! 영유아보육 이해하기'
-                                    }
-                                />
-                            </S.CardBox>
-                            <S.CardBox>
-                                <VideoCard
-                                    Thumbnail={Thumbnail}
-                                    href={''}
-                                    title={
-                                        '(자막) [보육/아동복지교사] 기본! 영유아보육 이해하기'
-                                    }
-                                />
-                            </S.CardBox>
-                            <S.CardBox>
-                                <VideoCard
-                                    Thumbnail={Thumbnail}
-                                    href={''}
-                                    title={
-                                        '(자막) [보육/아동복지교사] 기본! 영유아보육 이해하기'
-                                    }
-                                />
-                            </S.CardBox>
-                            <S.CardBox>
-                                <VideoCard
-                                    Thumbnail={Thumbnail}
-                                    href={''}
-                                    title={
-                                        '(자막) [보육/아동복지교사] 기본! 영유아보육 이해하기'
-                                    }
-                                />
-                            </S.CardBox>
-                            <S.CardBox>
-                                <VideoCard
-                                    Thumbnail={Thumbnail}
-                                    href={''}
-                                    title={
-                                        '(자막) [보육/아동복지교사] 기본! 영유아보육 이해하기'
-                                    }
-                                />
-                            </S.CardBox>
-                            <S.CardBox>
-                                <VideoCard
-                                    Thumbnail={Thumbnail}
-                                    href={''}
-                                    title={
-                                        '(자막) [보육/아동복지교사] 기본! 영유아보육 이해하기'
-                                    }
-                                />
-                            </S.CardBox>
-                            <S.CardBox>
-                                <VideoCard
-                                    Thumbnail={Thumbnail}
-                                    href={''}
-                                    title={
-                                        '(자막) [보육/아동복지교사] 기본! 영유아보육 이해하기'
-                                    }
-                                />
-                            </S.CardBox>
+                            {projectsPerPage.map((item, index) => (
+                                <S.CardBox key={index}>
+                                    <VideoCard
+                                        thumbnail={item.imageUrl}
+                                        href={item.siteUrl}
+                                        title={item.name}
+                                    />
+                                </S.CardBox>
+                            ))}
                         </S.Body>
-                        <S.Footer>{/* 페이지네이션 */}</S.Footer>
+                        <S.Footer>
+                            <Pagination
+                                current={currentPage}
+                                total={projects.length}
+                                pageSize={PROJECTS_PER_PAGE}
+                                onChange={newPage => {
+                                    navigate(`?page=${newPage}`);
+                                }}
+                            />
+                        </S.Footer>
                     </S.Board>
                 </S.Wrapper>
             </S.Container>
