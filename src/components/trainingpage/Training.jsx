@@ -8,6 +8,8 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import useTraining from '../../hooks/training/useTraining';
 import { GetTrainingById, GetTrainingBySearch } from '../../api/TrainingCourse';
 
+const PROJECTS_PER_PAGE = 12;
+
 const Training = () => {
     const {
         currentPage,
