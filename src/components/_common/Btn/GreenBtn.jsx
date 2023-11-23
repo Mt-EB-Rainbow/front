@@ -7,15 +7,17 @@ const GreenBtn = ({
     text,
     onClick,
     width,
-    height,
     bottom,
+    top,
+    height,
     radius,
 }) => {
-    const horizontalProps = `${paddingHorizontal}rem`;
-    const verticalProps = `${paddingVertical}rem`;
     const widthProps = `${width}rem`;
     const heightProps = `${height}rem`;
     const MarginBottomProps = `${bottom}rem`;
+    const MarginTopProps = `${top}rem`;
+    const horizontalProps = `${paddingHorizontal}rem`;
+    const verticalProps = `${paddingVertical}rem`;
     const radiusProps = `${radius}rem`;
     return (
         <>
@@ -26,6 +28,7 @@ const GreenBtn = ({
                 height={heightProps}
                 onClick={onClick}
                 bottom={MarginBottomProps}
+                top={MarginTopProps}
                 radius={radiusProps}
             >
                 {text}
@@ -48,4 +51,5 @@ const Btn = styled.button`
     width: ${props => props.width};
     height: ${props => props.height};
     margin-bottom: ${props => props.bottom};
+    margin-top: ${props => props.top};
 `;

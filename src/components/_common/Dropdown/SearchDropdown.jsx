@@ -49,20 +49,21 @@ const Select = styled.select`
     -moz-appearance: none; /* 사파리, 크롬 하위버전용 */
 
     width: ${props => props.width};
+    height: 3.2rem;
     color: var(--gray);
     border: 1px var(--dark-gray) solid;
-    font-size: 20px;
+    font-size: 1rem;
     font-weight: 700;
-    border-radius: 12px;
+    border-radius: 0.6rem;
     background-color: var(--white);
     margin-right: ${props => props.marginRight};
     outline: none;
-    padding: 2.2vh 0.69vw;
+    padding: 1rem 0.5rem;
 
     // 드롭다운 아이콘
     background-image: url(${dropdown});
     background-repeat: no-repeat;
-    background-position: calc(100% - 10px) center;
+    background-position: calc(100% - 0.5rem) center;
 
     &::placeholder {
         color: var(--gray);
