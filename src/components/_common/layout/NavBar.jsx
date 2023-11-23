@@ -30,6 +30,14 @@ const NavBar = () => {
         navigate('/mentorboards');
     };
 
+    const goDictionary = () => {
+        navigate('/dictionary');
+    };
+
+    const goRecommend = () => {
+        navigate('/recommend');
+    };
+
     return (
         <div>
             <NavBox>
@@ -44,8 +52,8 @@ const NavBar = () => {
                     }}
                 />
                 <span>
-                    <Menu>직무 백과</Menu>
-                    <Menu>직무 추천</Menu>
+                    <Menu onClick={goDictionary}>직무 백과</Menu>
+                    <Menu onClick={goRecommend}>직무 추천</Menu>
                     <Menu onClick={goTraining}>직업 교육</Menu>
                     <Menu onClick={isMentor ? goMentorBoards : goResume}>
                         {isMentor ? '이력서 피드백' : '이력서 작성'}
