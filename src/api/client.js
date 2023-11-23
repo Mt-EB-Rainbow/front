@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const client = axios.create();
-client.defaults.baseURL = 'server.careersconnect.net';
+client.defaults.baseURL = 'https://server.careersconnect.net/';
 
 client.defaults.withCredentials = true;
 
