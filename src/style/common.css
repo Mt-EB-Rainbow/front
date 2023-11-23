@@ -43,25 +43,3 @@
 ::-webkit-scrollbar {
     display: none; /* Chrome, Safari, Opera*/
 }
-
-/* swiper */
-.mySwiper .swiper-button-next::after,
-.mySwiper .swiper-button-prev::after {
-    position: absolute;
-    top: var(--swiper-navigation-top-offset, 50%);
-    font-size: 2vh;
-    z-index: 10;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: black;
-}
-
-.mySwiper .swiper-slide {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 1.9vh;
-}
