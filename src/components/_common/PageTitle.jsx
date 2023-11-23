@@ -15,4 +15,5 @@ export const Title = styled.div`
     font-family: var(--korean);
     font-size: 2rem;
     font-weight: 700;
+    text-align: center;
 `;
