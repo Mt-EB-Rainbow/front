@@ -27,6 +27,9 @@ import MentorSignup03Page from './pages/MentirSignup03Page';
 import SuccessPage from './pages/SuccessPage';
 import { RecoilRoot } from 'recoil';
 
+import RecommendPage from './pages/RecommendPage';
+import DictionaryPage from './pages/DictionaryPage';
+
 function App() {
     return (
         <>
