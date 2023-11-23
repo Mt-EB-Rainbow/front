@@ -2,10 +2,13 @@ import { Router, useNavigate } from 'react-router-dom';
 import WhiteBtn from '../Btn/WhiteBtn';
 import { NavBox, Menu } from './NavBar.style';
 import logo from '../../../assets/logo.svg';
+import { useRecoilValue } from 'recoil';
+import { loginState } from '../../../recoil/loginState';
 
 const NavBar = () => {
     const navigate = useNavigate();
     const isMentor = false;
+    const isLoggedin = useRecoilValue(loginState);
 
     const goLogin = () => {
         navigate('/login');
@@ -53,13 +56,24 @@ const NavBar = () => {
                     <Menu onClick={goChildcare}>보육시설 조회</Menu>
                     <Menu onClick={goSupport}>취업지원 기관 조회</Menu>
                 </span>
-                {}
-                <WhiteBtn
-                    text={'회원가입 / 로그인'}
-                    onClick={goLogin}
-                    marginSide={'1.1'}
-                    font={'0.8'}
-                />
+                {isLoggedin ? (
+                    <>
+                        <WhiteBtn
+                            text={'로그아웃'}
+                            marginSide={'1.1'}
+                            font={'0.8'}
+                        />
+                    </>
+                ) : (
+                    <>
+                        <WhiteBtn
+                            text={'회원가입 / 로그인'}
+                            onClick={goLogin}
+                            marginSide={'1.1'}
+                            font={'0.8'}
+                        />
+                    </>
+                )}
             </NavBox>
         </div>
     );

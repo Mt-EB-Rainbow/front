@@ -19,7 +19,10 @@ const Resume = () => {
                 <S.Wrapper>
                     <PageTitle text={'내 이력서 관리'} />
                     <div style={{ height: '6.5rem' }}></div>
-                    <BoardsHeader length={0} />
+                    <BoardsHeader
+                        length={0}
+                        placeholder={'제목 및 내용으로 검색'}
+                    />
 
                     {isResumeExist ? (
                         <>
