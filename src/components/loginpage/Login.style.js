@@ -17,7 +17,7 @@ export const Wrapper = styled.div`
 `;
 
 export const Text = styled.div`
-    font-size: 1.5vh;
+    font-size: 0.8rem;
     font-family: var(--korean);
     color: var(--dark-gray);
     margin-bottom: 0.5vh;
@@ -27,8 +27,8 @@ export const Text = styled.div`
 `;
 
 export const InputEmail = styled.input`
-    width: 26.25vw;
-    height: 5vh;
+    width: 19rem;
+    height: 2.7rem;
     box-sizing: border-box;
     padding: 1.5vh;
     border-radius: 1.2vh;
@@ -48,16 +48,16 @@ export const SectionText = styled.div`
     color: var(--gray);
     margin-top: 1.8vh;
     margin-bottom: 1.8vh;
-    font-size: 1.6vh;
+    font-size: 0.8rem;
     font-weight: 600;
 `;
 
 export const LoginBtn = styled.button`
-    width: 26.25vw;
+    width: 19rem;
     color: var(--dark-gray);
-    padding: 1.4vh 11.25vw 1.4vh 11.25vw;
+    padding: 0.75rem 8.1rem;
     border: 0.1em solid var(--gray);
-    font-size: 1.8vh;
+    font-size: 1rem;
     font-weight: 500;
     border-radius: 90vh;
     font-family: var(--korean);
@@ -70,7 +70,7 @@ export const LoginBtn = styled.button`
 export const SignUpText = styled.div`
     margin-top: 0.9vh;
     color: var(--green);
-    font-size: 1.5vh;
+    font-size: 0.8rem;
     padding: 1vh;
     cursor: pointer;
     margin-bottom: 0.9vh;

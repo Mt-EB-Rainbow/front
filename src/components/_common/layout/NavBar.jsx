@@ -20,10 +20,6 @@ const NavBar = () => {
         navigate('/resume');
     };
 
-    const goMentorBoards = () => {
-        navigate('/mentorboards');
-    };
-
     return (
         <div>
             <NavBox>
@@ -41,11 +37,9 @@ const NavBar = () => {
                     <Menu>직무 백과</Menu>
                     <Menu>직무 추천</Menu>
                     <Menu>직업 교육</Menu>
-                    <Menu onClick={isMentor ? goMentorBoards : goResume}>
-                        {isMentor ? '이력서 피드백' : '이력서 작성'}
-                    </Menu>
+                    <Menu onClick={goResume}>이력서 작성</Menu>
                     <Menu onClick={goChildcare}>보육시설 조회</Menu>
-                    <Menu>취업지원 기관 조회</Menu>
+                    <Menu onClick={goSupport}>취업지원 기관 조회</Menu>
                 </span>
                 <WhiteBtn
                     text={'회원가입 / 로그인'}
