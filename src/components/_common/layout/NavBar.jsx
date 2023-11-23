@@ -57,6 +57,7 @@ const NavBar = () => {
                     text={'회원가입 / 로그인'}
                     onClick={goLogin}
                     marginSide={'1.1'}
+                    font={'0.8'}
                 />
             </NavBox>
         </div>

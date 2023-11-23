@@ -51,7 +51,7 @@ const Select = styled.select`
     width: ${props => props.width};
     height: 3.2rem;
     color: var(--gray);
-    border: 1px var(--dark-gray) solid;
+    border: 1px var(--gray) solid;
     font-size: 1rem;
     font-weight: 700;
     border-radius: 0.6rem;
