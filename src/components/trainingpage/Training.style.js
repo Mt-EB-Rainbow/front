@@ -18,7 +18,7 @@ export const Box = styled.div`
     display: flex;
     width: 59.7rem;
     height: 7rem;
-    background-color: var(--pale-green);
+    background-color: var(--pale-gray);
     justify-content: center;
     align-items: center;
     border-radius: 2.2vh;
