@@ -1,11 +1,17 @@
 import styled from 'styled-components';
 
+export const Container = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+`;
+
 export const Wrapper = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
     height: auto;
-    width: 100vw;
+    width: 59.7rem;
 `;
 
 export const Box = styled.div`
@@ -20,10 +26,12 @@ export const Box = styled.div`
 `;
 
 export const InlineBox = styled.div`
-    width: 77.3vw;
+    width: 59.7rem;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    box-sizing: border-box;
+    padding: 2rem;
 `;
 
 export const Content = styled.div`
@@ -33,7 +41,7 @@ export const Content = styled.div`
 `;
 
 export const Board = styled.div`
-    width: 82.91vw;
+    width: 59.7rem;
     display: flex;
     flex-direction: column;
 `;
