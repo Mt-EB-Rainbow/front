@@ -3,12 +3,14 @@ import styled from 'styled-components';
 export const NavBox = styled.div`
     width: 100vw;
     height: 6vh;
-    border-bottom: 0.1em solid #d8d8d8;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
     position: relative;
+    box-shadow: 0px 2px 8px 0px rgba(0, 0, 0, 0.1);
+    -moz-box-shadow: 0px 2px 8px 0px rgba(0, 0, 0, 0.1);
+    -webkit-box-shadow: 0px 2px 8px 0px rgba(0, 0, 0, 0.1);
 `;
 
 export const Menu = styled.span`

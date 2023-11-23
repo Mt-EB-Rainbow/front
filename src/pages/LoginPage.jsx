@@ -1,9 +1,9 @@
-import Login from '../components/loginpage/Login';
+import LoginEmail from '../components/loginpage/LoginEmail';
 
 const LoginPage = () => {
     return (
         <>
-            <Login />
+            <LoginEmail />
         </>
     );
 };

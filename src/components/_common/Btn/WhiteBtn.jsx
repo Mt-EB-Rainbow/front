@@ -26,7 +26,7 @@ const Btn = styled.button`
     font-size: ${props => props.font};
     font-family: var(--korean);
     font-weight: 600;
-    border: 0.1rem solid #d8d8d8;
+    border: none;
     border-radius: 0.5rem;
     cursor: pointer;
     margin: 0 ${props => props.marginSide};
