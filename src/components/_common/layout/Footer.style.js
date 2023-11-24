@@ -10,6 +10,7 @@ export const FooterBox = styled.div`
     align-items: center;
     position: relative;
     bottom: 0;
+    margin-top: 7rem;
 `;
 
 export const Text = styled.span`

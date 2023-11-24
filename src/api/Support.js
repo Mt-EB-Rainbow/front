@@ -1,16 +1,20 @@
 import client from './client';
 
-export const SupportApi = async (district, dong, pageNum) => {
+// 취업 지원 사이트 전체 조회
+export const SupportApi = async () => {
     try {
-        const res = await client.get('/sites', {
-            district: String(district),
-            dong: String(dong),
-            pageNum: String(pageNum),
-        });
+        const res = await client.get('/sites');
+        return res.data;
+    } catch (err) {
+        console.log(err);
+    }
+};
 
-        console.log(res, '조회 성공');
-
-        return res;
+// 취업 지원 사이트 타입별 조회
+export const SupportByTypeApi = async siteType => {
+    try {
+        const res = await client.get(`/sites/${siteType}`);
+        return res.data;
     } catch (err) {
         console.log(err);
     }
