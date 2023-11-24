@@ -29,6 +29,7 @@ import { RecoilRoot } from 'recoil';
 
 import RecommendPage from './pages/RecommendPage';
 import DictionaryPage from './pages/DictionaryPage';
+import SuccessPage from './pages/SuccessPage';
 
 function App() {
     return (
