@@ -20,6 +20,7 @@ import ScrollToTop from './components/_common/ScrollToTop';
 
 import RecommendPage from './pages/RecommendPage';
 import DictionaryPage from './pages/DictionaryPage';
+import SuccessPage from './pages/SuccessPage';
 
 function App() {
     return (
@@ -94,6 +95,11 @@ function App() {
                             exact
                             path='/recommend'
                             element={<RecommendPage />}
+                        />
+                        <Route
+                            exact
+                            path='/success'
+                            element={<SuccessPage />}
                         />
                     </Routes>
                 </Layout>
