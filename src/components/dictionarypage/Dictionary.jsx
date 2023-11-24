@@ -130,7 +130,7 @@ const Dictionary = () => {
                     보육교사의 역할과 자질에 대해 파악할 수 있다.
                 </S.Info>
             </S.InfoBox>
-            <S.Content style={{ marginBottom: '4rem' }}>
+            <S.Content>
                 <S.RecommendBox>
                     <S.Icon src={smile} />
                     <S.InfoBox width='21.3rem' style={{ marginTop: '1.5rem' }}>
