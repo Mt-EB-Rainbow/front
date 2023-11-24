@@ -117,6 +117,10 @@ S.Text = styled.div`
 `;
 S.CheckBox = styled.input`
     margin-left: 2rem;
+    width: 4rem;
+    height: 4rem;
+    border-radius: 1rem;
+    background-color: var(--light-gray);
 `;
 S.Thumbnail = styled.img`
     margin-left: 2rem;
