@@ -68,7 +68,7 @@ const Main = () => {
                     )}
                 </S.InnerContainer>
             </S.NewContainer>
-            <S.NewContainer margin='2rem 0 4rem 0'>
+            <S.NewContainer margin='2rem 0 0 0'>
                 <S.InnerContainer>
                     <S.Title>아이가 있으신가요?</S.Title>
                     <MenuBtn
