@@ -90,7 +90,7 @@ export const PaginationUi = styled(Pagination)`
         color: var(--dark-green);
     }
     .ant-pagination-item a {
-        color: var(--gray);
+        color: var(--dark-gray);
         font-weight: 400;
     }
     .ant-pagination-item-active a {
