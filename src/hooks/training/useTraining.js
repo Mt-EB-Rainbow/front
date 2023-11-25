@@ -1,43 +1,54 @@
 import { useMemo, useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import { TrainingData } from '../../mock/Training';
-
-const PROJECTS_PER_PAGE = 12;
+import { TrainingApi } from '../../api/TrainingCourse';
 
 const useTraining = () => {
     const location = useLocation();
-    const [currentPage, setCurrentPage] = useState(1); // currentPage 상태 추가
+    const [currentPage, setCurrentPage] = useState(1);
+    const TRAININGS_PER_PAGE = 12;
 
-    // 프로젝트 목록 불러오기
-    const projects = TrainingData;
+    const [training, setTraining] = useState([]);
+    const [totalTrainings, setTotalTrainings] = useState(0);
+    const [loading, setLoading] = useState(true);
+
+    console.log(true);
+
+    useEffect(() => {
+        const fetchSites = async () => {
+            const startPage = currentPage;
+
+            try {
+                const courses = await TrainingApi(
+                    'KIAO7F5LGGBIAW16CBXXR76IQMEHIOWU',
+                    'A',
+                    startPage,
+                    TRAININGS_PER_PAGE,
+                ).then(
+                    setLoading(false), // 데이터 로딩 완료
+                );
+                setTraining(courses.response.response_body.list.data);
+                setTotalTrainings(courses.response.response_body.result); // 전체 트레이닝 수
+            } catch (err) {
+                console.log(err);
+            }
+        };
+        fetchSites();
+    }, [currentPage]);
 
     useEffect(() => {
         const params = new URLSearchParams(location.search);
         const pageFromURL = Number(params.get('page') || '1');
-        if (currentPage !== pageFromURL) {
-            setCurrentPage(pageFromURL);
-        }
-    }, [location.search, currentPage]);
+        setCurrentPage(pageFromURL);
+    }, [location.search]);
 
-    // 현재 페이지에 보여줄 프로젝트
-    const projectsPerPage = useMemo(() => {
-        if (!projects) return [];
-        const start = (currentPage - 1) * PROJECTS_PER_PAGE;
-        const end = start + PROJECTS_PER_PAGE;
-        return projects.slice(start, end);
-    }, [projects, currentPage]);
-
-    // 마지막 페이지
-    const lastPage = useMemo(() => {
-        if (!projects) return 1;
-        return Math.ceil(projects.length / PROJECTS_PER_PAGE);
-    }, [projects]);
+    const lastPage = Math.ceil(totalTrainings / TRAININGS_PER_PAGE);
 
     return {
         currentPage,
         lastPage,
-        projects,
-        projectsPerPage,
+        training,
+        totalTrainings,
+        loading,
     };
 };
 
