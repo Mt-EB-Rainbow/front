@@ -3,6 +3,7 @@ import React, { useRef, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import banner from '../../assets/mainpage/banner_txt.png';
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 
 // Import Swiper styles
 import 'swiper/css';
@@ -15,6 +16,8 @@ import './Banner.css';
 import { Navigation, Pagination, Mousewheel, Keyboard } from 'swiper/modules';
 
 export default function Banner() {
+    const navigate = useNavigate();
+
     return (
         <>
             <Swiper
@@ -26,13 +29,13 @@ export default function Banner() {
                 loop={true}
                 modules={[Navigation, Pagination, Mousewheel, Keyboard]}
             >
-                <SwiperSlide>
+                <SwiperSlide onClick={() => navigate('/success/1')}>
                     <img src={banner} />
                 </SwiperSlide>
-                <SwiperSlide>
+                <SwiperSlide onClick={() => navigate('/success/2')}>
                     <img src={banner} />
                 </SwiperSlide>
-                <SwiperSlide>
+                <SwiperSlide onClick={() => navigate('/success/3')}>
                     <img src={banner} />
                 </SwiperSlide>
             </Swiper>
