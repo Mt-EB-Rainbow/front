@@ -23,6 +23,7 @@ import RecommendPage from './pages/RecommendPage';
 import DictionaryPage from './pages/DictionaryPage';
 import MentorSignupPage from './pages/MentorSignupPage';
 import MentorSignup03Page from './pages/MentirSignup03Page';
+import SuccessPage from './pages/SuccessPage';
 
 function App() {
     return (
@@ -112,6 +113,11 @@ function App() {
                             exact
                             path='/recommend'
                             element={<RecommendPage />}
+                        />
+                        <Route
+                            exact
+                            path='/success/:id'
+                            element={<SuccessPage />}
                         />
                         <Route
                             exact

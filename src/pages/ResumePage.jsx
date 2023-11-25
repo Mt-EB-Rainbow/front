@@ -6,7 +6,8 @@ import { useState } from 'react';
 
 const ResumePage = () => {
     // const isLoggedin = useRecoilValue(loginState);
-    const [isLoggedin, setIsLoggedin] = useState(true);
+    const token = localStorage.getItem('accessToken');
+    const [isLoggedin, setIsLoggedin] = useState(token);
 
     return <>{isLoggedin ? <Resume /> : <GoLogin />}</>;
 };

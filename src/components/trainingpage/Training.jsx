@@ -2,25 +2,52 @@ import GreenBtn from '../_common/Btn/GreenBtn';
 import BigSearchInput from '../_common/Input/BigSearchInput';
 import PageTitle from '../_common/PageTitle';
 import * as S from './Training.style';
-import useTraining from '../../hooks/useTraining';
-import BoardsHeader from '../_common/BoardsHeader';
+import Header from '../trainingpage/Header';
 import VideoCard from '../_common/Card/VideoCard';
-import Thumbnail from '../../assets/thumbnail.jpeg';
-import { Select, Space } from 'antd';
+import { Space, Select } from 'antd';
 import React, { useState } from 'react';
-
-// select option
-const categoryData = ['취업', '창업'];
-const educationData = {
-    취업: ['전체', '교육, 컨설팅', '상담'],
-    창업: ['전체', '창업 공통', '창업 사례', '창업 전략'],
-};
+import { useNavigate } from 'react-router-dom';
+import useTraining from '../../hooks/training/useTraining';
 
 const Training = () => {
-    const { filterValues, submitFilter, videoLength } = useTraining();
-    const doSearch = () => {
-        console.log('검색');
+    const { currentPage, lastPage, training, totalTrainings, loading } =
+        useTraining();
+
+    console.log(loading);
+    const navigate = useNavigate();
+    const PROJECTS_PER_PAGE = 12;
+    const videoLength = totalTrainings;
+
+    // select option
+    let categoryData = [];
+
+    for (let i = 0; i < training.length; i++) {
+        categoryData.push(training[i].majorCategoryName);
+    }
+    // category 중복 제거
+    categoryData = categoryData.filter(
+        (value, index, self) => self.indexOf(value) === index,
+    );
+
+    // console.log(training[0].onlineTrainingTime);
+    const educationData = {
+        // 취업: ['전체', '교육, 컨설팅', '상담'],
+        창업: ['전체', '창업 공통', '창업 사례', '창업 전략'],
+        BIZ일반: [
+            '전체',
+            '기획, 경영',
+            '리더십',
+            '재무/법',
+            '교육',
+            '자기개발',
+            '커뮤니케이션',
+            '시사상식',
+            '금융/재테크',
+            '조직관리',
+            '성과창출',
+        ],
     };
+
     // Select box
     const [category, setCategory] = useState(categoryData[0]);
     const [education, setEducation] = useState(educationData[categoryData[0]]);
@@ -31,6 +58,11 @@ const Training = () => {
     const onEducationChange = value => {
         setEducation(value);
     };
+
+    const doSearch = () => {
+        console.log('검색');
+    };
+
     return (
         <>
             <S.Container>
@@ -87,12 +119,12 @@ const Training = () => {
                                         }}
                                         value={education}
                                         onChange={onEducationChange}
-                                        options={educationData[category].map(
-                                            edu => ({
-                                                label: edu,
-                                                value: edu,
-                                            }),
-                                        )}
+                                        // options={educationData[category].map(
+                                        //     edu => ({
+                                        //         label: edu,
+                                        //         value: edu,
+                                        //     }),
+                                        // )}
                                     />
                                 </Space>
                                 <GreenBtn
@@ -107,123 +139,29 @@ const Training = () => {
                         </S.InlineBox>
                     </S.Box>
                     <S.Board>
-                        <BoardsHeader
-                            length={videoLength}
-                            onClick={doSearch}
-                            placeholder={'제목 및 내용으로 검색'}
-                        />
+                        <Header length={videoLength} />
                         <S.Body>
-                            {/* @todo map */}
-                            <S.CardBox>
-                                <VideoCard
-                                    Thumbnail={Thumbnail}
-                                    href={''}
-                                    title={
-                                        '(자막) [보육/아동복지교사] 기본! 영유아보육 이해하기'
-                                    }
-                                />
-                            </S.CardBox>
-                            <S.CardBox>
-                                <VideoCard
-                                    Thumbnail={Thumbnail}
-                                    href={''}
-                                    title={
-                                        '(자막) [보육/아동복지교사] 기본! 영유아보육 이해하기'
-                                    }
-                                />
-                            </S.CardBox>
-                            <S.CardBox>
-                                <VideoCard
-                                    Thumbnail={Thumbnail}
-                                    href={''}
-                                    title={
-                                        '(자막) [보육/아동복지교사] 기본! 영유아보육 이해하기'
-                                    }
-                                />
-                            </S.CardBox>
-                            <S.CardBox>
-                                <VideoCard
-                                    Thumbnail={Thumbnail}
-                                    href={''}
-                                    title={
-                                        '(자막) [보육/아동복지교사] 기본! 영유아보육 이해하기'
-                                    }
-                                />
-                            </S.CardBox>
-                            <S.CardBox>
-                                <VideoCard
-                                    Thumbnail={Thumbnail}
-                                    href={''}
-                                    title={
-                                        '(자막) [보육/아동복지교사] 기본! 영유아보육 이해하기'
-                                    }
-                                />
-                            </S.CardBox>
-                            <S.CardBox>
-                                <VideoCard
-                                    Thumbnail={Thumbnail}
-                                    href={''}
-                                    title={
-                                        '(자막) [보육/아동복지교사] 기본! 영유아보육 이해하기'
-                                    }
-                                />
-                            </S.CardBox>
-                            <S.CardBox>
-                                <VideoCard
-                                    Thumbnail={Thumbnail}
-                                    href={''}
-                                    title={
-                                        '(자막) [보육/아동복지교사] 기본! 영유아보육 이해하기'
-                                    }
-                                />
-                            </S.CardBox>
-                            <S.CardBox>
-                                <VideoCard
-                                    Thumbnail={Thumbnail}
-                                    href={''}
-                                    title={
-                                        '(자막) [보육/아동복지교사] 기본! 영유아보육 이해하기'
-                                    }
-                                />
-                            </S.CardBox>
-                            <S.CardBox>
-                                <VideoCard
-                                    Thumbnail={Thumbnail}
-                                    href={''}
-                                    title={
-                                        '(자막) [보육/아동복지교사] 기본! 영유아보육 이해하기'
-                                    }
-                                />
-                            </S.CardBox>
-                            <S.CardBox>
-                                <VideoCard
-                                    Thumbnail={Thumbnail}
-                                    href={''}
-                                    title={
-                                        '(자막) [보육/아동복지교사] 기본! 영유아보육 이해하기'
-                                    }
-                                />
-                            </S.CardBox>
-                            <S.CardBox>
-                                <VideoCard
-                                    Thumbnail={Thumbnail}
-                                    href={''}
-                                    title={
-                                        '(자막) [보육/아동복지교사] 기본! 영유아보육 이해하기'
-                                    }
-                                />
-                            </S.CardBox>
-                            <S.CardBox>
-                                <VideoCard
-                                    Thumbnail={Thumbnail}
-                                    href={''}
-                                    title={
-                                        '(자막) [보육/아동복지교사] 기본! 영유아보육 이해하기'
-                                    }
-                                />
-                            </S.CardBox>
+                            {training?.map((item, index) => (
+                                <S.CardBox key={index}>
+                                    <VideoCard
+                                        thumbnail={item.fileUrl}
+                                        href={item.detailUrl}
+                                        title={item.courseName}
+                                        loading={loading}
+                                    />
+                                </S.CardBox>
+                            ))}
                         </S.Body>
-                        <S.Footer>{/* 페이지네이션 */}</S.Footer>
+                        <S.Footer>
+                            <S.PaginationUi
+                                current={currentPage}
+                                total={totalTrainings}
+                                pageSize={PROJECTS_PER_PAGE}
+                                onChange={newPage => {
+                                    navigate(`?page=${newPage}`);
+                                }}
+                            />
+                        </S.Footer>
                     </S.Board>
                 </S.Wrapper>
             </S.Container>

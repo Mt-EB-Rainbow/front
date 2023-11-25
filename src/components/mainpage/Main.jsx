@@ -61,19 +61,19 @@ const Main = () => {
                     ) : (
                         <MenuBtn
                             title='이력서 작성'
-                            text='이력서 준비하고 동종업계 멘토 피드백 받기'
+                            text='이력서 준비하고 업계 멘토 피드백 받기'
                             icon={write}
                             onclick={() => navigate('/resume')}
                         />
                     )}
                 </S.InnerContainer>
             </S.NewContainer>
-            <S.NewContainer margin='2rem 0 4rem 0'>
+            <S.NewContainer margin='2rem 0 0 0'>
                 <S.InnerContainer>
                     <S.Title>아이가 있으신가요?</S.Title>
                     <MenuBtn
                         title='인근 보육 시설 조회'
-                        text='믿고 맡길 수 있는 인근 보육 시설 알아보기'
+                        text='믿을 수 있는 인근 보육 시설 알아보기'
                         icon={child}
                         onclick={() => navigate('/childcare')}
                     />
