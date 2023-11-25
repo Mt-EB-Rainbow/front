@@ -18,35 +18,54 @@ const provinceData = ['강남구', '강동구', '강북구', '강서구', '관�
 '금천구', '노원구', '도봉구','동대문구','동작구', '마포구', '서대문구', '서초구', '성동구','성북구', '송파구', '양천구','영등포구', '용산구', '은평구','종로구','중구','중랑구'];
 
 const Childcare = () => {
-    const [isExist, setIsExist] = useState(true);
+    const [current, setCurrent] = useState(false);
     const [dong, setDong] = useState('');
     const pageNum = 1;
+    //get받아온 배열 저장
+    const [nurturesArray, setNurturesArray] = useState([])
+    
 
     // Select box
-    const [cities, setCities] = useState(provinceData[0]);
+    const [district, setDistrict] = useState(provinceData[0]);
 
     const handleProvinceChange = value => {
-        setCities(value);
+        setDistrict(value);
     
     };
 
     //보육시설 get`
     const getchild = async ()=>{
-    console.log(cities)
+    console.log(district)
     console.log(dong)
-    console.log( pageNum)
-        const res = await GetChildApi(cities, dong, pageNum )
-         console.log(res)
+    console.log(pageNum)
+
+try{
+    const res = await GetChildApi(district, dong, pageNum )
+    console.log(res.data.nurturesResponse)
+    if(res.status == 200 | res.status == 201){
+       setNurturesArray(res.data.nurturesResponse)
+    }
+}catch(err){
+    console.log(err)
+    alert('입력값을 확인해주세요!')
+}
+        
+         
     }
     
+    //티오있는 시설 리스트 필터링
+    const TO = nurturesArray.filter((el)=>el.capacity != el.current)
+    console.log(TO)
    
 
     // 체크 박스
     const onChange = e => {
         console.log(`checked = ${e.target.checked}`);
+        setCurrent(!current);
+
     };
 
-    //  표 header
+    
     // 표 header
     const columns = useMemo(
         () => [
@@ -72,26 +91,41 @@ const Childcare = () => {
             },
         ],
         [],
-    );``
+    );
     const data = useMemo(
         () =>
-            Array(7)
-                .fill()
-                .map((_, index) => ({
-                    num: index + 1,
-                    name: '(재)천주교서울대교구유지재단 천사어린이집',
-                    full: 100,
-                    now: 70,
-                    address:
-                        '서울특별시 송파구 거마로24길 11, (마천동) (마천2동)',
+            nurturesArray
+                .map((el, index) => ({
+                        num: index + 1,
+                        name: el.schoolName,
+                        full: el.capacity,
+                        now: el.current,
+                        address:el.address,
+                    
+                    
                 })),
-        [],
+        [nurturesArray],
+    );
+
+    const TOdata = useMemo(
+        () =>
+            TO
+                .map((el, index) => ({
+                        num: index + 1,
+                        name: el.schoolName,
+                        full: el.capacity,
+                        now: el.current,
+                        address:el.address,
+                    
+                    
+                })),
+        [TO],
     );
 
     return (
         <>
             <S.Container>
-                <S.Wrapper>
+                <S.Wrapper nurturesArray={nurturesArray.length}>
                     <PageTitle text={'인근 보육 시설 조회'} />
                     <S.GrayBox>
                         <S.BoxTitle>
@@ -106,7 +140,7 @@ const Childcare = () => {
                                     fontSize: '13rem',
                                 }}
                                 onChange={handleProvinceChange}
-                                value={cities}
+                                value={district}
                                 options={provinceData.map(province => ({
                                     label: province,
                                     value: province,
@@ -115,6 +149,8 @@ const Childcare = () => {
                             <S.Dong placeholder='행정동을 입력하세요' type='text' value={dong} onChange={e=>setDong(e.target.value)}></S.Dong>
                             
                         </Space>
+
+                        {/* 티오있는 시설만 필터링 */}
                         <Checkbox
                             onChange={onChange}
                             style={{
@@ -127,10 +163,10 @@ const Childcare = () => {
                         </Checkbox>
                         <S.CustGreenBtn onClick={getchild}>검색 하기</S.CustGreenBtn>
                     </S.GrayBox>
-                    <S.Length>총 {isExist ? 'n' : 0}건</S.Length>
+                    <S.Length>총 {nurturesArray.length}건</S.Length>
                     <S.Line />
-                    {isExist ? (
-                        <Table columns={columns} data={data} />
+                    {nurturesArray.length ? (
+                        <Table columns={columns} data={ current? TOdata:data} />
                     ) : (
                         <NoTable />
                     )}
