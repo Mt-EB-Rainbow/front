@@ -1,20 +1,27 @@
 import GreenBtn from '../_common/Btn/GreenBtn';
 import PageTitle from '../_common/PageTitle';
 import * as S from './New.style';
-import { useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { Switch } from 'antd';
 import './Switch.css';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import { NewResumeApi, getResumeContentApi } from '../../api/resume';
+import { resumedata } from './mockData';
 
 const New = ({ isEdit }) => {
+    const { resumeId } = useParams();
     const navigate = useNavigate();
     const [inputCount, setInputCount] = useState(0);
     const [check, setCheck] = useState(false);
-    const [education, setEducation] = useState(1);
 
     // input data
     const [title, setTitle] = useState('');
-    const [content, setContent] = useState('');
+    const [introduction, setIntroduction] = useState();
+    // 학력
+    const [startDate, setStartDate] = useState('');
+    const [finishDate, setFinishDate] = useState('');
+    const [name, setName] = useState('');
+    const [major, setMajor] = useState('');
 
     const onChangeTitle = e => {
         setTitle(e.target.value);
@@ -22,26 +29,32 @@ const New = ({ isEdit }) => {
     };
 
     const onChangeContent = e => {
-        setContent(e.target.value);
+        setIntroduction(e.target.value);
     };
     const onChange = checked => {
         console.log(`switch to ${checked}`);
         setCheck(!check);
     };
 
-    const addBox = () => {
-        setEducation(education + 1);
-    };
+    // 내용 post
+    const onSubmit = async e => {
+        e.preventDefault();
 
-    const onSubmit = () => {
-        if (title && content) {
-            //  백엔드로 post
+        const res = await NewResumeApi(
+            resumeId,
+            resumedata.title,
+            resumedata.introduction,
+            resumedata.educations,
+            resumedata.experiences,
+            resumedata.languages,
+            resumedata.awards,
+        );
+        console.log(res);
+        window.scrollTo(0, 0);
 
-            navigate('/resume');
-            //작성한 result의 data의 메소드의 id 값을 푸쉬해줄 주소로 넣어준다}
+        navigate('/resume');
 
-            alert('저장이 완료되었습니다.');
-        }
+        alert('저장이 완료되었습니다.');
     };
 
     return (
@@ -107,7 +120,7 @@ const New = ({ isEdit }) => {
                     <S.TextArea
                         type='text'
                         placeholder='자기소개를 입력하세요.'
-                        value={content}
+                        value={introduction}
                         onChange={onChangeContent}
                     />
                     {/* 학력 */}
@@ -116,30 +129,51 @@ const New = ({ isEdit }) => {
                             <S.Title>학력</S.Title>
                             <S.Star>*</S.Star>
                         </S.TitleWrapper2>
-                        <S.Plus onClick={addBox}>+ 항목 추가</S.Plus>
+                        <S.Plus>+ 항목 추가</S.Plus>
                     </S.TitleContainer>
                     <S.GreenBox>
                         제1항의 지시를 받은 당해 행정기관은 이에 응하여야 한다.
                         위원은 정당에 가입하거나 정치에 관여할 수 없다.
                     </S.GreenBox>
                     <S.Line />
-                    {Array(education)
+                    {Array(1)
                         .fill(1)
                         .map(el => (
                             <div style={{ width: '39.3rem' }}>
                                 <S.GrayBox>
                                     <div>
-                                        <S.SmallInput
+                                        <S.SmallInput1
                                             type='text'
-                                            placeholder='2000.00 - 2000.00'
+                                            placeholder='2000.00'
+                                            value={startDate}
+                                            onChange={e =>
+                                                setStartDate(e.target.value)
+                                            }
+                                        />
+                                        <span>- </span>
+                                        <S.SmallInput1
+                                            type='text'
+                                            placeholder='2000.00'
+                                            value={finishDate}
+                                            onChange={e =>
+                                                setFinishDate(e.target.value)
+                                            }
                                         />
                                         <S.School
                                             type='text'
                                             placeholder='학교명'
+                                            value={name}
+                                            onChange={e =>
+                                                setName(e.target.value)
+                                            }
                                         />
                                         <S.SmallInput
                                             type='text'
                                             placeholder='전공 및 학위'
+                                            value={major}
+                                            onChange={e =>
+                                                setMajor(e.target.value)
+                                            }
                                         />
                                     </div>
                                 </S.GrayBox>
