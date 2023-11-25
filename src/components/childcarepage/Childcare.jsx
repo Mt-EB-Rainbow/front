@@ -130,7 +130,7 @@ const Childcare = () => {
             },
         ],
         [],
-    );``
+    );
     const data = useMemo(
         () =>
             nurturesArray.map((el, index) => ({

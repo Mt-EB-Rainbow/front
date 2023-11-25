@@ -13,5 +13,6 @@ export const GetChildApi = async (district, dong, pageNum) => {
         return res;
     } catch (err) {
         console.log(err);
+
     }
 };
