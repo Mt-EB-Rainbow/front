@@ -24,6 +24,7 @@ export const GrayBox = styled.div`
     padding: 4vh;
     margin-bottom: 5vh;
     border-radius: 1.8vh;
+   
 `;
 export const BoxTitle = styled.div`
     /* font-size: 20px;
@@ -58,3 +59,20 @@ export const Line = styled.div`
     border-bottom: 0.1em solid var(--light-gray);
     margin-top: 0.5rem;
 `;
+
+export const Dong = styled.input`
+box-sizing: border-box;
+width: 16rem;
+height: 3.3rem;
+margin-left: 0.5rem;
+padding: 1.1rem 0.75rem;
+border-radius: 0.3rem;
+border: 1px solid var(--light-gray);
+background: var(--White, #FFF);
+color: black;
+font-size: 1rem;
+font-style: normal;
+font-weight: 500;
+line-height: normal;
+outline: none;
+`
