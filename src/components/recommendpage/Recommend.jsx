@@ -24,7 +24,7 @@ const Recommend = () => {
                         <S.InfoTitle>상황 기반 직무 추천 검사</S.InfoTitle>
                         <S.Line />
                         <S.QuestionBox>
-                            <S.Text>1. 미성년인 자녀가 있나요?</S.Text>
+                            <S.Question>1. 미성년인 자녀가 있나요?</S.Question>
                             <div
                                 style={{
                                     display: 'flex',
@@ -39,7 +39,9 @@ const Recommend = () => {
                             </div>
                         </S.QuestionBox>
                         <S.QuestionBox>
-                            <S.Text>2. 아이를 맡아줄 곳이 있나요?</S.Text>
+                            <S.Question>
+                                2. 아이를 맡아줄 곳이 있나요?
+                            </S.Question>
                             <div
                                 style={{
                                     display: 'flex',
