@@ -97,4 +97,9 @@ export const PaginationUi = styled(Pagination)`
         border: none;
         color: #000;
     }
+
+    .anticon-double-right svg,
+    .anticon-double-left svg {
+        color: var(--gray);
+    }
 `;
