@@ -1,19 +1,34 @@
 import styled from 'styled-components';
-// import thumbnail from '../../../assets/thumbnail.jpeg';
+import CardSkeleton from '../Skeleton/CardSkeleton';
 
-const VideoCard = ({ thumbnail, href, title }) => {
+const VideoCard = ({ thumbnail, href, title, loading }) => {
+    console.log(loading);
     return (
-        <a
-            href={href}
-            style={{ textDecoration: 'none' }}
-            target='_blank'
-            rel='noopener noreferrer'
-        >
-            <Wrapper>
-                <Thumbnail thumbnail={thumbnail} />
-                <Title>{title}</Title>
-            </Wrapper>
-        </a>
+        <>
+            {loading ? (
+                <>
+                    <div>
+                        <CardSkeleton
+                            contentHeight='2.5rem'
+                            titleHeight='10.35rem'
+                            width='13.75rem'
+                        />
+                    </div>
+                </>
+            ) : (
+                <a
+                    href={href}
+                    style={{ textDecoration: 'none' }}
+                    target='_blank'
+                    rel='noopener noreferrer'
+                >
+                    <Wrapper>
+                        <Thumbnail thumbnail={thumbnail} />
+                        <Title>{title}</Title>
+                    </Wrapper>
+                </a>
+            )}
+        </>
     );
 };
 
@@ -48,3 +63,10 @@ export const Title = styled.div`
     -webkit-line-clamp: 2;
     text-overflow: ellipsis;
 `;
+
+// const SkeletonStyled = styled(Skeleton)`
+//     width: 100%;
+//     height: 10.35rem;
+//     border-radius: ${props => props.borderRadius || '0'};
+//     margin-bottom: 0.5rem;
+// `;

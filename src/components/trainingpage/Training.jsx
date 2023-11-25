@@ -2,18 +2,18 @@ import GreenBtn from '../_common/Btn/GreenBtn';
 import BigSearchInput from '../_common/Input/BigSearchInput';
 import PageTitle from '../_common/PageTitle';
 import * as S from './Training.style';
-import useTrainingFilter from '../../hooks/training/useTrainingFilter';
 import Header from '../trainingpage/Header';
 import VideoCard from '../_common/Card/VideoCard';
-import Thumbnail from '../../assets/thumbnail.jpeg';
-// import Pagination from '../_common/Pagination';
-import { Space, Select, Pagination } from 'antd';
-import React, { useState, useMemo, useEffect } from 'react';
+import { Space, Select } from 'antd';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useTraining from '../../hooks/training/useTraining';
 
 const Training = () => {
-    const { currentPage, lastPage, training, totalTrainings } = useTraining();
+    const { currentPage, lastPage, training, totalTrainings, loading } =
+        useTraining();
+
+    console.log(loading);
     const navigate = useNavigate();
     const PROJECTS_PER_PAGE = 12;
     const videoLength = totalTrainings;
@@ -147,6 +147,7 @@ const Training = () => {
                                         thumbnail={item.fileUrl}
                                         href={item.detailUrl}
                                         title={item.courseName}
+                                        loading={loading}
                                     />
                                 </S.CardBox>
                             ))}
