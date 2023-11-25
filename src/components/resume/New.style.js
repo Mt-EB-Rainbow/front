@@ -164,6 +164,16 @@ export const SmallInput = styled.input`
     border: none;
     outline: none;
 `;
+export const SmallInput1 = styled.input`
+    color: black;
+    font-size: 0.8rem;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    border: none;
+    outline: none;
+    width: 3.5rem;
+`;
 
 export const School = styled.input`
     color: black;

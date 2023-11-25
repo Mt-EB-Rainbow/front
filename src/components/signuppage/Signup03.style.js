@@ -9,30 +9,37 @@ export const Wrapper = styled.div`
 `;
 
 export const Text = styled.div`
-    font-size: 2.2vh;
     font-weight: 600;
-    margin-bottom: 3.7vh;
+    margin-bottom: 4.5rem;
+    white-space: pre-wrap;
+    text-align: center;
+    color: var(--Black, #333);
+    text-align: center;
+
+    font-size: 1.2rem;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
 `;
 
 export const BtnWrapper = styled.div`
     display: flex;
     flex-direction: row;
-    height: 5vh;
-    width: 31vw;
+    width: 22rem;
     justify-content: space-between;
 `;
 
 export const GrayBtn = styled.button`
-    width: 10.75rem;
-    height: 2.7rem;
-    color: var(--dark-gray);
-    padding: 1.4vh 2vw 1.4vh 2vw;
-    border: 0.1em solid var(--gray);
+    color: var(--Gray, #999);
     font-size: 1rem;
-    font-weight: 500;
-    border-radius: 90vh;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    border: 1px solid var(--gray);
+    font-size: 1rem;
+    border-radius: 5rem;
     font-family: var(--korean);
-    font-weight: 600;
+    padding: 0.75rem 1.6rem;
     background-color: white;
     margin-bottom: 1.8vh;
     cursor: pointer;
