@@ -96,7 +96,7 @@ const NavBar = () => {
                     <Menu onClick={goChildcare}>보육시설 조회</Menu>
                     <Menu onClick={goSupport}>취업지원 기관 조회</Menu>
                 </span>
-                {isLoggedin ? (
+                {false ? (
                     <>
                         <WhiteBtn
                             text={'로그아웃'}
