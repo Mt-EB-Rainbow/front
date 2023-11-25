@@ -10,6 +10,8 @@ import { Checkbox } from 'antd';
 import './CheckBox.css';
 import Table from './Table';
 import NoTable from './NoTable';
+//api
+import { GetChildApi } from '../../api/child';
 
 //로딩
 import { Flex, Spin } from 'antd';
@@ -128,7 +130,7 @@ const Childcare = () => {
             },
         ],
         [],
-    );
+    );``
     const data = useMemo(
         () =>
             nurturesArray.map((el, index) => ({
@@ -180,13 +182,8 @@ const Childcare = () => {
                             <S.Dong
                                 placeholder='행정동을 입력하세요'
                                 type='text'
-                                value={dong}
                                 onChange={e => setDong(e.target.value)}
                             ></S.Dong>
-                        </Space>
-
-                        {/* 티오있는 시설만 필터링 */}
-                        <Checkbox
                             onChange={onChange}
                             style={{
                                 margin: '20px',

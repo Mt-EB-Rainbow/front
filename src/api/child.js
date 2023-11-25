@@ -1,6 +1,6 @@
-import client from "./client";
+import client from './client';
 
-export const GetChildApi = async (district, dong, pageNum)=> {
+export const GetChildApi = async (district, dong, pageNum) => {
     try {
         const res = await client.post('/nurtures', {
             district: String(district),
@@ -13,7 +13,5 @@ export const GetChildApi = async (district, dong, pageNum)=> {
         return res;
     } catch (err) {
         console.log(err);
-
     }
-
 };
