@@ -8,6 +8,7 @@ import Signup02Page from './pages/Signup02Page';
 import LoginEmailPage from './pages/LoginEmailPage';
 import Signup03Page from './pages/Signup03Page';
 import Signup01Page from './pages/Signup01Page';
+import ResumeDetailPage from './pages/ResumeDetailPage';
 
 import SupportPage from './pages/SupportPage';
 import TrainingPage from './pages/TrainingPage';
@@ -81,7 +82,17 @@ function App() {
                             element={<ChildcarePage />}
                         />
                         <Route exact path='/resume' element={<ResumePage />} />
-                        <Route exact path='/new' element={<ResumeNewPage />} />
+                        <Route
+                            exact
+                            path='/new/:resumeId'
+                            element={<ResumeNewPage />}
+                        />
+                        <Route
+                            exact
+                            path='/detail/:resumeId'
+                            element={<ResumeDetailPage />}
+                        />
+
                         <Route
                             exact
                             path='/mentorfeedback'

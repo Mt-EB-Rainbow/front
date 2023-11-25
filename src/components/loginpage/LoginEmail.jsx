@@ -18,7 +18,7 @@ const LoginEmail = () => {
     const Login = async e => {
         e.preventDefault();
         const res = await Signin(email, pw);
-        console.log(res);
+
         navigate('/');
     };
 

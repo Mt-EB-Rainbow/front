@@ -8,7 +8,7 @@ import { loginState } from '../../../recoil/loginState';
 const NavBar = () => {
     const navigate = useNavigate();
     const isMentor = false;
-    const isLoggedin = useRecoilValue(loginState);
+    // const isLoggedin = useRecoilValue(loginState);
 
     const goLogin = () => {
         navigate('/login');
@@ -64,7 +64,7 @@ const NavBar = () => {
                     <Menu onClick={goChildcare}>보육시설 조회</Menu>
                     <Menu onClick={goSupport}>취업지원 기관 조회</Menu>
                 </span>
-                {isLoggedin ? (
+                {false ? (
                     <>
                         <WhiteBtn
                             text={'로그아웃'}

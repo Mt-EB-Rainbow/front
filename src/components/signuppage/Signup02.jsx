@@ -37,11 +37,11 @@ const Signup02 = () => {
                         onChange={e => setName(e.target.value)}
                     />
 
-                    {/* <S.Text>닉네임</S.Text>
+                    <S.Text>닉네임</S.Text>
                     <S.InputText
                         value={nickname}
                         onChange={e => setNickname(e.target.value)}
-                    /> */}
+                    />
 
                     <S.Text>이메일</S.Text>
                     <S.InputText
