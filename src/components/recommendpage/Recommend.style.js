@@ -102,10 +102,17 @@ S.ResultContainer = styled(S.BetweenContainer)`
     height: 9.2rem;
     border-bottom: 1px solid var(--light-gray);
 `;
+S.Question = styled.div`
+    font-size: 1.2rem;
+    font-weight: 500;
+    margin-left: 2rem;
+    color: var(--black);
+`;
 S.Text = styled.div`
     font-size: 1.2rem;
-    font-weight: 600;
+    font-weight: 500;
     margin-left: ${props => (props.marginL ? props.marginL : '2rem')};
+    color: var(--dark-gray);
 `;
 S.CheckBox = styled.input`
     margin-left: 2rem;
