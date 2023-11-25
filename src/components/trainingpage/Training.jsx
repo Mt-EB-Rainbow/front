@@ -239,12 +239,12 @@ const Training = () => {
                                         }}
                                         value={education}
                                         onChange={onEducationChange}
-                                        options={educationData[category].map(
-                                            edu => ({
-                                                label: edu,
-                                                value: edu,
-                                            }),
-                                        )}
+                                        // options={educationData[category].map(
+                                        //     edu => ({
+                                        //         label: edu,
+                                        //         value: edu,
+                                        //     }),
+                                        // )}
                                     />
                                 </Space>
                                 <S.GreenBtn
