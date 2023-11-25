@@ -98,7 +98,7 @@ function App() {
                         />
                         <Route
                             exact
-                            path='/success'
+                            path='/success/:id'
                             element={<SuccessPage />}
                         />
                     </Routes>
