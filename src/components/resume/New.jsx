@@ -362,6 +362,18 @@ const New = ({ isEdit }) => {
         }
     };
 
+    const [contentdata, setContentdata] = useState({});
+
+    //내용 get
+    useEffect(() => {
+        const getContent = async () => {
+            const res = await getResumeContentApi(resumeId);
+            setContentdata(res);
+            console.log(res);
+        };
+        getContent();
+    }, []);
+
     return (
         <>
             <S.Container>
@@ -468,6 +480,11 @@ const New = ({ isEdit }) => {
                                                           .startDate
                                                     : ''
                                             }
+                                            defaultValue={
+                                                contentdata.data?.educations[
+                                                    index
+                                                ].startDate
+                                            }
                                         />
                                         <span>- </span>
                                         <S.SmallInput1
@@ -484,6 +501,11 @@ const New = ({ isEdit }) => {
                                                     ? educations[index]
                                                           .finishDate
                                                     : ''
+                                            }
+                                            defaultValue={
+                                                contentdata.data?.educations[
+                                                    index
+                                                ].finishDate
                                             }
                                         />
                                     </div>
@@ -651,6 +673,11 @@ const New = ({ isEdit }) => {
                                                     ? experiences[0].department
                                                     : ''
                                             }
+                                            defaultValue={
+                                                contentdata.data?.educations[
+                                                    index
+                                                ].name
+                                            }
                                         />
                                         <S.SmallInput
                                             type='text'
@@ -731,6 +758,11 @@ const New = ({ isEdit }) => {
                                             }
                                             defaultValue={
                                                 isEdit ? languages[0].score : ''
+                                            }
+                                            defaultValue={
+                                                contentdata.data?.educations[
+                                                    index
+                                                ].major
                                             }
                                         />
                                     </div>
