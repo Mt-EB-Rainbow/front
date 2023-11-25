@@ -52,9 +52,6 @@ const useTraining = () => {
         totalTrainings,
         setTotalTrainings,
         fetchSites,
-        setLoading,
         loading,
     };
 };
-
-export default useTraining;
