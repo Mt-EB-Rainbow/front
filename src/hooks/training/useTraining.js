@@ -9,6 +9,9 @@ const useTraining = () => {
 
     const [training, setTraining] = useState([]);
     const [totalTrainings, setTotalTrainings] = useState(0);
+    const [loading, setLoading] = useState(true);
+
+    console.log(true);
 
     useEffect(() => {
         const fetchSites = async () => {
@@ -20,6 +23,8 @@ const useTraining = () => {
                     'A',
                     startPage,
                     TRAININGS_PER_PAGE,
+                ).then(
+                    setLoading(false), // 데이터 로딩 완료
                 );
                 setTraining(courses.response.response_body.list.data);
                 setTotalTrainings(courses.response.response_body.result); // 전체 트레이닝 수
@@ -38,13 +43,12 @@ const useTraining = () => {
 
     const lastPage = Math.ceil(totalTrainings / TRAININGS_PER_PAGE);
 
-    // const category = training.
-
     return {
         currentPage,
         lastPage,
         training,
         totalTrainings,
+        loading,
     };
 };
 
