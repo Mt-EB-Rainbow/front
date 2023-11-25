@@ -46,7 +46,7 @@ export const NewResumeApi = async (
             awards,
         });
 
-        console.log(res);
+        console.log(res, ' resume 내용 post 성공');
         return res;
     } catch (err) {
         console.log(err);

@@ -4,6 +4,7 @@ export const Container = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
+   
 `;
 
 export const Wrapper = styled.div`
@@ -11,7 +12,7 @@ export const Wrapper = styled.div`
     flex-direction: column;
     align-items: center;
     width: 59.7rem;
-    height: auto;
+   height: ${props => props.exist ? "auto" : "100vh"};
 `;
 
 export const Boards = styled.div`

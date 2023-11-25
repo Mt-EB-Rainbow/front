@@ -11,8 +11,7 @@ import { memberIdState } from '../../recoil/loginState';
 const Resume = () => {
     const navigate = useNavigate();
     const [resumeResponses, setResumeResponses] = useState([]);
-    const memberId = useRecoilValue(memberIdState);
-    console.log(memberId);
+    const memberId = localStorage.getItem('memberId');
 
     const goNew = async e => {
         e.preventDefault();
@@ -25,7 +24,7 @@ const Resume = () => {
 
     useEffect(() => {
         const getBoards = async () => {
-            const res = await GetResumeApi(Number(memberId));
+            const res = await GetResumeApi(memberId);
             console.log(res.data?.resumeResponses);
             setResumeResponses(res.data?.resumeResponses);
         };
@@ -35,7 +34,7 @@ const Resume = () => {
     return (
         <>
             <S.Container>
-                <S.Wrapper>
+                <S.Wrapper exist={resumeResponses.length}>
                     <PageTitle text={'내 이력서 관리'} />
                     <div style={{ height: '6.5rem' }}></div>
                     <BoardsHeader
