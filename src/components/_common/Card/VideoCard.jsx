@@ -21,7 +21,7 @@ export default VideoCard;
 
 export const Wrapper = styled.div`
     width: 13.75rem;
-    height: 29.3vh;
+    height: 13.2rem;
     text-decoration: none;
 `;
 
@@ -38,8 +38,13 @@ export const Thumbnail = styled.div`
 
 export const Title = styled.div`
     width: 100%;
-    height: 2.35rem;
+    height: 2.5rem;
     color: var(--black);
     font-size: 1rem;
     font-weight: 600;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    text-overflow: ellipsis;
 `;

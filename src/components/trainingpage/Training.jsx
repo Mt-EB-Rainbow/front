@@ -3,30 +3,49 @@ import BigSearchInput from '../_common/Input/BigSearchInput';
 import PageTitle from '../_common/PageTitle';
 import * as S from './Training.style';
 import useTrainingFilter from '../../hooks/training/useTrainingFilter';
-import BoardsHeader from '../_common/BoardsHeader';
+import Header from '../trainingpage/Header';
 import VideoCard from '../_common/Card/VideoCard';
 import Thumbnail from '../../assets/thumbnail.jpeg';
-import { Pagination, Select, Space } from 'antd';
-import React, { useState, useMemo } from 'react';
+// import Pagination from '../_common/Pagination';
+import { Space, Select, Pagination } from 'antd';
+import React, { useState, useMemo, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useTraining from '../../hooks/training/useTraining';
 
-// select option
-const categoryData = ['취업', '창업'];
-const educationData = {
-    취업: ['전체', '교육, 컨설팅', '상담'],
-    창업: ['전체', '창업 공통', '창업 사례', '창업 전략'],
-};
-
-const PROJECTS_PER_PAGE = 12;
-
 const Training = () => {
-    const { currentPage, lastPage, projects, projectsPerPage } = useTraining();
+    const { currentPage, lastPage, training, totalTrainings } = useTraining();
     const navigate = useNavigate();
-    const videoLength = projectsPerPage.length;
+    const PROJECTS_PER_PAGE = 12;
+    const videoLength = totalTrainings;
 
-    const doSearch = () => {
-        console.log('검색');
+    // select option
+    let categoryData = [];
+
+    for (let i = 0; i < training.length; i++) {
+        categoryData.push(training[i].majorCategoryName);
+    }
+    // category 중복 제거
+    categoryData = categoryData.filter(
+        (value, index, self) => self.indexOf(value) === index,
+    );
+
+    // console.log(training[0].onlineTrainingTime);
+    const educationData = {
+        // 취업: ['전체', '교육, 컨설팅', '상담'],
+        창업: ['전체', '창업 공통', '창업 사례', '창업 전략'],
+        BIZ일반: [
+            '전체',
+            '기획, 경영',
+            '리더십',
+            '재무/법',
+            '교육',
+            '자기개발',
+            '커뮤니케이션',
+            '시사상식',
+            '금융/재테크',
+            '조직관리',
+            '성과창출',
+        ],
     };
 
     // Select box
@@ -38,6 +57,10 @@ const Training = () => {
     };
     const onEducationChange = value => {
         setEducation(value);
+    };
+
+    const doSearch = () => {
+        console.log('검색');
     };
 
     return (
@@ -96,12 +119,12 @@ const Training = () => {
                                         }}
                                         value={education}
                                         onChange={onEducationChange}
-                                        options={educationData[category].map(
-                                            edu => ({
-                                                label: edu,
-                                                value: edu,
-                                            }),
-                                        )}
+                                        // options={educationData[category].map(
+                                        //     edu => ({
+                                        //         label: edu,
+                                        //         value: edu,
+                                        //     }),
+                                        // )}
                                     />
                                 </Space>
                                 <GreenBtn
@@ -116,26 +139,22 @@ const Training = () => {
                         </S.InlineBox>
                     </S.Box>
                     <S.Board>
-                        <BoardsHeader
-                            length={videoLength}
-                            onClick={doSearch}
-                            placeholder={'제목 및 내용으로 검색'}
-                        />
+                        <Header length={videoLength} />
                         <S.Body>
-                            {projectsPerPage.map((item, index) => (
+                            {training?.map((item, index) => (
                                 <S.CardBox key={index}>
                                     <VideoCard
-                                        thumbnail={item.imageUrl}
-                                        href={item.siteUrl}
-                                        title={item.name}
+                                        thumbnail={item.fileUrl}
+                                        href={item.detailUrl}
+                                        title={item.courseName}
                                     />
                                 </S.CardBox>
                             ))}
                         </S.Body>
                         <S.Footer>
-                            <Pagination
+                            <S.PaginationUi
                                 current={currentPage}
-                                total={projects.length}
+                                total={totalTrainings}
                                 pageSize={PROJECTS_PER_PAGE}
                                 onChange={newPage => {
                                     navigate(`?page=${newPage}`);
