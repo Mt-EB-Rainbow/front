@@ -362,6 +362,7 @@ const New = ({ isEdit }) => {
         }
     };
 
+    //받아온 내용 저장
     const [contentdata, setContentdata] = useState({});
 
     //내용 get
@@ -481,9 +482,11 @@ const New = ({ isEdit }) => {
                                                     : ''
                                             }
                                             defaultValue={
-                                                contentdata.data?.educations[
-                                                    index
-                                                ].startDate
+                                                isEdit
+                                                    ? contentdata.data
+                                                          ?.educations[index]
+                                                          .startDate
+                                                    : ''
                                             }
                                         />
                                         <span>- </span>
@@ -503,9 +506,11 @@ const New = ({ isEdit }) => {
                                                     : ''
                                             }
                                             defaultValue={
-                                                contentdata.data?.educations[
-                                                    index
-                                                ].finishDate
+                                                isEdit
+                                                    ? contentdata.data
+                                                          ?.educations[index]
+                                                          .finishDate
+                                                    : ''
                                             }
                                         />
                                     </div>
@@ -674,9 +679,11 @@ const New = ({ isEdit }) => {
                                                     : ''
                                             }
                                             defaultValue={
-                                                contentdata.data?.educations[
-                                                    index
-                                                ].name
+                                                isEdit
+                                                    ? contentdata.data
+                                                          ?.educations[index]
+                                                          .name
+                                                    : ''
                                             }
                                         />
                                         <S.SmallInput
@@ -760,9 +767,11 @@ const New = ({ isEdit }) => {
                                                 isEdit ? languages[0].score : ''
                                             }
                                             defaultValue={
-                                                contentdata.data?.educations[
-                                                    index
-                                                ].major
+                                                isEdit
+                                                    ? contentdata.data
+                                                          ?.educations[index]
+                                                          .major
+                                                    : ''
                                             }
                                         />
                                     </div>
