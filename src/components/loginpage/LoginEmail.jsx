@@ -12,14 +12,21 @@ const LoginEmail = () => {
     const [pw, setPw] = useState('');
     const navigate = useNavigate();
 
-    //recoil로 로그인 상태관리
-
     //로그인하기
     const Login = async e => {
         e.preventDefault();
-        const res = await Signin(email, pw);
 
-        navigate('/');
+        try {
+            const res = await Signin(email, pw);
+            if ((res.status == 200) | (res.status == 201)) {
+                navigate('/');
+            }
+        } catch (err) {
+            console.log(err);
+            alert('이메일/비밀번호가 일치하지 않습니다')
+
+        }
+
     };
 
     const goSignup = () => {
@@ -36,11 +43,13 @@ const LoginEmail = () => {
                             <S.InputEmail
                                 style={{ marginBottom: '20px' }}
                                 value={email}
+                                type='email'
                                 onChange={e => setEmail(e.target.value)}
                             />
                             <S.Text>비밀번호</S.Text>
                             <S.InputEmail
                                 value={pw}
+                                type='password'
                                 onChange={e => setPw(e.target.value)}
                             />
                         </S.InputWrapper>

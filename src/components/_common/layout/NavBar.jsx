@@ -8,7 +8,7 @@ import { loginState } from '../../../recoil/loginState';
 const NavBar = () => {
     const navigate = useNavigate();
     const isMentor = true;
-    // const isLoggedin = useRecoilValue(loginState);
+    const isLoggedin = localStorage.getItem('accessToken');
 
     const goLogin = () => {
         navigate('/login');
@@ -64,7 +64,7 @@ const NavBar = () => {
                     <Menu onClick={goChildcare}>보육시설 조회</Menu>
                     <Menu onClick={goSupport}>취업지원 기관 조회</Menu>
                 </span>
-                {false ? (
+                {isLoggedin ? (
                     <>
                         <WhiteBtn
                             text={'로그아웃'}

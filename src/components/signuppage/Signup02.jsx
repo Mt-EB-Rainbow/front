@@ -17,10 +17,22 @@ const Signup02 = () => {
     //회원가입하기
     const Sign = async e => {
         e.preventDefault();
-        const res = await SignApi(name, email, pw, nickname, birth);
-        console.log(res);
-        window.scrollTo(0, 0);
-        navigate('/signup03');
+        try {
+            const res = await SignApi(name, email, pw, nickname, birth);
+            console.log(res);
+            window.scrollTo(0, 0);
+            navigate('/signup03');
+            if ((res.status == 200) | (res.status == 201)) {
+                console.log(res);
+                window.scrollTo(0, 0);
+                navigate('/signup03');
+            }
+        } catch (err) {
+            console.log(err);
+            alert('오류')
+
+        }
+
     };
 
     return (
