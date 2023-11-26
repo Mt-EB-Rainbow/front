@@ -4,12 +4,16 @@ import React, { useState } from 'react';
 import { useMemo } from 'react';
 
 //  select 라이브러리
-import { Select, Space } from 'antd';
+import { Select, Skeleton, Space } from 'antd';
 //  checkbox 라이브러리
 import { Checkbox } from 'antd';
 import './CheckBox.css';
 import Table from './Table';
 import NoTable from './NoTable';
+
+//로딩
+import { Flex, Spin } from 'antd';
+import './spin.css'
 //api
 import { GetChildApi } from '../../api/child';
 
@@ -54,6 +58,9 @@ const Childcare = () => {
     // Select box
     const [district, setDistrict] = useState(provinceData[0]);
 
+    //로딩 state
+    const [loading, setLoading] = useState(false);
+
     const handleProvinceChange = value => {
         setDistrict(value);
     };
@@ -63,20 +70,29 @@ const Childcare = () => {
         console.log(district);
         console.log(dong);
         console.log(pageNum);
+        setLoading(true)
 
         try {
             const res = await GetChildApi(district, dong, pageNum);
             console.log(res.data.nurturesResponse);
+
             if ((res.status == 200) | (res.status == 201)) {
                 setNurturesArray(res.data.nurturesResponse);
                 setPageCnt(res.data.pageCnt);
+                setLoading(false);
             }
         } catch (err) {
             console.log(err);
-            alert('입력값을 확인해주세요!');
-        }
-    };
+            setNurturesArray([])
+            //alert('조회결과가 없습니다. 자치구와 행정동을 다시 확인해주세요!');
+        } finally {
+            // 로딩 상태를 false로 설정하여 로딩바를 숨김
+            setLoading(false);
+        };
+    }
     console.log(pageCnt);
+
+
     //티오있는 시설 리스트 필터링
     const TO = nurturesArray.filter(el => el.capacity != el.current);
     console.log(TO);
@@ -188,14 +204,23 @@ const Childcare = () => {
                     <S.Line />
                     {nurturesArray.length ? (
                         <>
-                            <Table
-                                columns={columns}
-                                data={current ? TOdata : data}
-                            />
+                            {loading ?
+                                <S.Text>
+                                    <Flex align="center" gap="middle">
+
+                                        <Spin size="large" style={{ color: "var(--dark-green)" }} />
+                                    </Flex>
+                                </S.Text>
+                                :
+                                <Table
+                                    columns={columns}
+                                    data={current ? TOdata : data}
+                                />}
+
                             <S.Footer>
                                 <S.PaginationUi
                                     current={pageNum}
-                                    total={16}
+                                    total={pageCnt * 10}
                                     pageSize={10}
                                     onChange={newPage => {
                                         setPageNum(newPage);
@@ -205,12 +230,13 @@ const Childcare = () => {
                             </S.Footer>
                         </>
                     ) : (
-                        <NoTable />
+                        <NoTable isloading={loading} />
                     )}
                 </S.Wrapper>
             </S.Container>
         </>
     );
 };
+
 
 export default Childcare;
