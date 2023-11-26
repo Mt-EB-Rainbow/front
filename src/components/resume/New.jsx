@@ -7,6 +7,7 @@ import './Switch.css';
 import { useNavigate, useParams } from 'react-router-dom';
 import { NewResumeApi, getResumeContentApi } from '../../api/resume';
 import { resumedata } from './mockData';
+import JobModal from './Modal';
 
 const New = ({ isEdit }) => {
     const { resumeId } = useParams();
@@ -25,40 +26,11 @@ const New = ({ isEdit }) => {
 
     const [startDate, setStartDate] = useState('');
     const [startDateArr, setStartDateArr] = useState([]);
-
     const [finishDate, setFinishDate] = useState(Array());
     const [name, setName] = useState(Array());
     const [major, setMajor] = useState(Array(educount));
 
-    //새로운 학력 추가
-    const onCreate = (startDate, finishDate, name, major) => {
-        // const create_date = new Date().getTime();  //날짜 객체 생성
-
-        const newEducation = {
-            //새로운 객체 생성
-            startDate: startDate,
-            finishDate: finishDate,
-            name: name,
-            major: major,
-        };
-
-        setEducations([newEducation, ...educations]);
-        //원래있던 data를 나열해주고 그후 새로운 데이터를 추가한다.
-        seteduCount(educount + 1);
-    };
-
-    // 배열의 특정 인덱스의 값을 변경하는 함수
-
-    const setEducationIndex = (index, value) => {
-        setEducations(prevState => {
-            const newState = [...prevState];
-            newState[index] = value;
-            return newState;
-        });
-    };
-
     // 경력
-
     const [startDate2, setStartDate2] = useState('');
     const [finishDate2, setFinishDate2] = useState('');
     const [department, setDepartment] = useState('');
@@ -77,6 +49,28 @@ const New = ({ isEdit }) => {
     const [finishDate3, setFinishDate3] = useState('');
     const [activity, setActivity] = useState('');
     const [content, setContent] = useState('');
+
+    // 모달 open
+    const [modalIsOpen, setModalIsOpen] = useState(false);
+    const openModal = () => {
+        setModalIsOpen(!modalIsOpen);
+    };
+
+    const closer = () => {
+        setModalIsOpen(!modalIsOpen);
+    };
+
+    //임시 데이터
+    const data = [
+        '보육교사',
+        '상담사',
+        '선생님',
+        '요가강사',
+        '연구원',
+        '미용사',
+    ];
+
+    /////모달/////
 
     const onChangeTitle = e => {
         setTitle(e.target.value);
@@ -112,6 +106,7 @@ const New = ({ isEdit }) => {
         alert('저장이 완료되었습니다.');
     };
 
+    //받아온 내용 저장
     const [contentdata, setContentdata] = useState({});
 
     //내용 get
@@ -166,12 +161,19 @@ const New = ({ isEdit }) => {
                             type='text'
                             placeholder='직무를 입력하세요.'
                         />
+                        <JobModal
+                            isModalOpen={modalIsOpen}
+                            closer={closer}
+                            maintext={'직무 검색하기'}
+                            data={data}
+                        ></JobModal>
                         <GreenBtn
                             text={'직무 찾기'}
                             width={10.75}
                             paddingHorizontal={2}
                             height={2.7}
                             radius={5}
+                            onClick={openModal}
                         />
                     </S.ShortInputWrapper>
                     <S.TitleWapper>
@@ -198,7 +200,7 @@ const New = ({ isEdit }) => {
                             <S.Title>학력</S.Title>
                             <S.Star>*</S.Star>
                         </S.TitleWrapper2>
-                        <S.Plus onClick={onCreate}>+ 항목 추가</S.Plus>
+                        <S.Plus>+ 항목 추가</S.Plus>
                     </S.TitleContainer>
                     <S.GreenBox>
                         제1항의 지시를 받은 당해 행정기관은 이에 응하여야 한다.
@@ -218,9 +220,11 @@ const New = ({ isEdit }) => {
                                                 setStartDate(e.target.value)
                                             }
                                             defaultValue={
-                                                contentdata.data?.educations[
-                                                    index
-                                                ].startDate
+                                                isEdit
+                                                    ? contentdata.data
+                                                          ?.educations[index]
+                                                          .startDate
+                                                    : ''
                                             }
                                         />
                                         <span>- </span>
@@ -231,9 +235,11 @@ const New = ({ isEdit }) => {
                                                 setFinishDate(e.target.value)
                                             }
                                             defaultValue={
-                                                contentdata.data?.educations[
-                                                    index
-                                                ].finishDate
+                                                isEdit
+                                                    ? contentdata.data
+                                                          ?.educations[index]
+                                                          .finishDate
+                                                    : ''
                                             }
                                         />
                                         <S.School
@@ -243,9 +249,11 @@ const New = ({ isEdit }) => {
                                                 setName(e.target.value)
                                             }
                                             defaultValue={
-                                                contentdata.data?.educations[
-                                                    index
-                                                ].name
+                                                isEdit
+                                                    ? contentdata.data
+                                                          ?.educations[index]
+                                                          .name
+                                                    : ''
                                             }
                                         />
                                         <S.SmallInput
@@ -255,9 +263,11 @@ const New = ({ isEdit }) => {
                                                 setMajor(e.target.value)
                                             }
                                             defaultValue={
-                                                contentdata.data?.educations[
-                                                    index
-                                                ].major
+                                                isEdit
+                                                    ? contentdata.data
+                                                          ?.educations[index]
+                                                          .major
+                                                    : ''
                                             }
                                         />
                                     </div>
@@ -287,7 +297,10 @@ const New = ({ isEdit }) => {
                                 placeholder='2000.00'
                                 onChange={e => setStartDate2(e.target.value)}
                                 defaultValue={
-                                    contentdata.data?.experiences[0].startDate
+                                    isEdit
+                                        ? contentdata.data?.experiences[0]
+                                              .startDate
+                                        : ''
                                 }
                             />
                             <span>- </span>
@@ -296,7 +309,10 @@ const New = ({ isEdit }) => {
                                 placeholder='2000.00'
                                 onChange={e => setFinishDate2(e.target.value)}
                                 defaultValue={
-                                    contentdata.data?.experiences[0].finishDate
+                                    isEdit
+                                        ? contentdata.data?.experiences[0]
+                                              .finishDate
+                                        : ''
                                 }
                             />
                             <S.School
@@ -304,7 +320,10 @@ const New = ({ isEdit }) => {
                                 placeholder='회사명'
                                 onChange={e => setDepartment(e.target.value)}
                                 defaultValue={
-                                    contentdata.data?.experiences[0].department
+                                    isEdit
+                                        ? contentdata.data?.experiences[0]
+                                              .department
+                                        : ''
                                 }
                             />
                             <S.SmallInput
@@ -312,7 +331,10 @@ const New = ({ isEdit }) => {
                                 placeholder='부서명 / 직책'
                                 onChange={e => setPosition(e.target.value)}
                                 defaultValue={
-                                    contentdata.data?.experiences[0].position
+                                    isEdit
+                                        ? contentdata.data?.experiences[0]
+                                              .position
+                                        : ''
                                 }
                             />
                         </div>
@@ -340,7 +362,10 @@ const New = ({ isEdit }) => {
                                 placeholder='2000.00 (취득년월)'
                                 onChange={e => setGainedDate(e.target.value)}
                                 defaultValue={
-                                    contentdata.data?.languages[0].gainedDate
+                                    isEdit
+                                        ? contentdata.data?.languages[0]
+                                              .gainedDate
+                                        : ''
                                 }
                             />
                             <S.School
@@ -348,7 +373,10 @@ const New = ({ isEdit }) => {
                                 placeholder='언어'
                                 onChange={e => setTestName(e.target.value)}
                                 defaultValue={
-                                    contentdata.data?.languages[0].testName
+                                    isEdit
+                                        ? contentdata.data?.languages[0]
+                                              .testName
+                                        : ''
                                 }
                             />
                             <S.SmallInput
@@ -356,7 +384,9 @@ const New = ({ isEdit }) => {
                                 placeholder='어학시험명 / 급수'
                                 onChange={e => setScore(e.target.value)}
                                 defaultValue={
-                                    contentdata.data?.languages[0].score
+                                    isEdit
+                                        ? contentdata.data?.languages[0].score
+                                        : ''
                                 }
                             />
                         </div>
@@ -385,7 +415,9 @@ const New = ({ isEdit }) => {
                                 placeholder='2000.00'
                                 onChange={e => setStartDate3(e.target.value)}
                                 defaultValue={
-                                    contentdata.data?.awards[0].startDate
+                                    isEdit
+                                        ? contentdata.data?.awards[0].startDate
+                                        : ''
                                 }
                             />
                             <span>- </span>
@@ -394,7 +426,9 @@ const New = ({ isEdit }) => {
                                 placeholder='2000.00'
                                 onChange={e => setFinishDate3(e.target.value)}
                                 defaultValue={
-                                    contentdata.data?.awards[0].finishDate
+                                    isEdit
+                                        ? contentdata.data?.awards[0].finishDate
+                                        : ''
                                 }
                             />
                             <S.School
@@ -402,7 +436,9 @@ const New = ({ isEdit }) => {
                                 placeholder='활동명 / 대회명'
                                 onChange={e => setActivity(e.target.value)}
                                 defaultValue={
-                                    contentdata.data?.awards[0].activity
+                                    isEdit
+                                        ? contentdata.data?.awards[0].activity
+                                        : ''
                                 }
                             />
                             <S.SmallInput
@@ -410,7 +446,9 @@ const New = ({ isEdit }) => {
                                 placeholder='활동 내용 / 수상 내역'
                                 onChange={e => setContent(e.target.value)}
                                 defaultValue={
-                                    contentdata.data?.awards[0].content
+                                    isEdit
+                                        ? contentdata.data?.awards[0].content
+                                        : ''
                                 }
                             />
                         </div>
