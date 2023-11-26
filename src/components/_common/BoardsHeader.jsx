@@ -28,7 +28,7 @@ const Wrapper = styled.div`
 `;
 
 const SearchInput = styled.input`
-    width: 22vw;
+    width: 15rem;
     height: 2rem;
     border-radius: 5rem;
     outline: none;
