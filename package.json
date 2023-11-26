@@ -8,6 +8,7 @@
         "@testing-library/user-event": "^13.5.0",
         "antd": "^5.10.2",
         "axios": "^1.6.2",
+        "fast-xml-parser": "^4.3.2",
         "qs": "^6.11.2",
         "react": "^18.2.0",
         "react-device-detect": "^2.2.3",
@@ -43,5 +44,8 @@
             "last 1 firefox version",
             "last 1 safari version"
         ]
+    },
+    "devDependencies": {
+        "eslint-plugin-react": "^7.33.2"
     }
 }

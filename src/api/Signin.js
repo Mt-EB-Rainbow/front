@@ -11,6 +11,8 @@ export const Signin = async (email, pw) => {
 
         const token = res.data.accessToken;
         localStorage.setItem('accessToken', token);
+        localStorage.setItem('memberId', res.data.memberId);
+
         return res;
     } catch (err) {
         console.log(err);

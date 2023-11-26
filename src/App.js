@@ -4,10 +4,11 @@ import './style/common.css';
 import MainPage from './pages/MainPage';
 import LoginPage from './pages/LoginPage';
 import Layout from './components/_common/layout/Layout';
-import Signup01Page from './pages/Signup01Page';
-import Signup02Page from './components/signuppage/Signup02';
+import Signup02Page from './pages/Signup02Page';
 import LoginEmailPage from './pages/LoginEmailPage';
 import Signup03Page from './pages/Signup03Page';
+import Signup01Page from './pages/Signup01Page';
+import ResumeDetailPage from './pages/ResumeDetailPage';
 
 import SupportPage from './pages/SupportPage';
 import TrainingPage from './pages/TrainingPage';
@@ -20,6 +21,8 @@ import ScrollToTop from './components/_common/ScrollToTop';
 
 import RecommendPage from './pages/RecommendPage';
 import DictionaryPage from './pages/DictionaryPage';
+import MentorSignupPage from './pages/MentorSignupPage';
+import MentorSignup03Page from './pages/MentirSignup03Page';
 import SuccessPage from './pages/SuccessPage';
 
 function App() {
@@ -55,6 +58,11 @@ function App() {
                             path='/signup03'
                             element={<Signup03Page />}
                         />
+                        <Route
+                            exact
+                            path='/mentorsignup'
+                            element={<MentorSignupPage />}
+                        />
 
                         {/* 직업 교육 페이지 */}
                         <Route
@@ -75,7 +83,17 @@ function App() {
                             element={<ChildcarePage />}
                         />
                         <Route exact path='/resume' element={<ResumePage />} />
-                        <Route exact path='/new' element={<ResumeNewPage />} />
+                        <Route
+                            exact
+                            path='/new/:resumeId'
+                            element={<ResumeNewPage />}
+                        />
+                        <Route
+                            exact
+                            path='/detail/:resumeId'
+                            element={<ResumeDetailPage />}
+                        />
+
                         <Route
                             exact
                             path='/mentorfeedback'
@@ -100,6 +118,11 @@ function App() {
                             exact
                             path='/success/:id'
                             element={<SuccessPage />}
+                        />
+                        <Route
+                            exact
+                            path='/mentorsignup03'
+                            element={<MentorSignup03Page />}
                         />
                     </Routes>
                 </Layout>
