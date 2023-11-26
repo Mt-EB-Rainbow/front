@@ -1,11 +1,12 @@
 import { S } from './Recommend.style';
 import PageTitle from '../_common/PageTitle';
-import { useNavigate } from 'react-router';
+import { useNavigate, useLocation } from 'react-router';
 import { useState, useEffect } from 'react';
 import { PostAnswer } from '../../api/diagnosis';
 
-const RecommendResult = ({ answer }) => {
+const RecommendResult = () => {
     const navigate = useNavigate();
+    const { state } = useLocation();
     const [result, setResult] = useState({});
     const [jobList, setJobList] = useState('');
 
@@ -26,7 +27,7 @@ const RecommendResult = ({ answer }) => {
     };
 
     useEffect(() => {
-        PostAns(answer);
+        PostAns(state.answer);
     }, []);
 
     useEffect(() => {
@@ -37,7 +38,7 @@ const RecommendResult = ({ answer }) => {
     }, [result]);
 
     return (
-        <>
+        <S.Wrapper>
             {Object.keys(result).length !== 0 && (
                 <>
                     <PageTitle text={'상황 기반 직무 추천 결과'} />
@@ -48,7 +49,7 @@ const RecommendResult = ({ answer }) => {
                             alignItems: 'flex-start',
                         }}
                     >
-                        <S.Text style={{ marginBottom: '0.5rem' }}>
+                        <S.Text style={{ marginBottom: '0.2rem' }}>
                             나에게 가장 잘 맞는 직무 리스트
                         </S.Text>
                         <S.ResultTitle>{jobList}</S.ResultTitle>
@@ -128,7 +129,7 @@ const RecommendResult = ({ answer }) => {
                     </S.InfoBox>
                 </>
             )}
-        </>
+        </S.Wrapper>
     );
 };
 export default RecommendResult;

@@ -3,8 +3,10 @@ import PageTitle from '../_common/PageTitle';
 import RecommendResult from './RecommendResult';
 import { useState, useEffect } from 'react';
 import { GetQuestion } from '../../api/diagnosis';
+import { useNavigate } from 'react-router';
+
 const Recommend = () => {
-    const [isTest, setIsTest] = useState(true);
+    const navigate = useNavigate();
     const [questions, setQuestions] = useState({});
     const [answer, setAnswer] = useState({
         q1: -1,
@@ -42,67 +44,61 @@ const Recommend = () => {
 
     return (
         <S.Wrapper>
-            {isTest ? (
-                <>
-                    <PageTitle text={'상황 기반 직무 추천'} />
-                    <S.GrayBox>
-                        <S.Title style={{ marginLeft: '2rem' }}>
-                            {testTxt}
-                        </S.Title>
-                    </S.GrayBox>
-                    <S.InfoBox>
-                        <S.InfoTitle>상황 기반 직무 추천 검사</S.InfoTitle>
-                        <S.Line />
-                        {isLoading ? (
-                            <>로딩중</>
-                        ) : (
-                            <>
-                                {questions.map((item, idx) => {
-                                    return (
-                                        <S.QuestionBox>
-                                            <S.Question>
-                                                {item.question}
-                                            </S.Question>
-                                            <S.OptionContainer>
-                                                {item.options.map(
-                                                    (op, opIdx) => {
-                                                        const name =
-                                                            'q' +
-                                                            String(idx + 1);
-                                                        return (
-                                                            <>
-                                                                <S.CheckBox
-                                                                    type='checkbox'
-                                                                    name={name}
-                                                                    onChange={e =>
-                                                                        checkOnlyOne(
-                                                                            name,
-                                                                            opIdx,
-                                                                            e.target,
-                                                                        )
-                                                                    }
-                                                                />
-                                                                <S.Text marginL='0'>
-                                                                    {op.option}
-                                                                </S.Text>
-                                                            </>
-                                                        );
-                                                    },
-                                                )}
-                                            </S.OptionContainer>
-                                        </S.QuestionBox>
-                                    );
-                                })}
-                            </>
-                        )}
-                    </S.InfoBox>
-                    <S.GreenBtn onClick={() => setIsTest(false)}>
-                        결과 확인하기
-                    </S.GreenBtn>
-                </>
-            ) : (
-                <RecommendResult answer={answer} />
-            )}
+            <PageTitle text={'상황 기반 직무 추천'} />
+            <S.GrayBox>
+                <S.Title style={{ marginLeft: '2rem' }}>{testTxt}</S.Title>
+            </S.GrayBox>
+            <S.InfoBox>
+                <S.InfoTitle>상황 기반 직무 추천 검사</S.InfoTitle>
+                <S.Line />
+                {isLoading ? (
+                    <></>
+                ) : (
+                    <>
+                        {questions.map((item, idx) => {
+                            return (
+                                <S.QuestionBox>
+                                    <S.Question>{item.question}</S.Question>
+                                    <S.OptionContainer>
+                                        {item.options.map((op, opIdx) => {
+                                            const name = 'q' + String(idx + 1);
+                                            return (
+                                                <>
+                                                    <S.CheckBox
+                                                        type='checkbox'
+                                                        name={name}
+                                                        onChange={e =>
+                                                            checkOnlyOne(
+                                                                name,
+                                                                opIdx,
+                                                                e.target,
+                                                            )
+                                                        }
+                                                    />
+                                                    <S.Text marginL='0'>
+                                                        {op.option}
+                                                    </S.Text>
+                                                </>
+                                            );
+                                        })}
+                                    </S.OptionContainer>
+                                </S.QuestionBox>
+                            );
+                        })}
+                    </>
+                )}
+            </S.InfoBox>
+            <S.GreenBtn
+                onClick={() =>
+                    navigate('/recommend/result', {
+                        state: {
+                            answer: answer,
+                        },
+                    })
+                }
+            >
+                결과 확인하기
+            </S.GreenBtn>
         </S.Wrapper>
     );
 };
