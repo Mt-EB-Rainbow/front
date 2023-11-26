@@ -10,6 +10,8 @@ const Signup02 = () => {
     const [nickname, setNickname] = useState('');
     const [email, setEmail] = useState('');
     const [pw, setPw] = useState('');
+    const [pw2, setPw2] = useState('');
+    const [err, setErr] = useState('')
     const [birth, setBirth] = useState('');
 
     const navigate = useNavigate();
@@ -19,9 +21,8 @@ const Signup02 = () => {
         e.preventDefault();
         try {
             const res = await SignApi(name, email, pw, nickname, birth);
-            console.log(res);
-            window.scrollTo(0, 0);
-            navigate('/signup03');
+
+
             if ((res.status == 200) | (res.status == 201)) {
                 console.log(res);
                 window.scrollTo(0, 0);
@@ -29,7 +30,7 @@ const Signup02 = () => {
             }
         } catch (err) {
             console.log(err);
-            alert('오류')
+            alert('이메일 / 패스워드를 다시 입력해주세요.')
 
         }
 
@@ -67,7 +68,10 @@ const Signup02 = () => {
                         onChange={e => setPw(e.target.value)}
                     />
                     <S.Text>비밀번호 재확인</S.Text>
-                    <S.InputText type='password' />
+                    <S.InputText2 type='password' value={pw2}
+                        onChange={(e) => setPw2(e.target.value)} />
+                    <S.Err>{err}</S.Err>
+
                     <S.Text>생년월일</S.Text>
                     <S.InputText
                         placeholder='YYYY-MM-DD'

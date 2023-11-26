@@ -45,7 +45,17 @@ export const InputText = styled.input`
     box-sizing: border-box;
     padding: 1.5vh;
 `;
-
+export const InputText2 = styled.input`
+    width: 100%;
+    height: 2.7rem;
+    border: 1px solid var(--gray);
+    font-size: 0.9rem;
+    outline: none;
+    border-radius: 0.6rem;
+   
+    box-sizing: border-box;
+    padding: 1.5vh;
+`;
 export const Text = styled.div`
     font-size: 0.8rem;
     font-weight: 600;
@@ -54,3 +64,12 @@ export const Text = styled.div`
     width: 100%;
     margin-bottom: 0.5rem;
 `;
+
+export const Err = styled.div`
+color: red;
+font-size: 0.5rem;
+width: 100%;
+margin-bottom: 1.2rem;
+margin-top: 0.5rem;
+
+`
