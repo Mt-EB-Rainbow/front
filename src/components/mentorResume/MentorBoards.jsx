@@ -26,13 +26,13 @@ const MentorBoards = () => {
     return (
         <>
             <S.Container>
-                <S.Wrapper>
+                <S.Wrapper height={resumeArr.length > 9? true: false}>
                     <PageTitle text={'제출된 이력서'} />
                     <div style={{ height: '6.5rem' }}></div>
-                    <BoardsHeader
-                        length={resumeArr.length}
-                        placeholder={'직무로 검색하기'}
-                    />
+                    <S.HeaderWrapper>
+                    <S.Length>총 {resumeArr.length}건</S.Length>
+                
+                    </S.HeaderWrapper>
 
                     {resumeArr.length ? (
                         resumeArr?.map(el => (
