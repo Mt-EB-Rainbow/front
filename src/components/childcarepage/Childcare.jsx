@@ -10,6 +10,10 @@ import { Checkbox } from 'antd';
 import './CheckBox.css';
 import Table from './Table';
 import NoTable from './NoTable';
+
+//로딩
+import { Flex, Spin } from 'antd';
+import './spin.css'
 //api
 import { GetChildApi } from '../../api/child';
 
