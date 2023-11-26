@@ -65,3 +65,16 @@ export const getResumeContentApi = async resumeId => {
         console.log(err);
     }
 };
+
+//이력서 전체 조회하기
+export const getAllResume = async () => {
+    try {
+        const res = await client.get(`/resume`);
+
+        console.log(res, 'resume 전체 목록 조회 성공');
+
+        return res;
+    } catch (err) {
+        console.log(err);
+    }
+};

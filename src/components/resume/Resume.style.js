@@ -68,7 +68,7 @@ export const GreenBox = styled.div`
 `;
 
 export const Right = styled.div`
-    width: 4.7rem;
+    width: 5rem;
     height: 5.65rem;
     flex-shrink: 0;
     text-align: right;

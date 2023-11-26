@@ -2,13 +2,28 @@ import { Router, useNavigate } from 'react-router-dom';
 import WhiteBtn from '../Btn/WhiteBtn';
 import { NavBox, Menu } from './NavBar.style';
 import logo from '../../../assets/logo.svg';
-import { useRecoilValue } from 'recoil';
-import { loginState } from '../../../recoil/loginState';
+import { SignoutApi } from '../../../api/logout';
 
 const NavBar = () => {
     const navigate = useNavigate();
     const isMentor = false;
-    // const isLoggedin = useRecoilValue(loginState);
+    const isLoggedin = localStorage.getItem('accessToken');
+
+    // 로그아웃
+    const logout = async () => {
+        try {
+            const res = await SignoutApi();
+            if ((res.status == 200) | (res.status == 201)) {
+                console.log(res);
+                navigate('/')
+            }
+        } catch (err) {
+            console.log(err);
+            alert('오류')
+
+        }
+
+    }
 
     const goLogin = () => {
         navigate('/login');
@@ -64,12 +79,13 @@ const NavBar = () => {
                     <Menu onClick={goChildcare}>보육시설 조회</Menu>
                     <Menu onClick={goSupport}>취업지원 기관 조회</Menu>
                 </span>
-                {false ? (
+                {isLoggedin ? (
                     <>
                         <WhiteBtn
                             text={'로그아웃'}
                             marginSide={'1.1'}
                             font={'0.8'}
+                            onClick={logout}
                         />
                     </>
                 ) : (

@@ -20,6 +20,7 @@ import MentorBoardsPage from './pages/MentorBoardsPage';
 import ScrollToTop from './components/_common/ScrollToTop';
 
 import RecommendPage from './pages/RecommendPage';
+import RecommendResultPage from './pages/RecommendResultPage';
 import DictionaryPage from './pages/DictionaryPage';
 import MentorSignupPage from './pages/MentorSignupPage';
 import MentorSignup03Page from './pages/MentirSignup03Page';
@@ -96,7 +97,7 @@ function App() {
 
                         <Route
                             exact
-                            path='/mentorfeedback'
+                            path='/mentorfeedback/:resumeId'
                             element={<MentorFeedbackPage />}
                         />
                         <Route
@@ -113,6 +114,11 @@ function App() {
                             exact
                             path='/recommend'
                             element={<RecommendPage />}
+                        />
+                        <Route
+                            exact
+                            path='/recommend/result'
+                            element={<RecommendResultPage />}
                         />
                         <Route
                             exact

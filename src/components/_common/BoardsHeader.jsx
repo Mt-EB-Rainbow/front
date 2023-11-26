@@ -19,7 +19,7 @@ export default BoardsHeader;
 
 const Wrapper = styled.div`
     width: 59.7rem;
-    height: 2.8rem;
+    height: 3.3rem;
     border-bottom: 0.05rem solid var(--light-gray);
     display: flex;
     flex-direction: row;
@@ -28,7 +28,7 @@ const Wrapper = styled.div`
 `;
 
 const SearchInput = styled.input`
-    width: 22vw;
+    width: 15rem;
     height: 2rem;
     border-radius: 5rem;
     outline: none;
@@ -47,6 +47,7 @@ const SearchWrapper = styled.div`
     display: flex;
     flex-direction: row;
     align-items: center;
+    margin-bottom: 0.5rem;
 `;
 
 const Length = styled.div`

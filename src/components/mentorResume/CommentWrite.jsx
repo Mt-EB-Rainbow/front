@@ -1,25 +1,58 @@
 import styled from 'styled-components';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import GreenBtn from '../_common/Btn/GreenBtn';
+import { FeedbackApi, getFeedbackApi } from '../../api/feedback';
+import { useParams } from 'react-router-dom';
+import CommentList from './CommentList';
 
 const CommentWrite = () => {
-    const [comment, setComment] = useState('');
+    const [content, setContent] = useState('');
+    const memberId = localStorage.getItem('memberId');
+    const { resumeId } = useParams();
+
+    const [contentData, setContentData] = useState();
+
     const onChangeInput = e => {
-        setComment(e.target.value);
+        setContent(e.target.value);
     };
-    const onSubmit = () => {
-        // post 보내기
+
+    //피드백 post
+    const onSubmit = async () => {
+        const res = await FeedbackApi(memberId, resumeId, content);
+        console.log(res?.config.data);
+        await getComment();
+        setContent('')
     };
+
+    //피드백 get
+    const getComment = async () => {
+        const res = await getFeedbackApi(resumeId);
+
+        console.log(res);
+        setContentData(res?.data.feedbacks);
+    };
+
+    useEffect(() => {
+        const getComment = async () => {
+            const res = await getFeedbackApi(resumeId);
+
+            console.log(res);
+            setContentData(res?.data.feedbacks);
+        };
+        getComment();
+    }, []);
+
     return (
         <>
+            <CommentList data={contentData} />
             <TitleWrapper>
                 <Title>피드백을 남겨주세요</Title>
                 <Star>*</Star>
             </TitleWrapper>
             <TextArea
                 type='text'
-                placeholder='자기소개를 입력하세요.'
-                value={comment}
+                placeholder='피드백을 남겨주세요.'
+                value={content}
                 onChange={onChangeInput}
             />
             <GreenBtn

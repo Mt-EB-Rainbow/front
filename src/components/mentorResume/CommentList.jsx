@@ -1,18 +1,23 @@
+import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
+import { getFeedbackApi } from '../../api/feedback';
 
-const CommentList = () => {
+const CommentList = ({ data }) => {
     return (
         <>
-            <TitleContainer2>
-                <TitleWrapper2>
-                    <Title>피드백</Title>
-                </TitleWrapper2>
-                <Date>2023.11.11</Date>
-            </TitleContainer2>
-            <Feedback>
-                이거 저거를 이렇게 저렇게 수정해주시면 될 것 같습니다.
-                수고하셨습니다!
-            </Feedback>
+            <Title>피드백</Title>
+
+            {data?.map(el => (
+                <>
+                    <TitleContainer2>
+                        <TitleWrapper2>
+                            <Date>김00 멘토님</Date>
+                        </TitleWrapper2>
+                        <Date>{el.createdAt.slice(0,13)}</Date>
+                    </TitleContainer2>
+                    <Feedback key={el.FeedbackId}>{el.content}</Feedback>
+                </>
+            ))}
         </>
     );
 };
@@ -24,13 +29,15 @@ export const Title = styled.div`
     font-style: normal;
     font-weight: 700;
     line-height: normal;
+    width: 100%;
+    margin-top: 5rem;
+    margin-bottom: 1rem;
 `;
 export const TitleContainer2 = styled.div`
     display: flex;
     width: 100%;
     margin-bottom: 0.5rem;
     justify-content: space-between;
-    margin-top: 4rem;
 `;
 
 export const Date = styled.div`
@@ -40,6 +47,7 @@ export const Date = styled.div`
     font-weight: 700;
     display: flex;
     align-items: end;
+    width: 9rem;
 `;
 
 export const TitleWrapper2 = styled.div`
@@ -59,4 +67,5 @@ export const Feedback = styled.div`
     font-style: normal;
     font-weight: 500;
     line-height: normal;
+    margin-bottom: 1.9rem;
 `;

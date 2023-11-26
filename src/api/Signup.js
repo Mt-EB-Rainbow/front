@@ -12,8 +12,6 @@ export const SignApi = async (name, email, pw, nickname, birth) => {
 
         console.log(res);
 
-        const token = res.data.accessToken;
-        localStorage.setItem('accessToken', token);
         return res;
     } catch (err) {
         console.log(err);

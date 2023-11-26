@@ -76,7 +76,7 @@ S.GreenBtn = styled.button`
     height: 3.2rem;
     border-radius: 0.6rem;
     border: none;
-    background-color: var(--dark-green);
+    background-color: ${props => props.backgroundColor};
     color: var(--white);
     font-size: 1rem;
     font-weight: 500;
@@ -95,5 +95,21 @@ S.Input = styled.input`
     &::placeholder {
         color: var(--gray);
     }
+`;
+S.InfoTitle = styled.div`
+    font-size: 1.4rem;
+    font-weight: 700;
+`;
+S.Line = styled.hr`
+    width: 59.65rem;
+    border: 1px solid var(--light-gray);
+    margin: 0.5rem 0 4rem 0;
+`;
+S.InlineContainer = styled.div`
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    margin-top: 2rem;
+    width: 59.65rem;
 `;
 export { S };
