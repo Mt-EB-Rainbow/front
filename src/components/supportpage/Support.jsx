@@ -41,7 +41,7 @@ const Support = () => {
                 <PageTitle text={'취업 지원 사이트 모음'} />
                 <S.PageBody>
                     <S.Header>
-                        <S.Title>취업 / 교육 / 상담</S.Title>
+                        <S.Title>취업 • 교육 • 상담</S.Title>
                     </S.Header>
                     <S.Body>
                         {employment.map((item, index) => (
