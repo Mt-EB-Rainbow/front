@@ -1,3 +1,4 @@
+import { Pagination } from 'antd';
 import styled from 'styled-components';
 
 export const Container = styled.div`
@@ -11,7 +12,7 @@ export const Wrapper = styled.div`
     flex-direction: column;
     align-items: center;
     width: 59.7rem;
-    height: ${props => props.nurturesArray ? "auto" : "100vh"}
+    height: ${props => (props.nurturesArray ? 'auto' : '100vh')};
 `;
 
 export const GrayBox = styled.div`
@@ -24,7 +25,6 @@ export const GrayBox = styled.div`
     padding: 4vh;
     margin-bottom: 5vh;
     border-radius: 1.8vh;
-   
 `;
 export const BoxTitle = styled.div`
     /* font-size: 20px;
@@ -61,18 +61,54 @@ export const Line = styled.div`
 `;
 
 export const Dong = styled.input`
-box-sizing: border-box;
-width: 16rem;
-height: 3.3rem;
-margin-left: 0.5rem;
-padding: 1.1rem 0.75rem;
-border-radius: 0.3rem;
-border: 1px solid var(--light-gray);
-background: var(--White, #FFF);
-color: black;
-font-size: 1rem;
-font-style: normal;
-font-weight: 500;
-line-height: normal;
-outline: none;
-`
+    box-sizing: border-box;
+    width: 16rem;
+    height: 3.3rem;
+    margin-left: 0.5rem;
+    padding: 1.1rem 0.75rem;
+    border-radius: 0.3rem;
+    border: 1px solid var(--light-gray);
+    background: var(--White, #fff);
+    color: black;
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    outline: none;
+`;
+
+export const Footer = styled.div`
+    width: 100%;
+    display: flex;
+    justify-content: center;
+`;
+
+export const PaginationUi = styled(Pagination)`
+    margin-top: 2.35rem;
+
+    // antd 커스텀
+    .ant-select-selector,
+    .ant-pagination-options {
+        display: none;
+    }
+    .ant-pagination-item-active {
+        border: none;
+        font-size: 0.8rem;
+    }
+    .ant-pagination-item-active a:hover {
+        color: var(--dark-green);
+    }
+    .ant-pagination-item a {
+        color: var(--dark-gray);
+        font-weight: 400;
+    }
+    .ant-pagination-item-active a {
+        border: none;
+        color: #000;
+    }
+
+    .anticon-double-right svg,
+    .anticon-double-left svg {
+        color: var(--gray);
+    }
+`;
