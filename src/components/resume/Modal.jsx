@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import GreenBtn from '../_common/Btn/GreenBtn';
 import search from '../../assets/search.svg';
 import { useState } from 'react';
+
 const JobModal = React.memo(props => {
     const { isModalOpen, closer, maintext, onClick1, onClick2, data } = props;
 
@@ -165,3 +166,4 @@ const Data = styled.div`
     padding: 1rem 2.3rem;
     border-bottom: 1px solid var(--light-gray);
     cursor: pointer;
+`;

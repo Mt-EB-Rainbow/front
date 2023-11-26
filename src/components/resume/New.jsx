@@ -375,6 +375,78 @@ const New = ({ isEdit }) => {
         getContent();
     }, []);
 
+    // 학력 항목 추가
+    const addEducation = () => {
+        setEducations(prevEducations => [
+            ...prevEducations,
+            {
+                startDate: '',
+                finishDate: '',
+                name: '',
+                major: '',
+                degreeStatus: null, // 여기서 초기값을 설정
+            },
+        ]);
+    };
+
+    // 경력 항목 추가
+    const addExperience = () => {
+        setExperience(prevExperience => [
+            ...prevExperience,
+            {
+                startDate2: '',
+                finishDate2: '',
+                department: '',
+                position: '',
+            },
+        ]);
+    };
+
+    // 언어 항목 추가
+    const addLanguage = () => {
+        setLanguages(prevLanguages => [
+            ...prevLanguages,
+            {
+                gainedDate: '',
+                testName: '',
+                score: '',
+            },
+        ]);
+    };
+
+    // 수상 항목 추가
+    const addAwards = () => {
+        setAwards(prevAwards => [
+            ...prevAwards,
+            {
+                startDate3: '',
+                finishDate3: '',
+                activity: '',
+                content: '',
+            },
+        ]);
+    };
+
+    // 한 번에 하나만 체크
+    const [degree, setDegree] = useState(null);
+
+    const checkOnlyOne = (index, newDegreeStatus) => {
+        setEducations(prevEducations =>
+            prevEducations.map((edu, eduIndex) =>
+                eduIndex === index
+                    ? { ...edu, degreeStatus: newDegreeStatus }
+                    : edu,
+            ),
+        );
+    };
+
+    // 직무 선택
+    const [selectedJob, setSelectedJob] = useState(''); // 선택된 직무 상태
+
+    const handleJobSelect = job => {
+        setSelectedJob(job); // 선택된 직무를 상태에 저장
+    };
+
     return (
         <>
             <S.Container>
@@ -681,8 +753,8 @@ const New = ({ isEdit }) => {
                                             defaultValue={
                                                 isEdit
                                                     ? contentdata.data
-                                                          ?.educations[index]
-                                                          .name
+                                                          ?.experiences[0]
+                                                          .department
                                                     : ''
                                             }
                                         />
@@ -769,8 +841,73 @@ const New = ({ isEdit }) => {
                                             defaultValue={
                                                 isEdit
                                                     ? contentdata.data
-                                                          ?.educations[index]
-                                                          .major
+                                                          ?.experiences[0]
+                                                          .position
+                                                    : ''
+                                            }
+                                        />
+                                    </S.BoxRight>
+                                </S.GrayBox>
+                            </div>
+                        ))}
+
+                    {/* 어학 */}
+                    <S.TitleContainer2>
+                        <S.TitleWrapper2>
+                            <S.Title>어학</S.Title>
+                        </S.TitleWrapper2>
+                        <S.Plus onClick={addLanguage}>+ 항목 추가</S.Plus>
+                    </S.TitleContainer2>
+                    <S.GreenBox>
+                        {
+                            '• 외국어 자격증을 보유한 경우 작성해주세요. \n• 활용 가능한 외국어가 있다면, 어느정도 수준인지 레벨을 선택해주세요.'
+                        }
+                    </S.GreenBox>
+                    <S.Line />
+                    {Array(languages.length)
+                        .fill(1)
+                        .map((_, index) => (
+                            <div style={{ width: '39.3rem' }}>
+                                <S.GrayBox>
+                                    <div>
+                                        <S.SmallInput
+                                            type='text'
+                                            placeholder='2000.00 (취득년월)'
+                                            onChange={e =>
+                                                setGainedDate(e.target.value)
+                                            }
+                                            defaultValue={
+                                                isEdit
+                                                    ? contentdata.data
+                                                          ?.languages[0]
+                                                          .gainedDate
+                                                    : ''
+                                            }
+                                        />
+                                        <S.School
+                                            type='text'
+                                            placeholder='언어'
+                                            onChange={e =>
+                                                setTestName(e.target.value)
+                                            }
+                                            defaultValue={
+                                                isEdit
+                                                    ? contentdata.data
+                                                          ?.languages[0]
+                                                          .testName
+                                                    : ''
+                                            }
+                                        />
+                                        <S.SmallInput
+                                            type='text'
+                                            placeholder='어학시험명 / 급수'
+                                            onChange={e =>
+                                                setScore(e.target.value)
+                                            }
+                                            defaultValue={
+                                                isEdit
+                                                    ? contentdata.data
+                                                          ?.languages[0].score
                                                     : ''
                                             }
                                         />
