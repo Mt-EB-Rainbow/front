@@ -83,7 +83,9 @@ const RecommendResult = ({ answer }) => {
                                         <S.Button
                                             onClick={() =>
                                                 navigate('/dictionary/', {
-                                                    jobId: item.jobId,
+                                                    state: {
+                                                        jobId: item.jobId,
+                                                    },
                                                 })
                                             }
                                         >
@@ -92,7 +94,9 @@ const RecommendResult = ({ answer }) => {
                                         <S.Button
                                             onClick={() =>
                                                 navigate('/training/', {
-                                                    jobId: item.jobId,
+                                                    state: {
+                                                        jobId: item.jobId,
+                                                    },
                                                 })
                                             }
                                         >
