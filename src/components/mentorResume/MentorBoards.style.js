@@ -42,10 +42,6 @@ export const Length = styled.div`
     font-weight: 600;
 `;
 
-export const Info = styled.div`
-    height: auto;
-`;
-
 export const ResumeBtn = styled.div`
     box-sizing: border-box;
     font-size: 1.8vh;
