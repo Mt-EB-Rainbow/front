@@ -3,11 +3,19 @@ import styled from 'styled-components';
 import GreenBtn from '../_common/Btn/GreenBtn';
 import search from '../../assets/search.svg';
 import { useState } from 'react';
+
 const JobModal = React.memo(props => {
     const { isModalOpen, closer, maintext, onClick1, onClick2, data } = props;
 
     const [text, setText] = useState('');
     console.log(text);
+
+    const handleItemClick = item => {
+        if (props.onItemSelect) {
+            props.onItemSelect(item);
+        }
+        closer(); // 모달 닫기
+    };
 
     useEffect(() => {
         document.body.style.cssText = `
@@ -38,7 +46,9 @@ const JobModal = React.memo(props => {
                         </Wrapper>
                         <Line />
                         {data.map(el => (
-                            <Data>{el}</Data>
+                            <Data onClick={() => handleItemClick(el)}>
+                                {el}
+                            </Data>
                         ))}
                     </ModalBlock>
                 </Container>
@@ -147,7 +157,6 @@ const Line = styled.div`
 
 const Data = styled.div`
     color: #545454;
-
     font-size: 1rem;
     font-style: normal;
     font-weight: 500;
@@ -156,4 +165,5 @@ const Data = styled.div`
     box-sizing: border-box;
     padding: 1rem 2.3rem;
     border-bottom: 1px solid var(--light-gray);
+    cursor: pointer;
 `;
