@@ -1,161 +1,197 @@
 import { S } from './Dictionary.style';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import PageTitle from '../_common/PageTitle';
 import BigSearchInput from '../_common/Input/BigSearchInput';
-import GreenBtn from '../_common/Btn/GreenBtn';
 import { Select, Space } from 'antd';
+import {
+    GetCategories,
+    GetJobInfo,
+    GetJobInfoList,
+} from '../../api/dictionary';
+import { useLocation } from 'react-router';
 import smile from '../../assets/dictionarypage/smile.svg';
 import cry from '../../assets/dictionarypage/cry.svg';
 
-const categoryData = ['교육분야', '금융 · 보험 · 경영 · 사무 분야'];
-const jobData = {
-    교육분야: [
-        '독서 논술 지도사',
-        '보육교사',
-        '요가지도사',
-        '체험학습강사',
-        '학원강사',
-        '특수아보조교사',
-        '학교방과후교사',
-        '도시농업지도사',
-    ],
-    '금융 · 보험 · 경영 · 사무 분야': ['전체'],
-};
-
 const Dictionary = () => {
-    const [category, setCategory] = useState(categoryData[0]);
-    const [job, setJob] = useState('직무 이름');
-    const onCategoryChange = value => {
-        setCategory(value);
-        setJob(jobData[category][0]);
+    const [categoryData, setCategoryData] = useState([]); // 전체 카테고리 데이터 배열
+    const [jobData, setJobData] = useState([]); // 선택된 카테고리에 속한 직무 이름 배열
+    const [selectedCategory, setSelectedCategory] = useState(1); // categoryId int
+    const [seletedJob, setSeletedJob] = useState(0); // jobId int
+    const [inputName, setInputName] = useState(''); // 직무 이름 string
+    const [jobInfo, setJobInfo] = useState([]); // 객체 배열
+    const { state } = useLocation();
+
+    const GetCategory = async () => {
+        const res = await GetCategories();
+        console.log(res);
+        setCategoryData(res.categoryResponses);
     };
-    const onjobChange = value => {
-        setJob(value);
+
+    const SearchById = async id => {
+        const res = await GetJobInfo(id);
+        console.log(res);
+        setJobInfo([res]);
     };
-    const doSearch = () => {
-        console.log('검색');
+
+    const SearchByName = async name => {
+        const res = await GetJobInfoList(name);
+        console.log(res);
+        setJobInfo(res.jobDetailList);
     };
+
+    const onInputChange = e => {
+        setInputName(e.target.value);
+        console.log(e.target.value);
+    };
+
+    const onCategoryChange = categoryId => {
+        setSelectedCategory(categoryId);
+        setJobData(categoryData[categoryId - 1].jobResponses);
+        setSeletedJob([]);
+    };
+
+    const onJobChange = jobId => {
+        setSeletedJob(jobId);
+    };
+
+    useEffect(() => {
+        if (state !== null) {
+            setSeletedJob(state.jobId);
+            SearchById(state.jobId);
+        }
+        GetCategory();
+    }, []);
+
     return (
         <S.Wrapper>
             <PageTitle text={'직무 백과'} />
             <S.SearchBox>
                 <S.InlineBox>
                     <S.Content>
-                        {/* 검색 */}
-                        <BigSearchInput
-                            width={22}
+                        <S.Input
                             placeholder={
                                 '찾고자 하는 직무 이름을 검색해 보세요'
                             }
-                            marginRight={0.5}
-                            padding={0.5}
+                            onChange={onInputChange}
                         />
-                        <GreenBtn
-                            paddingHorizontal={1.5}
-                            paddingVertical={1}
-                            text={'검색'}
-                            onClick={doSearch}
-                            width={4.75}
-                            height={3.2}
-                            radius={0.6}
-                        />
+                        <S.GreenBtn onClick={() => SearchByName(inputName)}>
+                            검색
+                        </S.GreenBtn>
                     </S.Content>
-                    <S.Content>
-                        <Space
-                            wrap
-                            style={{
-                                marginRight: '0.5rem',
-                            }}
-                        >
-                            <Select
-                                defaultValue='직무 분야'
+                    {categoryData.length !== 0 && (
+                        <S.Content>
+                            <Space
+                                wrap
                                 style={{
-                                    width: '10.4rem',
-                                    height: '3.2rem',
-                                    fontSize: '1rem',
+                                    marginRight: '0.5rem',
                                 }}
-                                onChange={onCategoryChange}
-                                options={categoryData.map(ct => ({
-                                    label: ct,
-                                    value: ct,
-                                }))}
-                            />
-                            <Select
-                                defaultValue='직무 이름'
-                                style={{
-                                    width: '10.4rem',
-                                    height: '3.2rem',
-                                    fontSize: '1rem',
-                                }}
-                                value={job}
-                                onChange={onjobChange}
-                                options={jobData[category].map(edu => ({
-                                    label: edu,
-                                    value: edu,
-                                }))}
-                            />
-                        </Space>
-                        <GreenBtn
-                            padding={1.5}
-                            text={'검색'}
-                            onClick={doSearch}
-                            width={4.75}
-                            height={3.2}
-                            radius={0.6}
-                        />
-                    </S.Content>
+                            >
+                                <Select
+                                    defaultValue='직무 분야'
+                                    style={{
+                                        width: '10.4rem',
+                                        height: '3.2rem',
+                                        fontSize: '1rem',
+                                    }}
+                                    onChange={onCategoryChange}
+                                    options={categoryData.map(ct => ({
+                                        label: ct.name,
+                                        value: ct.categoryId,
+                                    }))}
+                                />
+                                <Select
+                                    defaultValue='직무 이름'
+                                    style={{
+                                        width: '10.4rem',
+                                        height: '3.2rem',
+                                        fontSize: '1rem',
+                                    }}
+                                    value={seletedJob.name}
+                                    onChange={onJobChange}
+                                    options={jobData.map(edu => ({
+                                        label: edu.name,
+                                        value: edu.jobId,
+                                    }))}
+                                />
+                            </Space>
+                            <S.GreenBtn onClick={() => SearchById(seletedJob)}>
+                                검색
+                            </S.GreenBtn>
+                        </S.Content>
+                    )}
                 </S.InlineBox>
             </S.SearchBox>
-            <S.JobTitle>{job}</S.JobTitle>
-            <S.InfoBox>
-                <S.InfoTitle>직무 소개</S.InfoTitle>
-                <S.Line />
-                <S.Info>
-                    보육의 개념과 필요성, 보육관련법, 보육시설의 형태와 유형별
-                    특징 등 보육교사가 되기 위한 기본적인 이론에 대해 학습하고
-                    보육교사의 역할과 자질에 대해 파악할 수 있다.
-                </S.Info>
-                <S.InfoTitle>필요 기술 및 지식</S.InfoTitle>
-                <S.Line />
-                <S.Info>
-                    보육의 개념과 필요성, 보육관련법, 보육시설의 형태와 유형별
-                    특징 등 보육교사가 되기 위한 기본적인 이론에 대해 학습하고
-                    보육교사의 역할과 자질에 대해 파악할 수 있다.
-                </S.Info>
-                <S.InfoTitle>근무 실태</S.InfoTitle>
-                <S.Line />
-                <S.Info>
-                    보육의 개념과 필요성, 보육관련법, 보육시설의 형태와 유형별
-                    특징 등 보육교사가 되기 위한 기본적인 이론에 대해 학습하고
-                    보육교사의 역할과 자질에 대해 파악할 수 있다.
-                </S.Info>
-            </S.InfoBox>
-            <S.Content>
-                <S.RecommendBox>
-                    <S.Icon src={smile} />
-                    <S.InfoBox width='21.3rem' style={{ marginTop: '1.5rem' }}>
-                        <S.InfoTitle>이런 분께 추천해요</S.InfoTitle>
-                        <S.Info width='21.3rem' style={{ marginTop: '0.5rem' }}>
-                            보육의 개념과 필요성, 보육관련법, 보육시설의 형태와
-                            유형별 특징 등 보육교사가 되기 위한 기본적인 이론에
-                            대해 학습하고 보육교사의 역할과 자질에 대해 파악할
-                            수 있다.
-                        </S.Info>
-                    </S.InfoBox>
-                </S.RecommendBox>
-                <S.RecommendBox style={{ marginLeft: '1rem' }}>
-                    <S.Icon src={cry} />
-                    <S.InfoBox width='21.3rem' style={{ marginTop: '1.5rem' }}>
-                        <S.InfoTitle>이런 분께 추천하지 않아요</S.InfoTitle>
-                        <S.Info width='21.3rem' style={{ marginTop: '0.5rem' }}>
-                            보육의 개념과 필요성, 보육관련법, 보육시설의 형태와
-                            유형별 특징 등 보육교사가 되기 위한 기본적인 이론에
-                            대해 학습하고 보육교사의 역할과 자질에 대해 파악할
-                            수 있다.
-                        </S.Info>
-                    </S.InfoBox>
-                </S.RecommendBox>
-            </S.Content>
+            <S.ResultContainer>
+                {jobInfo.length !== 0 && ( // jobInfo는 직무 정보 객체들이 담긴 배열
+                    <>
+                        {jobInfo.map(item => {
+                            // item은 각 직무에 대한 정보 객체
+                            return (
+                                <div>
+                                    <S.JobTitle>{item.name}</S.JobTitle>
+                                    <S.InfoBox>
+                                        <S.InfoTitle>직무 소개</S.InfoTitle>
+                                        <S.Line />
+                                        <S.Info>{item.description}</S.Info>
+                                        <S.InfoTitle>
+                                            필요 기술 및 지식
+                                        </S.InfoTitle>
+                                        <S.Line />
+                                        <S.Info>{item.coreCompetency}</S.Info>
+                                        <S.InfoTitle>근무 실태</S.InfoTitle>
+                                        <S.Line />
+                                        <S.Info>{item.competencies}</S.Info>
+                                    </S.InfoBox>
+                                    <S.Content
+                                        style={{ alignItems: 'flex-start' }}
+                                    >
+                                        <S.RecommendBox>
+                                            <S.Icon src={smile} />
+                                            <S.InfoBox
+                                                width='21.3rem'
+                                                style={{ marginTop: '1.5rem' }}
+                                            >
+                                                <S.InfoTitle>
+                                                    이런 분께 추천해요
+                                                </S.InfoTitle>
+                                                <S.Info
+                                                    width='21.3rem'
+                                                    style={{
+                                                        margin: '0.5rem 0 2rem 0',
+                                                    }}
+                                                >
+                                                    {item.pros}
+                                                </S.Info>
+                                            </S.InfoBox>
+                                        </S.RecommendBox>
+                                        <S.RecommendBox
+                                            style={{ marginLeft: '1rem' }}
+                                        >
+                                            <S.Icon src={cry} />
+                                            <S.InfoBox
+                                                width='21.3rem'
+                                                style={{ marginTop: '1.5rem' }}
+                                            >
+                                                <S.InfoTitle>
+                                                    이런 분께 추천하지 않아요
+                                                </S.InfoTitle>
+                                                <S.Info
+                                                    width='21.3rem'
+                                                    style={{
+                                                        margin: '0.5rem 0 2rem 0',
+                                                    }}
+                                                >
+                                                    {item.cons}
+                                                </S.Info>
+                                            </S.InfoBox>
+                                        </S.RecommendBox>
+                                    </S.Content>
+                                </div>
+                            );
+                        })}
+                    </>
+                )}
+            </S.ResultContainer>
         </S.Wrapper>
     );
 };

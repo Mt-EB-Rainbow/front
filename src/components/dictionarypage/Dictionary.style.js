@@ -9,6 +9,9 @@ S.Wrapper = styled(S.ColumnContainer)`
     justify-content: center;
     align-items: center;
 `;
+S.ResultContainer = styled(S.ColumnContainer)`
+    gap: 4rem;
+`;
 S.SearchBox = styled.div`
     display: flex;
     align-items: center;
@@ -34,7 +37,7 @@ S.JobTitle = styled.div`
     text-align: center;
     font-size: 1.5rem;
     font-weight: 700;
-    margin: 2rem 0 2rem 0;
+    margin: 2rem 0 4rem 0;
 `;
 S.InfoBox = styled(S.ColumnContainer)`
     width: ${props => (props.width ? props.width : '59.7rem')};
@@ -58,7 +61,6 @@ S.Info = styled.div`
 S.RecommendBox = styled.div`
     display: flex;
     width: 29.1rem;
-    height: 10rem;
     border-radius: 1rem;
     border: 1px solid var(--gray);
     background-color: var(--white);
@@ -68,5 +70,30 @@ S.Icon = styled.img`
     height: 3rem;
     margin: 1.5rem 1rem 0 1.5rem;
 `;
+S.GreenBtn = styled.button`
+    padding: 0 1.5rem;
+    width: 4.75rem;
+    height: 3.2rem;
+    border-radius: 0.6rem;
+    border: none;
+    background-color: var(--dark-green);
+    color: var(--white);
+    font-size: 1rem;
+    font-weight: 500;
+`;
+S.Input = styled.input`
+    width: 22rem;
+    color: var(--black);
+    border: 1px #d9d9d9 solid;
+    font-size: 1rem;
+    border-radius: 0.6rem;
+    background-color: var(--white);
+    margin-right: 0.5rem;
+    padding: 1rem 0.5rem;
+    outline: none;
 
+    &::placeholder {
+        color: var(--gray);
+    }
+`;
 export { S };
