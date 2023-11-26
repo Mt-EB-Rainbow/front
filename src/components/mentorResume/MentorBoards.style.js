@@ -1,3 +1,4 @@
+import { Pagination } from 'antd';
 import styled from 'styled-components';
 
 export const Container = styled.div`
@@ -110,4 +111,40 @@ export const Text = styled.div`
     line-height: normal;
     margin-top: 6.9rem;
     margin-bottom: 1.6rem;
+`;
+
+export const Footer = styled.div`
+    width: 100%;
+    display: flex;
+    justify-content: center;
+`;
+
+export const PaginationUi = styled(Pagination)`
+    margin-top: 2.35rem;
+
+    // antd 커스텀
+    .ant-select-selector,
+    .ant-pagination-options {
+        display: none;
+    }
+    .ant-pagination-item-active {
+        border: none;
+        font-size: 0.8rem;
+    }
+    .ant-pagination-item-active a:hover {
+        color: var(--dark-green);
+    }
+    .ant-pagination-item a {
+        color: var(--dark-gray);
+        font-weight: 400;
+    }
+    .ant-pagination-item-active a {
+        border: none;
+        color: #000;
+    }
+
+    .anticon-double-right svg,
+    .anticon-double-left svg {
+        color: var(--gray);
+    }
 `;

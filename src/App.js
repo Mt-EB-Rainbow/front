@@ -96,7 +96,7 @@ function App() {
 
                         <Route
                             exact
-                            path='/mentorfeedback'
+                            path='/mentorfeedback/:resumeId'
                             element={<MentorFeedbackPage />}
                         />
                         <Route
