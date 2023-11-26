@@ -13,7 +13,7 @@ const CommentList = ({ data }) => {
                         <TitleWrapper2>
                             <Date>김00 멘토님</Date>
                         </TitleWrapper2>
-                        <Date>2023.11.11</Date>
+                        <Date>{el.createdAt.slice(0,13)}</Date>
                     </TitleContainer2>
                     <Feedback key={el.FeedbackId}>{el.content}</Feedback>
                 </>
@@ -47,6 +47,7 @@ export const Date = styled.div`
     font-weight: 700;
     display: flex;
     align-items: end;
+    width: 9rem;
 `;
 
 export const TitleWrapper2 = styled.div`
