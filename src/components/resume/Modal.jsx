@@ -11,7 +11,7 @@ const JobModal = React.memo(props => {
 
     useEffect(() => {
         document.body.style.cssText = `
-              position: fixed;
+              
               top: -${window.scrollY}px;
               overflow-y: scroll;
               width: 100%;`;
@@ -117,6 +117,7 @@ const ModalBlock = styled.div`
     flex-shrink: 0;
     overflow-y: auto;
     animation: modal-show 0.3s;
+    position: fixed;
     @keyframes modal-show {
         from {
             opacity: 0;
