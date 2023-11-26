@@ -19,7 +19,7 @@ S.Wrapper = styled(S.ColumnContainer)`
 `;
 S.GrayBox = styled.div`
     width: 59.7rem;
-    height: 7.3rem;
+    padding: 2rem 0;
     border-radius: 1rem;
     background: var(--pale-gray);
     margin: 4rem 0;
@@ -95,6 +95,7 @@ S.ResultTitle = styled.div`
     font-size: 1.6rem;
     font-weight: 700;
     margin-left: 2rem;
+    width: 56rem;
 `;
 S.ResultContainer = styled(S.BetweenContainer)`
     align-items: center;
@@ -123,6 +124,11 @@ S.Thumbnail = styled.img`
     height: 4rem;
     border-radius: 1rem;
     background-color: var(--light-gray);
+`;
+S.OptionContainer = styled.div`
+    display: flex;
+    gap: 1rem;
+    margin-right: 2rem;
 `;
 
 export { S };
