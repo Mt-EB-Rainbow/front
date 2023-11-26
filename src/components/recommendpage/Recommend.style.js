@@ -92,7 +92,7 @@ S.InlineContainer = styled(S.BetweenContainer)`
 `;
 S.ResultTitle = styled.div`
     color: var(--dark-green);
-    font-size: 1.6rem;
+    font-size: 1.4rem;
     font-weight: 700;
     margin-left: 2rem;
     width: 56rem;

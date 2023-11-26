@@ -16,10 +16,12 @@ const Dictionary = () => {
     const [categoryData, setCategoryData] = useState([]); // 전체 카테고리 데이터 배열
     const [jobData, setJobData] = useState([]); // 선택된 카테고리에 속한 직무 이름 배열
     const [selectedCategory, setSelectedCategory] = useState(1); // categoryId int
-    const [seletedJob, setSeletedJob] = useState(0); // jobId int
+    const [seletedJob, setSeletedJob] = useState('직무 이름'); // jobId int
     const [inputName, setInputName] = useState(''); // 직무 이름 string
     const [jobInfo, setJobInfo] = useState([]); // 객체 배열
     const { state } = useLocation();
+    const [isNameDisable, setIsNameDisable] = useState(true); // 이름으로 검색 버튼 비활성화
+    const [isIdDisable, setIsIdDisable] = useState(true); // id로 검색 버튼 비활성화
 
     const GetCategory = async () => {
         const res = await GetCategories();
@@ -40,18 +42,24 @@ const Dictionary = () => {
     };
 
     const onInputChange = e => {
+        if (e.target.value.length > 0) {
+            setIsNameDisable(false);
+        } else {
+            setIsNameDisable(true);
+        }
         setInputName(e.target.value);
-        console.log(e.target.value);
     };
 
     const onCategoryChange = categoryId => {
         setSelectedCategory(categoryId);
         setJobData(categoryData[categoryId - 1].jobResponses);
-        setSeletedJob([]);
+        setSeletedJob('직무 이름');
+        setIsIdDisable(true);
     };
 
     const onJobChange = jobId => {
         setSeletedJob(jobId);
+        setIsIdDisable(false);
     };
 
     useEffect(() => {
@@ -74,7 +82,15 @@ const Dictionary = () => {
                             }
                             onChange={onInputChange}
                         />
-                        <S.GreenBtn onClick={() => SearchByName(inputName)}>
+                        <S.GreenBtn
+                            disabled={isNameDisable}
+                            onClick={() => SearchByName(inputName)}
+                            backgroundColor={
+                                isNameDisable
+                                    ? 'var(--light-gray)'
+                                    : 'var(--dark-green)'
+                            }
+                        >
                             검색
                         </S.GreenBtn>
                     </S.Content>
@@ -106,7 +122,7 @@ const Dictionary = () => {
                                         height: '3.2rem',
                                         fontSize: '1rem',
                                     }}
-                                    value={seletedJob.name}
+                                    value={seletedJob}
                                     onChange={onJobChange}
                                     options={jobData.map(edu => ({
                                         label: edu.name,
@@ -114,14 +130,37 @@ const Dictionary = () => {
                                     }))}
                                 />
                             </Space>
-                            <S.GreenBtn onClick={() => SearchById(seletedJob)}>
+                            <S.GreenBtn
+                                disabled={isIdDisable}
+                                onClick={() => SearchById(seletedJob)}
+                                backgroundColor={
+                                    isIdDisable
+                                        ? 'var(--light-gray)'
+                                        : 'var(--dark-green)'
+                                }
+                            >
                                 검색
                             </S.GreenBtn>
                         </S.Content>
                     )}
                 </S.InlineBox>
             </S.SearchBox>
+            <S.InlineContainer>
+                <S.InfoTitle>검색 결과</S.InfoTitle>
+                <div
+                    style={{
+                        fontSize: '0.8rem',
+                        fontWeight: '600',
+                    }}
+                >
+                    총 {jobInfo.length}건
+                </div>
+            </S.InlineContainer>
+            <S.Line />
             <S.ResultContainer>
+                {jobInfo.length === 0 && (
+                    <S.Content>검색 결과가 없습니다.</S.Content>
+                )}
                 {jobInfo.length !== 0 && ( // jobInfo는 직무 정보 객체들이 담긴 배열
                     <>
                         {jobInfo.map(item => {

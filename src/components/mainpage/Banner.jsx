@@ -2,6 +2,8 @@ import React, { useRef, useState } from 'react';
 // Import Swiper React components
 import { Swiper, SwiperSlide } from 'swiper/react';
 import banner from '../../assets/mainpage/banner_txt.png';
+import banner2 from '../../assets/mainpage/banner_2.png';
+import banner3 from '../../assets/mainpage/banner_3.png';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 
@@ -33,10 +35,10 @@ export default function Banner() {
                     <img src={banner} />
                 </SwiperSlide>
                 <SwiperSlide onClick={() => navigate('/success/2')}>
-                    <img src={banner} />
+                    <img src={banner2} />
                 </SwiperSlide>
                 <SwiperSlide onClick={() => navigate('/success/3')}>
-                    <img src={banner} />
+                    <img src={banner3} />
                 </SwiperSlide>
             </Swiper>
         </>
