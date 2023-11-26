@@ -10,7 +10,7 @@ const MenuBtn = ({ title, text, icon, onclick }) => {
                 </S.Title>
                 <S.Text>{text}</S.Text>
             </S.InnerContainer>
-            <S.Icon src={arrow} width='1rem' />
+            <S.Icon src={arrow} width='1rem' margin='0 2rem 0 0' />
         </S.InnerBox>
     );
 };

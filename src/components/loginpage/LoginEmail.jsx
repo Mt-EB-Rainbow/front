@@ -4,17 +4,21 @@ import * as S from './LoginEmail.style';
 import { useState } from 'react';
 import { Signin } from '../../api/Signin';
 import { useNavigate } from 'react-router-dom';
+import { useRecoilState } from 'recoil';
+import { loginState } from '../../recoil/loginState';
 
 const LoginEmail = () => {
     const [email, setEmail] = useState('');
     const [pw, setPw] = useState('');
     const navigate = useNavigate();
 
+    //recoil로 로그인 상태관리
+
     //로그인하기
     const Login = async e => {
         e.preventDefault();
         const res = await Signin(email, pw);
-        console.log(res);
+
         navigate('/');
     };
 

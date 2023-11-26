@@ -44,7 +44,7 @@ S.Text = styled.div`
     color: var(--black);
     font-size: 1rem;
     font-weight: 500;
-    width: 17rem;
+    width: 19rem;
 `;
 S.Button = styled.button`
     @media (max-width: 30rem) {
@@ -98,6 +98,6 @@ S.InnerBox = styled.div`
 `;
 S.Icon = styled.img`
     width: ${props => (props.width ? props.width : '3rem')};
-    margin: 0 2rem;
+    margin: ${props => (props.margin ? props.margin : '0 2rem')};
 `;
 export { S };

@@ -1,6 +1,6 @@
 import Signup02 from '../components/signuppage/Signup02';
 
-const SignupPage = () => {
+const Signup02Page = () => {
     return (
         <>
             <Signup02 />
@@ -8,4 +8,4 @@ const SignupPage = () => {
     );
 };
 
-export default SignupPage;
+export default Signup02Page;

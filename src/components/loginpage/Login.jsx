@@ -14,7 +14,7 @@ const Login = () => {
     };
 
     const goSignup = () => {
-        navigate('/signup01');
+        navigate('/signup02');
     };
 
     return (

@@ -3,16 +3,16 @@ import GreenBtn from '../_common/Btn/GreenBtn';
 import * as S from './Signup03.style';
 import PageTitle from '../_common/PageTitle';
 
-const Signup03 = () => {
-    const message = `회원가입이 완료되었습니다!\n당신의 새로운 시작을 응원합니다 :)`;
+const MentorSignup03 = () => {
+    const message = `회원가입이 완료되었습니다!\n귀한 시간 내어 멘토링에 참여해주셔서 감사합니다 :)`;
     const navigate = useNavigate();
 
     const goMain = () => {
         navigate('/');
     };
 
-    const goRecommend = () => {
-        navigate('/recommend');
+    const goMentorBoards = () => {
+        navigate('/mentorboards');
     };
 
     return (
@@ -24,12 +24,12 @@ const Signup03 = () => {
 
                 <S.BtnWrapper>
                     <GreenBtn
-                        text={'직무 추천받기'}
+                        text={'이력서 목록 열람'}
                         paddingVertical={0.75}
                         paddingHorizontal={2.45}
                         width={10.75}
                         height={2.7}
-                        onClick={goRecommend}
+                        onClick={goMentorBoards}
                         radius={5}
                     />
                     <S.GrayBtn onClick={goMain}>메인으로 돌아가기</S.GrayBtn>
@@ -39,4 +39,4 @@ const Signup03 = () => {
     );
 };
 
-export default Signup03;
+export default MentorSignup03;
