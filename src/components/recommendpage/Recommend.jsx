@@ -2,32 +2,38 @@ import { S } from './Recommend.style';
 import PageTitle from '../_common/PageTitle';
 import RecommendResult from './RecommendResult';
 import { useState, useEffect } from 'react';
-import { GetQuestion, PostAnswer } from '../../api/diagnosis';
+import { GetQuestion } from '../../api/diagnosis';
 const Recommend = () => {
     const [isTest, setIsTest] = useState(true);
-    const [question, setQuestion] = useState({});
+    const [questions, setQuestions] = useState({});
     const [answer, setAnswer] = useState({
-        q1: 0,
-        q2: 0,
-        q3: 0,
-        q4: 0,
-        q5: 0,
-        q6: 0,
+        q1: -1,
+        q2: -1,
+        q3: -1,
+        q4: -1,
+        q5: -1,
+        q6: -1,
     });
-    const [result, setResult] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
     const testTxt =
         '아직 어떤 일을 하면 좋을지 정하지 못하셨나요?\n어떤 일이 내 상황에 맞을지, 오래 할 수 있는 일일지 직무 추천 검사를 통해 알아보세요!';
 
     const GetQuestions = async () => {
         const res = await GetQuestion();
-        console.log(res);
-        setQuestion(res.questions);
+        setQuestions(res.questions);
+        setIsLoading(false);
     };
-    const onResultClick = async answer => {
-        const res = await PostAnswer(answer);
-        console.log(res);
-        setResult(res.jobsResponse);
-        setIsTest(false);
+
+    const checkOnlyOne = (name, val, checkThis) => {
+        const checkboxes = document.getElementsByName(name);
+        for (let i = 0; i < checkboxes.length; i++) {
+            checkboxes[i].checked = false;
+        }
+        checkThis.checked = true;
+
+        let newAnswer = { ...answer };
+        newAnswer[name] = val;
+        setAnswer(newAnswer);
     };
 
     useEffect(() => {
@@ -47,34 +53,55 @@ const Recommend = () => {
                     <S.InfoBox>
                         <S.InfoTitle>상황 기반 직무 추천 검사</S.InfoTitle>
                         <S.Line />
-                        {question.map(item => {
-                            <S.QuestionBox>
-                                <S.Question>{item.question}</S.Question>
-                                <div
-                                    style={{
-                                        display: 'flex',
-                                        gap: '1rem',
-                                        marginRight: '2rem',
-                                    }}
-                                >
-                                    <S.CheckBox type='checkbox' />
-                                    <S.Text marginL='0'>예</S.Text>
-                                    <S.CheckBox type='checkbox' />
-                                    <S.Text marginL='0'>아니오</S.Text>
-                                </div>
-                            </S.QuestionBox>;
-                        })}
+                        {isLoading ? (
+                            <>로딩중</>
+                        ) : (
+                            <>
+                                {questions.map((item, idx) => {
+                                    return (
+                                        <S.QuestionBox>
+                                            <S.Question>
+                                                {item.question}
+                                            </S.Question>
+                                            <S.OptionContainer>
+                                                {item.options.map(
+                                                    (op, opIdx) => {
+                                                        const name =
+                                                            'q' +
+                                                            String(idx + 1);
+                                                        return (
+                                                            <>
+                                                                <S.CheckBox
+                                                                    type='checkbox'
+                                                                    name={name}
+                                                                    onChange={e =>
+                                                                        checkOnlyOne(
+                                                                            name,
+                                                                            opIdx,
+                                                                            e.target,
+                                                                        )
+                                                                    }
+                                                                />
+                                                                <S.Text marginL='0'>
+                                                                    {op.option}
+                                                                </S.Text>
+                                                            </>
+                                                        );
+                                                    },
+                                                )}
+                                            </S.OptionContainer>
+                                        </S.QuestionBox>
+                                    );
+                                })}
+                            </>
+                        )}
                     </S.InfoBox>
-                    <S.GreenBtn onClick={onResultClick}>
+                    <S.GreenBtn onClick={() => setIsTest(false)}>
                         결과 확인하기
                     </S.GreenBtn>
                 </>
             ) : (
-                <RecommendResult
-                    isTest={isTest}
-                    setIsTest={setIsTest}
-                    result={result}
-                />
+                <RecommendResult answer={answer} />
             )}
         </S.Wrapper>
     );
