@@ -7,7 +7,7 @@ import { loginState } from '../../../recoil/loginState';
 
 const NavBar = () => {
     const navigate = useNavigate();
-    const isMentor = false;
+    const isMentor = true;
     // const isLoggedin = useRecoilValue(loginState);
 
     const goLogin = () => {

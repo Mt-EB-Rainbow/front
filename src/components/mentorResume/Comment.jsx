@@ -1,9 +1,7 @@
 import CommentList from './CommentList';
 import CommentWrite from './CommentWrite';
 
-const Comment = () => {
-    const feedback = true;
-
+const Comment = ({ feedback }) => {
     return (
         <>
             {feedback ? (

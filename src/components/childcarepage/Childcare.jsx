@@ -45,7 +45,9 @@ const provinceData = [
 const Childcare = () => {
     const [current, setCurrent] = useState(false);
     const [dong, setDong] = useState('');
-    const pageNum = 1;
+    //페이지네이션
+    const [pageNum, setPageNum] = useState(1);
+    const [pageCnt, setPageCnt] = useState(0);
     //get받아온 배열 저장
     const [nurturesArray, setNurturesArray] = useState([]);
 
@@ -56,7 +58,7 @@ const Childcare = () => {
         setDistrict(value);
     };
 
-    //보육시설 get`
+    //보육시설 get
     const getchild = async () => {
         console.log(district);
         console.log(dong);
@@ -67,13 +69,14 @@ const Childcare = () => {
             console.log(res.data.nurturesResponse);
             if ((res.status == 200) | (res.status == 201)) {
                 setNurturesArray(res.data.nurturesResponse);
+                setPageCnt(res.data.pageCnt);
             }
         } catch (err) {
             console.log(err);
             alert('입력값을 확인해주세요!');
         }
     };
-
+    console.log(pageCnt);
     //티오있는 시설 리스트 필터링
     const TO = nurturesArray.filter(el => el.capacity != el.current);
     console.log(TO);
@@ -184,10 +187,23 @@ const Childcare = () => {
                     <S.Length>총 {nurturesArray.length}건</S.Length>
                     <S.Line />
                     {nurturesArray.length ? (
-                        <Table
-                            columns={columns}
-                            data={current ? TOdata : data}
-                        />
+                        <>
+                            <Table
+                                columns={columns}
+                                data={current ? TOdata : data}
+                            />
+                            <S.Footer>
+                                <S.PaginationUi
+                                    current={pageNum}
+                                    total={16}
+                                    pageSize={10}
+                                    onChange={newPage => {
+                                        setPageNum(newPage);
+                                        getchild();
+                                    }}
+                                />
+                            </S.Footer>
+                        </>
                     ) : (
                         <NoTable />
                     )}
