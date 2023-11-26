@@ -25,11 +25,17 @@ const Recommend = () => {
         setQuestions(res.questions);
         setIsLoading(false);
     };
-    const onResultClick = async answer => {
-        const res = await PostAnswer(answer);
-        console.log(res);
-        setResult(res.jobsResponse);
-        setIsTest(false);
+
+    const checkOnlyOne = (name, val, checkThis) => {
+        const checkboxes = document.getElementsByName(name);
+        for (let i = 0; i < checkboxes.length; i++) {
+            checkboxes[i].checked = false;
+        }
+        checkThis.checked = true;
+
+        let newAnswer = { ...answer };
+        newAnswer[name] = val;
+        setAnswer(newAnswer);
     };
 
     useEffect(() => {
