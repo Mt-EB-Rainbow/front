@@ -21,6 +21,7 @@ const CommentWrite = () => {
         const res = await FeedbackApi(memberId, resumeId, content);
         console.log(res?.config.data);
         await getComment();
+        setContent('')
     };
 
     //피드백 get
