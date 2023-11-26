@@ -42,6 +42,20 @@ const NavBar = () => {
         }
     }, []);
 
+    // 로그아웃
+    const logout = async () => {
+        try {
+            const res = await SignoutApi();
+            if ((res.status == 200) | (res.status == 201)) {
+                console.log(res);
+                navigate('/');
+            }
+        } catch (err) {
+            console.log(err);
+            alert('오류');
+        }
+    };
+
     const goLogin = () => {
         navigate('/login');
     };

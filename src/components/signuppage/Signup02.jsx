@@ -23,10 +23,6 @@ const Signup02 = () => {
         e.preventDefault();
         try {
             const res = await SignApi(name, email, pw, isMentor);
-
-            if ((res.status == 200) | (res.status == 201)) {
-                console.log(res);
-                window.scrollTo(0, 0);
                 navigate('/signup03');
             }
         } catch (err) {
