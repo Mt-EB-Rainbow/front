@@ -1050,9 +1050,7 @@ const New = ({ isEdit }) => {
                                             }
                                             defaultValue={
                                                 isEdit
-                                                    ? contentdata.data
-                                                          ?.languages[0]
-                                                          .testName
+                                                    ? languages[0].testName
                                                     : ''
                                             }
                                         />
@@ -1063,10 +1061,7 @@ const New = ({ isEdit }) => {
                                                 setScore(e.target.value, index)
                                             }
                                             defaultValue={
-                                                isEdit
-                                                    ? contentdata.data
-                                                          ?.languages[0].score
-                                                    : ''
+                                                isEdit ? languages[0].score : ''
                                             }
                                         />
                                     </div>
