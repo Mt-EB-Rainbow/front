@@ -4,11 +4,13 @@ import { NavBox, Menu } from './NavBar.style';
 import logo from '../../../assets/logo.svg';
 import { SignoutApi } from '../../../api/logout';
 import { CheckMentorApi } from '../../../api/isMentor';
+import { useState, useEffect } from 'react';
 
 const NavBar = () => {
     const navigate = useNavigate();
 
     const isLoggedin = localStorage.getItem('accessToken');
+    const [mentorStatus, setMentorStatus] = useState(false);
 
     // 로그아웃
     const logout = async () => {
@@ -24,11 +26,19 @@ const NavBar = () => {
         }
     };
 
-    //멘토 여부 get
-    const isMentor = async () => {
-        const res = await CheckMentorApi(localStorage.getItem('memberId'));
-        console.log(res);
-    };
+    // 멘토 여부 확인 및 상태 업데이트
+    useEffect(() => {
+        const fetchMentorStatus = async () => {
+            try {
+                const status = await CheckMentorApi();
+                setMentorStatus(status);
+            } catch (err) {
+                console.error('멘토 상태 확인 중 오류 발생', err);
+            }
+        };
+
+        fetchMentorStatus();
+    }, []);
 
     const goLogin = () => {
         navigate('/login');
@@ -78,8 +88,8 @@ const NavBar = () => {
                     <Menu onClick={goDictionary}>직무 백과</Menu>
                     <Menu onClick={goRecommend}>직무 추천</Menu>
                     <Menu onClick={goTraining}>직업 교육</Menu>
-                    <Menu onClick={isMentor ? goMentorBoards : goResume}>
-                        {isMentor ? '이력서 피드백' : '이력서 작성'}
+                    <Menu onClick={mentorStatus ? goMentorBoards : goResume}>
+                        {mentorStatus ? '이력서 피드백' : '이력서 작성'}
                     </Menu>
                     <Menu onClick={goChildcare}>보육시설 조회</Menu>
                     <Menu onClick={goSupport}>취업지원 기관 조회</Menu>
