@@ -174,12 +174,10 @@ const Dictionary = () => {
                                         <S.InfoTitle>직무 소개</S.InfoTitle>
                                         <S.Line />
                                         <S.Info>{item.description}</S.Info>
-                                        <S.InfoTitle>
-                                            필요 기술 및 지식
-                                        </S.InfoTitle>
+                                        <S.InfoTitle>핵심 역량</S.InfoTitle>
                                         <S.Line />
                                         <S.Info>{item.coreCompetency}</S.Info>
-                                        <S.InfoTitle>근무 실태</S.InfoTitle>
+                                        <S.InfoTitle>경력 개발</S.InfoTitle>
                                         <S.Line />
                                         <S.Info>{item.competencies}</S.Info>
                                     </S.InfoBox>
@@ -193,7 +191,7 @@ const Dictionary = () => {
                                                 style={{ marginTop: '1.5rem' }}
                                             >
                                                 <S.InfoTitle>
-                                                    이런 분께 추천해요
+                                                    이런 장점이 있어요
                                                 </S.InfoTitle>
                                                 <S.Info
                                                     width='21.3rem'
@@ -214,7 +212,7 @@ const Dictionary = () => {
                                                 style={{ marginTop: '1.5rem' }}
                                             >
                                                 <S.InfoTitle>
-                                                    이런 분께 추천하지 않아요
+                                                    이런 단점이 있어요
                                                 </S.InfoTitle>
                                                 <S.Info
                                                     width='21.3rem'

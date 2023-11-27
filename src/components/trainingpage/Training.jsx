@@ -22,7 +22,6 @@ const Training = () => {
         loading,
     } = useTraining();
 
-    console.log(totalTrainings);
     console.log(loading);
     const navigate = useNavigate();
     const PROJECTS_PER_PAGE = 12;
@@ -172,15 +171,17 @@ const Training = () => {
     };
 
     useEffect(() => {
+        console.log(loading);
         if (state !== null) {
             setInputName(state.jobName);
             SearchById(state.jobId);
             setIsNameDisable(false);
             setLoading(false);
         } else {
+            setLoading(true);
             fetchSites();
         }
-    }, []);
+    }, [currentPage]);
 
     return (
         <>
@@ -281,7 +282,7 @@ const Training = () => {
                             {/* <S.PaginationUi
                                 current={currentPage}
                                 total={totalTrainings}
-                                pageSize={PROJECTS_PER_PAGE}
+                                defaultPageSize={PROJECTS_PER_PAGE}
                                 onChange={newPage => {
                                     navigate(`?page=${newPage}`);
                                 }}

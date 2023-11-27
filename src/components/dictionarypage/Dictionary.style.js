@@ -47,7 +47,7 @@ S.JobTitle = styled.div`
     text-align: center;
     font-size: 1.5rem;
     font-weight: 700;
-    margin: 2rem 0 4rem 0;
+    margin: 3rem 0 4rem 0;
 `;
 S.InfoBox = styled(S.ColumnContainer)`
     width: ${props => (props.width ? props.width : '59.7rem')};
@@ -109,11 +109,6 @@ S.Input = styled.input`
 S.InfoTitle = styled.div`
     font-size: 1.4rem;
     font-weight: 700;
-`;
-S.Line = styled.hr`
-    width: 59.65rem;
-    border: 1px solid var(--light-gray);
-    margin: 0.5rem 0 4rem 0;
 `;
 S.InlineContainer = styled.div`
     display: flex;
