@@ -86,6 +86,7 @@ const RecommendResult = () => {
                                                 navigate('/dictionary/', {
                                                     state: {
                                                         jobId: item.jobId,
+                                                        jobName: item.name,
                                                     },
                                                 })
                                             }
@@ -97,6 +98,7 @@ const RecommendResult = () => {
                                                 navigate('/training/', {
                                                     state: {
                                                         jobId: item.jobId,
+                                                        jobName: item.name,
                                                     },
                                                 })
                                             }
