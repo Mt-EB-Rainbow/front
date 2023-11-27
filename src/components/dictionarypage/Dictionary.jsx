@@ -16,7 +16,7 @@ const Dictionary = () => {
     const [categoryData, setCategoryData] = useState([]); // 전체 카테고리 데이터 배열
     const [jobData, setJobData] = useState([]); // 선택된 카테고리에 속한 직무 이름 배열
     const [selectedCategory, setSelectedCategory] = useState(1); // categoryId int
-    const [seletedJob, setSeletedJob] = useState('직무 이름'); // jobId int
+    const [selectedJob, setSelectedJob] = useState('직무 이름'); // jobId int
     const [inputName, setInputName] = useState(''); // 직무 이름 string
     const [jobInfo, setJobInfo] = useState([]); // 객체 배열
     const { state } = useLocation();
@@ -53,19 +53,20 @@ const Dictionary = () => {
     const onCategoryChange = categoryId => {
         setSelectedCategory(categoryId);
         setJobData(categoryData[categoryId - 1].jobResponses);
-        setSeletedJob('직무 이름');
+        setSelectedJob('직무 이름');
         setIsIdDisable(true);
     };
 
     const onJobChange = jobId => {
-        setSeletedJob(jobId);
+        setSelectedJob(jobId);
         setIsIdDisable(false);
     };
 
     useEffect(() => {
         if (state !== null) {
-            setSeletedJob(state.jobId);
-            SearchById(state.jobId);
+            setInputName(state.jobName);
+            SearchByName(state.jobName);
+            setIsNameDisable(false);
         }
         GetCategory();
     }, []);
@@ -81,6 +82,7 @@ const Dictionary = () => {
                                 '찾고자 하는 직무 이름을 검색해 보세요'
                             }
                             onChange={onInputChange}
+                            value={inputName}
                         />
                         <S.GreenBtn
                             disabled={isNameDisable}
@@ -122,7 +124,7 @@ const Dictionary = () => {
                                         height: '3.2rem',
                                         fontSize: '1rem',
                                     }}
-                                    value={seletedJob}
+                                    value={selectedJob}
                                     onChange={onJobChange}
                                     options={jobData.map(edu => ({
                                         label: edu.name,
@@ -132,7 +134,7 @@ const Dictionary = () => {
                             </Space>
                             <S.GreenBtn
                                 disabled={isIdDisable}
-                                onClick={() => SearchById(seletedJob)}
+                                onClick={() => SearchById(selectedJob)}
                                 backgroundColor={
                                     isIdDisable
                                         ? 'var(--light-gray)'

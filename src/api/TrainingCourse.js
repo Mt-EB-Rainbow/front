@@ -76,3 +76,29 @@ export const TrainingFilterApi = async (type, category, education) => {
         console.log(err);
     }
 };
+
+export const GetTrainingBySearch = async (query, category, classDomain) => {
+    try {
+        const postData = JSON.stringify({
+            query: query,
+            category: category,
+            classDomain: classDomain,
+        });
+        const res = await client.post('/education/search', postData, {
+            headers: { 'Content-Type': 'application/json' },
+        });
+        console.log(res);
+        return res.data;
+    } catch (err) {
+        console.log(err);
+    }
+};
+
+export const GetTrainingById = async jobId => {
+    try {
+        const res = await client.get(`/education/search/${jobId}`);
+        return res.data;
+    } catch (err) {
+        console.log(err);
+    }
+};
