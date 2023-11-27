@@ -79,6 +79,11 @@ export const ShortInput = styled.input`
     margin-bottom: 2.6rem;
 
     margin-right: 1rem;
+
+    &.read-only {
+        background-color: var(--light-gray);
+        color: var(--dark-gray);
+    }
 `;
 
 export const ShortInputWrapper = styled.div`
@@ -105,6 +110,7 @@ export const GreenBox = styled.div`
     line-height: normal;
     padding: 1rem;
     margin-bottom: 0.5rem;
+    white-space: pre-wrap;
 `;
 
 export const TextArea = styled.textarea`
@@ -117,6 +123,7 @@ export const TextArea = styled.textarea`
     padding: 1rem;
     box-sizing: border-box;
     margin-bottom: 2.75rem;
+    font-size: 0.8rem;
 `;
 
 export const Plus = styled.div`
@@ -152,8 +159,41 @@ export const GrayBox = styled.div`
     padding: 0.85rem 2rem;
     box-sizing: border-box;
     display: flex;
+    flex-direction: row;
     align-items: center;
 `;
+
+export const BoxLeft = styled.div`
+    display: flex;
+    flex-direction: column;
+
+    & > div {
+        display: flex;
+        flex-direction: row;
+    }
+`;
+
+export const Label = styled.label`
+    display: flex;
+    flex-direction: row;
+    margin-right: 0.5rem;
+    align-items: center;
+    cursor: pointer;
+
+    & > div {
+        font-size: 0.6rem;
+        color: var(--gray);
+    }
+`;
+export const CheckBox = styled.input`
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 100rem;
+    border: 1px solid var(--gray);
+    margin-right: 0.24rem;
+`;
+
+export const BoxRight = styled.div``;
 
 export const SmallInput = styled.input`
     color: black;
