@@ -81,7 +81,6 @@ S.Icon = styled.img`
     margin: 1.5rem 1rem 0 1.5rem;
 `;
 S.GreenBtn = styled.button`
-    padding: 0 1.5rem;
     width: 4.75rem;
     height: 3.2rem;
     border-radius: 0.6rem;

@@ -117,7 +117,6 @@ export const SelectUi = styled(Select)`
 `;
 
 export const GreenBtn = styled.button`
-    padding: 0 1.5rem;
     width: 4.75rem;
     height: 3.2rem;
     border-radius: 0.6rem;
