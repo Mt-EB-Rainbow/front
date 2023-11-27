@@ -52,6 +52,7 @@ export const InputText2 = styled.input`
     font-size: 0.9rem;
     outline: none;
     border-radius: 0.6rem;
+
     box-sizing: border-box;
     padding: 1.5vh;
 `;

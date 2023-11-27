@@ -680,13 +680,6 @@ const New = ({ isEdit }) => {
                                                           .startDate
                                                     : ''
                                             }
-                                            defaultValue={
-                                                isEdit
-                                                    ? contentdata.data
-                                                          ?.educations[index]
-                                                          .startDate
-                                                    : ''
-                                            }
                                         />
                                         <span>- </span>
                                         <S.SmallInput1
@@ -697,13 +690,6 @@ const New = ({ isEdit }) => {
                                                     e.target.value,
                                                     index,
                                                 )
-                                            }
-                                            defaultValue={
-                                                isEdit
-                                                    ? contentdata.data
-                                                          ?.educations[index]
-                                                          .finishDate
-                                                    : ''
                                             }
                                             defaultValue={
                                                 isEdit
@@ -888,13 +874,6 @@ const New = ({ isEdit }) => {
                                                           .department
                                                     : ''
                                             }
-                                            defaultValue={
-                                                isEdit
-                                                    ? contentdata.data
-                                                          ?.experiences[0]
-                                                          .department
-                                                    : ''
-                                            }
                                         />
                                         <S.SmallInput
                                             type='text'
@@ -982,79 +961,6 @@ const New = ({ isEdit }) => {
                                                     ? contentdata.data
                                                           ?.languages[0].score
                                                     : ''
-                                            }
-                                            defaultValue={
-                                                isEdit
-                                                    ? contentdata.data
-                                                          ?.experiences[0]
-                                                          .position
-                                                    : ''
-                                            }
-                                        />
-                                    </S.BoxRight>
-                                </S.GrayBox>
-                            </div>
-                        ))}
-
-                    {/* 어학 */}
-                    <S.TitleContainer2>
-                        <S.TitleWrapper2>
-                            <S.Title>어학</S.Title>
-                        </S.TitleWrapper2>
-                        <S.Plus onClick={addLanguage}>+ 항목 추가</S.Plus>
-                    </S.TitleContainer2>
-                    <S.GreenBox>
-                        {
-                            '• 외국어 자격증을 보유한 경우 작성해주세요. \n• 활용 가능한 외국어가 있다면, 어느정도 수준인지 레벨을 선택해주세요.'
-                        }
-                    </S.GreenBox>
-                    <S.Line />
-                    {Array(languages.length)
-                        .fill(1)
-                        .map((_, index) => (
-                            <div style={{ width: '39.3rem' }}>
-                                <S.GrayBox>
-                                    <div>
-                                        <S.SmallInput
-                                            type='text'
-                                            placeholder='2000.00 (취득년월)'
-                                            onChange={e =>
-                                                setGainedDate(
-                                                    e.target.value,
-                                                    index,
-                                                )
-                                            }
-                                            defaultValue={
-                                                isEdit
-                                                    ? contentdata.data
-                                                          ?.languages[0]
-                                                          .gainedDate
-                                                    : ''
-                                            }
-                                        />
-                                        <S.School
-                                            type='text'
-                                            placeholder='언어'
-                                            onChange={e =>
-                                                setTestName(
-                                                    e.target.value,
-                                                    index,
-                                                )
-                                            }
-                                            defaultValue={
-                                                isEdit
-                                                    ? languages[0].testName
-                                                    : ''
-                                            }
-                                        />
-                                        <S.SmallInput
-                                            type='text'
-                                            placeholder='어학시험명 / 급수'
-                                            onChange={e =>
-                                                setScore(e.target.value, index)
-                                            }
-                                            defaultValue={
-                                                isEdit ? languages[0].score : ''
                                             }
                                         />
                                     </div>
