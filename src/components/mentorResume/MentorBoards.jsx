@@ -7,8 +7,6 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { getAllResume } from '../../api/resume';
 import { usePagination } from 'react-table';
 
-const isResumeExist = true;
-
 const MentorBoards = () => {
     const navigate = useNavigate();
     const [resumeArr, setResumeArr] = useState([]);
@@ -26,12 +24,11 @@ const MentorBoards = () => {
     return (
         <>
             <S.Container>
-                <S.Wrapper height={resumeArr.length > 9? true: false}>
+                <S.Wrapper height={resumeArr.length > 9 ? true : false}>
                     <PageTitle text={'제출된 이력서'} />
                     <div style={{ height: '6.5rem' }}></div>
                     <S.HeaderWrapper>
-                    <S.Length>총 {resumeArr.length}건</S.Length>
-                
+                        <S.Length>총 {resumeArr.length}건</S.Length>
                     </S.HeaderWrapper>
 
                     {resumeArr.length ? (
