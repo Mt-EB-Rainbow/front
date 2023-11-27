@@ -31,9 +31,6 @@ const LoginEmail = () => {
         navigate('/signup01');
     };
 
-    const goSignup = () => {
-        navigate('/signup01');
-    };
     return (
         <>
             <S.Wrapper>

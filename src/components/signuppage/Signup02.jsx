@@ -23,8 +23,7 @@ const Signup02 = () => {
         e.preventDefault();
         try {
             const res = await SignApi(name, email, pw, isMentor);
-                navigate('/signup03');
-            }
+            navigate('/signup03');
         } catch (err) {
             console.log(err);
             alert('이메일 / 패스워드를 다시 입력해주세요.');
