@@ -321,6 +321,7 @@ const New = ({ isEdit }) => {
         );
     };
 
+    // 항목 추가 함수
     const addEducation = () => {
         setEducations(prev => [...prev, { ...initialEducation }]);
     };
@@ -337,6 +338,32 @@ const New = ({ isEdit }) => {
         setAwards(prev => [...prev, { ...initialAward }]);
     };
 
+    // 항목 삭제 함수
+    const removeEducation = index => {
+        setEducations(prevEducations =>
+            prevEducations.filter((_, eduIndex) => eduIndex !== index),
+        );
+    };
+
+    const removeExperience = index => {
+        setExperiences(prevEducations =>
+            prevEducations.filter((_, exIndex) => exIndex !== index),
+        );
+    };
+
+    const removeLanguage = index => {
+        setLanguages(prevLanguages =>
+            prevLanguages.filter((_, lanIndex) => lanIndex !== index),
+        );
+    };
+
+    const removeAwards = index => {
+        setAwards(prevAward =>
+            prevAward.filter((_, awardsIndex) => awardsIndex !== index),
+        );
+    };
+
+    // 이력서 제출 함수
     const onSubmit = async e => {
         e.preventDefault();
         try {
@@ -550,28 +577,43 @@ const New = ({ isEdit }) => {
                                     </div>
                                 </S.BoxLeft>
                                 <S.BoxRight>
-                                    <S.School
-                                        type='text'
-                                        placeholder='학교명'
-                                        onChange={e =>
-                                            setName(e.target.value, index)
-                                        }
-                                        defaultValue={
-                                            isEdit ? educations[index].name : ''
-                                        }
-                                    />
-                                    <S.SmallInput
-                                        type='text'
-                                        placeholder='전공 및 학위'
-                                        onChange={e =>
-                                            setMajor(e.target.value, index)
-                                        }
-                                        defaultValue={
-                                            isEdit
-                                                ? educations[index].major
-                                                : ''
-                                        }
-                                    />
+                                    <div
+                                        style={{
+                                            display: 'flex',
+                                            flexDirection: 'column',
+                                            marginRight: '12rem',
+                                        }}
+                                    >
+                                        <S.School
+                                            type='text'
+                                            placeholder='학교명'
+                                            onChange={e =>
+                                                setName(e.target.value, index)
+                                            }
+                                            defaultValue={
+                                                isEdit
+                                                    ? educations[index].name
+                                                    : ''
+                                            }
+                                        />
+                                        <S.SmallInput
+                                            type='text'
+                                            placeholder='전공 및 학위'
+                                            onChange={e =>
+                                                setMajor(e.target.value, index)
+                                            }
+                                            defaultValue={
+                                                isEdit
+                                                    ? educations[index].major
+                                                    : ''
+                                            }
+                                        />
+                                    </div>
+                                    <S.RemoveBtn
+                                        onClick={() => removeEducation(index)}
+                                    >
+                                        - 항목 삭제
+                                    </S.RemoveBtn>
                                 </S.BoxRight>
                             </S.GrayBox>
                         </div>
@@ -595,7 +637,7 @@ const New = ({ isEdit }) => {
                             <div style={{ width: '39.3rem' }}>
                                 <S.GrayBox>
                                     <S.BoxLeft>
-                                        <div>
+                                        <div style={{ width: '7.86rem' }}>
                                             <S.SmallInput1
                                                 type='text'
                                                 placeholder='2000.00'
@@ -639,36 +681,53 @@ const New = ({ isEdit }) => {
                                         </S.Label>
                                     </S.BoxLeft>
                                     <S.BoxRight>
-                                        <S.School
-                                            type='text'
-                                            placeholder='회사명'
-                                            onChange={e =>
-                                                setDepartment(
-                                                    e.target.value,
-                                                    index,
-                                                )
+                                        <div
+                                            style={{
+                                                display: 'flex',
+                                                flexDirection: 'column',
+                                                marginRight: '12rem',
+                                            }}
+                                        >
+                                            <S.School
+                                                type='text'
+                                                placeholder='회사명'
+                                                onChange={e =>
+                                                    setDepartment(
+                                                        e.target.value,
+                                                        index,
+                                                    )
+                                                }
+                                                defaultValue={
+                                                    isEdit
+                                                        ? experiences[0]
+                                                              .department
+                                                        : ''
+                                                }
+                                            />
+                                            <S.SmallInput
+                                                type='text'
+                                                placeholder='부서명 / 직책'
+                                                onChange={e =>
+                                                    setPosition(
+                                                        e.target.value,
+                                                        index,
+                                                    )
+                                                }
+                                                defaultValue={
+                                                    isEdit
+                                                        ? experiences[0]
+                                                              .position
+                                                        : ''
+                                                }
+                                            />
+                                        </div>
+                                        <S.RemoveBtn
+                                            onClick={() =>
+                                                removeExperience(index)
                                             }
-                                            defaultValue={
-                                                isEdit
-                                                    ? experiences[0].department
-                                                    : ''
-                                            }
-                                        />
-                                        <S.SmallInput
-                                            type='text'
-                                            placeholder='부서명 / 직책'
-                                            onChange={e =>
-                                                setPosition(
-                                                    e.target.value,
-                                                    index,
-                                                )
-                                            }
-                                            defaultValue={
-                                                isEdit
-                                                    ? experiences[0].position
-                                                    : ''
-                                            }
-                                        />
+                                        >
+                                            - 항목 삭제
+                                        </S.RemoveBtn>
                                     </S.BoxRight>
                                 </S.GrayBox>
                             </div>
@@ -692,22 +751,26 @@ const New = ({ isEdit }) => {
                         .map((_, index) => (
                             <div style={{ width: '39.3rem' }}>
                                 <S.GrayBox>
-                                    <div>
-                                        <S.SmallInput
-                                            type='text'
-                                            placeholder='2000.00 (취득년월)'
-                                            onChange={e =>
-                                                setGainedDate(
-                                                    e.target.value,
-                                                    index,
-                                                )
-                                            }
-                                            defaultValue={
-                                                isEdit
-                                                    ? languages[0].gainedDate
-                                                    : ''
-                                            }
-                                        />
+                                    <S.SmallInput
+                                        type='text'
+                                        placeholder='2000.00 (취득년월)'
+                                        onChange={e =>
+                                            setGainedDate(e.target.value, index)
+                                        }
+                                        defaultValue={
+                                            isEdit
+                                                ? languages[0].gainedDate
+                                                : ''
+                                        }
+                                    />
+                                    <div
+                                        style={{
+                                            display: 'flex',
+                                            flexDirection: 'column',
+                                            marginLeft: '2rem',
+                                            marginRight: '12.5rem',
+                                        }}
+                                    >
                                         <S.School
                                             type='text'
                                             placeholder='언어'
@@ -734,6 +797,11 @@ const New = ({ isEdit }) => {
                                             }
                                         />
                                     </div>
+                                    <S.RemoveBtn
+                                        onClick={() => removeLanguage(index)}
+                                    >
+                                        - 항목 삭제
+                                    </S.RemoveBtn>
                                 </S.GrayBox>
                             </div>
                         ))}
@@ -788,6 +856,15 @@ const New = ({ isEdit }) => {
                                                     : ''
                                             }
                                         />
+                                    </div>
+                                    <div
+                                        style={{
+                                            display: 'flex',
+                                            flexDirection: 'column',
+                                            marginLeft: '2rem',
+                                            marginRight: '12rem',
+                                        }}
+                                    >
                                         <S.School
                                             type='text'
                                             placeholder='활동명 / 대회명'
@@ -815,6 +892,11 @@ const New = ({ isEdit }) => {
                                             }
                                         />
                                     </div>
+                                    <S.RemoveBtn
+                                        onClick={() => removeAwards(index)}
+                                    >
+                                        - 항목 삭제
+                                    </S.RemoveBtn>
                                 </S.GrayBox>
                             </div>
                         ))}
