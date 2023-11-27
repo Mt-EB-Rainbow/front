@@ -10,7 +10,7 @@ export const Wrapper = styled.div`
     flex-direction: column;
     align-items: center;
     width: 29.1rem;
-    height: auto;
+    height: 100vh;
 `;
 
 export const TextName = styled.div`
@@ -52,7 +52,7 @@ export const InputText2 = styled.input`
     font-size: 0.9rem;
     outline: none;
     border-radius: 0.6rem;
-   
+
     box-sizing: border-box;
     padding: 1.5vh;
 `;
@@ -66,10 +66,9 @@ export const Text = styled.div`
 `;
 
 export const Err = styled.div`
-color: red;
-font-size: 0.5rem;
-width: 100%;
-margin-bottom: 1.2rem;
-margin-top: 0.5rem;
-
-`
+    color: red;
+    font-size: 0.5rem;
+    width: 100%;
+    margin-bottom: 1.2rem;
+    margin-top: 0.5rem;
+`;
