@@ -92,7 +92,7 @@ const New = ({ isEdit }) => {
     };
 
     const onChangeCheckbox = checked => {
-        console.log(`switch to ${checked}`);
+        // console.log(`switch to ${checked}`);
         setCheck(!check);
     };
     const openModal = () => {
@@ -318,9 +318,13 @@ const New = ({ isEdit }) => {
             };
 
             const response = await NewResumeApi(resumeId, resumeData);
-            console.log('Response:', response);
+            // console.log('Response:', response);
 
-            if (!response || response.status !== 200) {
+            if (
+                !response ||
+                response.status !== 200 ||
+                response.status !== 201
+            ) {
                 throw new Error('Invalid response from server');
             }
 
@@ -426,9 +430,12 @@ const New = ({ isEdit }) => {
                                         <S.SmallInput1
                                             type='text'
                                             placeholder='2000.00'
-                                            onChange={e =>
-                                                setStartDate(e.target.value)
-                                            }
+                                            onChange={e => {
+                                                setStartDate(
+                                                    e.target.value,
+                                                    index,
+                                                );
+                                            }}
                                             defaultValue={
                                                 isEdit
                                                     ? contentdata.data
@@ -442,7 +449,10 @@ const New = ({ isEdit }) => {
                                             type='text'
                                             placeholder='2000.00'
                                             onChange={e =>
-                                                setFinishDate(e.target.value)
+                                                setFinishDate(
+                                                    e.target.value,
+                                                    index,
+                                                )
                                             }
                                             defaultValue={
                                                 isEdit
@@ -518,13 +528,13 @@ const New = ({ isEdit }) => {
                                         type='text'
                                         placeholder='학교명'
                                         onChange={e =>
-                                            setDepartment(e.target.value, index)
+                                            setName(e.target.value, index)
                                         }
                                         defaultValue={
                                             isEdit
-                                                ? contentdata.data?.experiences[
+                                                ? contentdata.data?.educations[
                                                       index
-                                                  ].department
+                                                  ].name
                                                 : ''
                                         }
                                     />
@@ -532,13 +542,13 @@ const New = ({ isEdit }) => {
                                         type='text'
                                         placeholder='전공 및 학위'
                                         onChange={e =>
-                                            setPosition(e.target.value, index)
+                                            setMajor(e.target.value, index)
                                         }
                                         defaultValue={
                                             isEdit
-                                                ? contentdata.data?.experiences[
+                                                ? contentdata.data?.educations[
                                                       index
-                                                  ].position
+                                                  ].major
                                                 : ''
                                         }
                                     />
@@ -572,6 +582,7 @@ const New = ({ isEdit }) => {
                                                 onChange={e =>
                                                     setStartDate2(
                                                         e.target.value,
+                                                        index,
                                                     )
                                                 }
                                                 defaultValue={
@@ -589,6 +600,7 @@ const New = ({ isEdit }) => {
                                                 onChange={e =>
                                                     setFinishDate2(
                                                         e.target.value,
+                                                        index,
                                                     )
                                                 }
                                                 defaultValue={
@@ -604,11 +616,6 @@ const New = ({ isEdit }) => {
                                             <S.CheckBox
                                                 type='checkbox'
                                                 name='isAttending'
-                                                // checked={degree === '졸업'}
-                                                // onChange={() =>
-                                                //     checkOnlyOne('졸업')
-                                                // }
-                                                // id='graduateCheckbox'
                                             />
                                             <div>재직중</div>
                                         </S.Label>
@@ -618,7 +625,10 @@ const New = ({ isEdit }) => {
                                             type='text'
                                             placeholder='회사명'
                                             onChange={e =>
-                                                setDepartment(e.target.value)
+                                                setDepartment(
+                                                    e.target.value,
+                                                    index,
+                                                )
                                             }
                                             defaultValue={
                                                 isEdit
@@ -632,7 +642,10 @@ const New = ({ isEdit }) => {
                                             type='text'
                                             placeholder='부서명 / 직책'
                                             onChange={e =>
-                                                setPosition(e.target.value)
+                                                setPosition(
+                                                    e.target.value,
+                                                    index,
+                                                )
                                             }
                                             defaultValue={
                                                 isEdit
@@ -670,7 +683,10 @@ const New = ({ isEdit }) => {
                                             type='text'
                                             placeholder='2000.00 (취득년월)'
                                             onChange={e =>
-                                                setGainedDate(e.target.value)
+                                                setGainedDate(
+                                                    e.target.value,
+                                                    index,
+                                                )
                                             }
                                             defaultValue={
                                                 isEdit
@@ -684,7 +700,10 @@ const New = ({ isEdit }) => {
                                             type='text'
                                             placeholder='언어'
                                             onChange={e =>
-                                                setTestName(e.target.value)
+                                                setTestName(
+                                                    e.target.value,
+                                                    index,
+                                                )
                                             }
                                             defaultValue={
                                                 isEdit
@@ -698,7 +717,7 @@ const New = ({ isEdit }) => {
                                             type='text'
                                             placeholder='어학시험명 / 급수'
                                             onChange={e =>
-                                                setScore(e.target.value)
+                                                setScore(e.target.value, index)
                                             }
                                             defaultValue={
                                                 isEdit
@@ -735,7 +754,10 @@ const New = ({ isEdit }) => {
                                             type='text'
                                             placeholder='2000.00'
                                             onChange={e =>
-                                                setStartDate3(e.target.value)
+                                                setStartDate3(
+                                                    e.target.value,
+                                                    index,
+                                                )
                                             }
                                             defaultValue={
                                                 isEdit
@@ -749,7 +771,10 @@ const New = ({ isEdit }) => {
                                             type='text'
                                             placeholder='2000.00'
                                             onChange={e =>
-                                                setFinishDate3(e.target.value)
+                                                setFinishDate3(
+                                                    e.target.value,
+                                                    index,
+                                                )
                                             }
                                             defaultValue={
                                                 isEdit
@@ -762,7 +787,10 @@ const New = ({ isEdit }) => {
                                             type='text'
                                             placeholder='활동명 / 대회명'
                                             onChange={e =>
-                                                setActivity(e.target.value)
+                                                setActivity(
+                                                    e.target.value,
+                                                    index,
+                                                )
                                             }
                                             defaultValue={
                                                 isEdit
@@ -775,7 +803,10 @@ const New = ({ isEdit }) => {
                                             type='text'
                                             placeholder='활동 내용 / 수상 내역'
                                             onChange={e =>
-                                                setContent(e.target.value)
+                                                setContent(
+                                                    e.target.value,
+                                                    index,
+                                                )
                                             }
                                             defaultValue={
                                                 isEdit
