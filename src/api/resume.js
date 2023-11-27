@@ -1,4 +1,6 @@
 import client from './client';
+import { convertDateFieldsInArray } from '../util/DateFormatter';
+
 // 이력서 작성 시작
 export const ResumeApi = async memberId => {
     try {
@@ -27,29 +29,42 @@ export const GetResumeApi = async memberId => {
 };
 
 // 이력서 작성 내용 post
-export const NewResumeApi = async (
-    resumeId,
-    title,
-    introduction,
-    educations,
-    experiences,
-    languages,
-    awards,
-) => {
-    try {
-        const res = await client.post(`/resume/${resumeId}`, {
-            title: String(title),
-            introduction: String(introduction),
-            educations,
-            experiences,
-            languages,
-            awards,
-        });
+export const NewResumeApi = async (resumeId, resumeData) => {
+    // 날짜 필드 변환
+    const convertedEducations = convertDateFieldsInArray(
+        resumeData.educations,
+        ['startDate', 'finishDate'],
+    );
+    const convertedExperiences = convertDateFieldsInArray(
+        resumeData.experiences,
+        ['startDate', 'finishDate'],
+    );
+    const convertedLanguages = convertDateFieldsInArray(resumeData.languages, [
+        'gainedDate',
+    ]);
+    const convertedAwards = convertDateFieldsInArray(resumeData.awards, [
+        'startDate',
+        'finishDate',
+    ]);
 
-        console.log(res, ' resume 내용 post 성공');
+    // 변환된 데이터로 새 객체 생성
+    const convertedData = {
+        ...resumeData,
+        educations: convertedEducations,
+        experiences: convertedExperiences,
+        languages: convertedLanguages,
+        awards: convertedAwards,
+    };
+
+    console.log('Sending Resume Data:', convertedData); // 데이터 확인 로그
+
+    try {
+        const res = await client.post(`/resume/${resumeId}`, convertedData);
+        console.log('API Response:', res); // 응답 로그
         return res;
     } catch (err) {
-        console.log(err);
+        console.error('API Error:', err); // 오류 로그
+        throw err; // 오류를 다시 throw하여 상위 호출자에게 전파
     }
 };
 
