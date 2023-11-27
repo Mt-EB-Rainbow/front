@@ -6,7 +6,7 @@ import { useRecoilState } from 'recoil';
 import { isMentorState } from '../../recoil/loginState';
 
 const Signup01 = () => {
-    const [isMentor, setIsMentor] = useRecoilState(isMentorState);
+    // const [isMentor, setIsMentor] = useRecoilState(isMentorState);
     const navigate = useNavigate();
 
     const goSignup = () => {
@@ -14,7 +14,6 @@ const Signup01 = () => {
     };
     const goMentorSignup = () => {
         navigate('/mentorsignup');
-        setIsMentor(true);
     };
     return (
         <>

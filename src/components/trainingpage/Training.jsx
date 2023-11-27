@@ -7,6 +7,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import useTraining from '../../hooks/training/useTraining';
 import { GetTrainingById, GetTrainingBySearch } from '../../api/TrainingCourse';
+import Pagination from './pagination';
 
 const Training = () => {
     const {
@@ -170,15 +171,17 @@ const Training = () => {
     };
 
     useEffect(() => {
+        console.log(loading);
         if (state !== null) {
             setInputName(state.jobName);
             SearchById(state.jobId);
             setIsNameDisable(false);
             setLoading(false);
         } else {
+            setLoading(true);
             fetchSites();
         }
-    }, []);
+    }, [currentPage]);
 
     return (
         <>
@@ -276,14 +279,15 @@ const Training = () => {
                             ))}
                         </S.Body>
                         <S.Footer>
-                            <S.PaginationUi
+                            {/* <S.PaginationUi
                                 current={currentPage}
                                 total={totalTrainings}
-                                pageSize={PROJECTS_PER_PAGE}
+                                defaultPageSize={PROJECTS_PER_PAGE}
                                 onChange={newPage => {
                                     navigate(`?page=${newPage}`);
                                 }}
-                            />
+                            /> */}
+                            <Pagination total={totalTrainings} />
                         </S.Footer>
                     </S.Board>
                 </S.Wrapper>

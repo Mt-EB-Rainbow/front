@@ -2,7 +2,6 @@ import styled from 'styled-components';
 import CardSkeleton from '../Skeleton/CardSkeleton';
 
 const VideoCard = ({ thumbnail, href, title, loading }) => {
-    console.log(loading);
     return (
         <>
             {loading ? (
