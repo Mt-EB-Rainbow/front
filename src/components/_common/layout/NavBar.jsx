@@ -19,6 +19,7 @@ const NavBar = () => {
             const res = await SignoutApi();
             if ((res.status == 200) | (res.status == 201)) {
                 navigate('/');
+                setMentorStatus(false);
             }
         } catch (err) {
             console.log(err);
@@ -31,7 +32,8 @@ const NavBar = () => {
         const fetchMentorStatus = async memberId => {
             try {
                 const status = await CheckMentorApi(memberId);
-                setMentorStatus(status);
+                console.log(status?.data);
+                setMentorStatus(status?.data);
             } catch (err) {
                 console.error('멘토 상태 확인 중 오류 발생', err);
             }
@@ -40,7 +42,7 @@ const NavBar = () => {
         if (memberId) {
             fetchMentorStatus(memberId);
         }
-    }, []);
+    }, [isLoggedin]);
 
     const goLogin = () => {
         navigate('/login');
@@ -90,8 +92,8 @@ const NavBar = () => {
                     <Menu onClick={goDictionary}>직무 백과</Menu>
                     <Menu onClick={goRecommend}>직무 추천</Menu>
                     <Menu onClick={goTraining}>직업 교육</Menu>
-                    <Menu onClick={mentorStatus ? goMentorBoards : goResume}>
-                        {mentorStatus ? '이력서 피드백' : '이력서 작성'}
+                    <Menu onClick={true ? goMentorBoards : goResume}>
+                        {true ? '이력서 피드백' : '이력서 작성'}
                     </Menu>
                     <Menu onClick={goChildcare}>보육시설 조회</Menu>
                     <Menu onClick={goSupport}>취업지원 기관 조회</Menu>

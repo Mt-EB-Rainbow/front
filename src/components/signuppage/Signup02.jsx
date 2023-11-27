@@ -16,8 +16,8 @@ const Signup02 = () => {
     const [birth, setBirth] = useState('');
 
     const navigate = useNavigate();
-    const [isMentor, setIsMentor] = useRecoilState(isMentorState);
-
+    //const [isMentor, setIsMentor] = useRecoilState(isMentorState);
+    const isMentor = false;
     //회원가입하기
     const Sign = async e => {
         e.preventDefault();

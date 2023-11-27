@@ -34,7 +34,7 @@ const Resume = () => {
     return (
         <>
             <S.Container>
-                <S.Wrapper exist={resumeResponses.length}>
+                <S.Wrapper exist={resumeResponses.length > 2}>
                     <PageTitle text={'내 이력서 관리'} />
                     <div style={{ height: '6.5rem' }}></div>
                     <BoardsHeader

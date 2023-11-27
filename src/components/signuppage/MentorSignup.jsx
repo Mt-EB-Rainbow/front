@@ -1,7 +1,7 @@
 import * as S from './MentorSignup.style';
 import PageTitle from '../_common/PageTitle';
 import GreenBtn from '../_common/Btn/GreenBtn';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Select } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
@@ -14,14 +14,7 @@ const MentorSignup = () => {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [pw, setPw] = useState('');
-    const [birth, setBirth] = useState('');
-
-    const go03 = () => {
-        navigate('/mentorsignup03');
-    };
-
-    // 멘토 확인 state
-    const [isMentor, setIsMentor] = useRecoilState(isMentorState);
+    const isMentor = true;
 
     //회원가입하기
     const Sign = async e => {
@@ -32,8 +25,7 @@ const MentorSignup = () => {
             if ((res.status == 200) | (res.status == 201)) {
                 console.log(res);
                 window.scrollTo(0, 0);
-                navigate('/signup03');
-                console.log(isMentor);
+                navigate('/mentorsignup03');
             }
         } catch (err) {
             console.log(err);
@@ -45,7 +37,7 @@ const MentorSignup = () => {
         <>
             <S.Container>
                 <S.Wrapper>
-                    <PageTitle text={'회원가입'} />
+                    <PageTitle text={'멘토 회원가입'} />
                     <div style={{ height: '3rem' }}></div>
 
                     <S.Text>이름</S.Text>
