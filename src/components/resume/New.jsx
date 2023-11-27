@@ -1,66 +1,15 @@
 import GreenBtn from '../_common/Btn/GreenBtn';
 import PageTitle from '../_common/PageTitle';
 import * as S from './New.style';
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Switch } from 'antd';
 import './Switch.css';
 import { useNavigate, useParams } from 'react-router-dom';
 import { NewResumeApi, getResumeContentApi } from '../../api/resume';
-import { resumedata } from './mockData';
 import JobModal from './Modal';
 
 const New = ({ isEdit }) => {
-    const { resumeId } = useParams();
-    const navigate = useNavigate();
-    const [inputCount, setInputCount] = useState(0);
-    const [check, setCheck] = useState(false);
-
-    // input data
-    // 제목, 자기소개
-    const [title, setTitle] = useState('');
-    const [introduction, setIntroduction] = useState('');
-
-    const [educount, seteduCount] = useState(1);
-    // 학력
-    const [educations, setEducations] = useState(Array(educount));
-
-    const [startDate, setStartDate] = useState('');
-    const [startDateArr, setStartDateArr] = useState([]);
-    const [finishDate, setFinishDate] = useState(Array());
-    const [name, setName] = useState(Array());
-    const [major, setMajor] = useState(Array(educount));
-
-    // 경력
-    const [startDate2, setStartDate2] = useState('');
-    const [finishDate2, setFinishDate2] = useState('');
-    const [department, setDepartment] = useState('');
-    const [position, setPosition] = useState('');
-    const [experiences, setExperience] = useState([]);
-
-    // 어학
-    const [languages, setLaguages] = useState([]);
-    const [gainedDate, setGainedDate] = useState('');
-    const [testName, setTestName] = useState('');
-    const [score, setScore] = useState('');
-
-    // 수상
-    const [awards, setAwards] = useState([]);
-    const [startDate3, setStartDate3] = useState('');
-    const [finishDate3, setFinishDate3] = useState('');
-    const [activity, setActivity] = useState('');
-    const [content, setContent] = useState('');
-
-    // 모달 open
-    const [modalIsOpen, setModalIsOpen] = useState(false);
-    const openModal = () => {
-        setModalIsOpen(!modalIsOpen);
-    };
-
-    const closer = () => {
-        setModalIsOpen(!modalIsOpen);
-    };
-
-    //임시 데이터
+    //mock data
     const data = [
         '보육교사',
         '상담사',
@@ -70,8 +19,69 @@ const New = ({ isEdit }) => {
         '미용사',
     ];
 
-    /////모달/////
+    const { resumeId } = useParams();
+    const navigate = useNavigate();
+    const [inputCount, setInputCount] = useState(0);
+    const [check, setCheck] = useState(false);
+    const [title, setTitle] = useState('');
+    const [introduction, setIntroduction] = useState('');
+    const [educations, setEducations] = useState([]);
+    const [experiences, setExperiences] = useState([]);
+    const [languages, setLanguages] = useState([]);
+    const [awards, setAwards] = useState([]);
+    const [selectedJob, setSelectedJob] = useState('');
+    const [modalIsOpen, setModalIsOpen] = useState(false);
+    const [contentdata, setContentdata] = useState({});
 
+    const initialEducation = {
+        startDate: '',
+        finishDate: '',
+        name: '',
+        major: '',
+        degreeStatus: null,
+    };
+
+    const initialExperience = {
+        startDate: '',
+        finishDate: '',
+        department: '',
+        position: '',
+        isPresent: false,
+    };
+
+    const initialLanguage = {
+        gainedDate: '',
+        testName: '',
+        score: '',
+    };
+
+    const initialAward = {
+        startDate: '',
+        finishDate: '',
+        activity: '',
+        content: '',
+    };
+
+    useEffect(() => {
+        if (isEdit) {
+            const getContent = async () => {
+                const res = await getResumeContentApi(resumeId);
+                setContentdata(res.data);
+                setEducations(res.data.educations || [initialEducation]);
+                setExperiences(res.data.experiences || [initialExperience]);
+                setLanguages(res.data.languages || [initialLanguage]);
+                setAwards(res.data.awards || [initialAward]);
+            };
+            getContent();
+        } else {
+            setEducations([initialEducation]);
+            setExperiences([initialExperience]);
+            setLanguages([initialLanguage]);
+            setAwards([initialAward]);
+        }
+    }, [isEdit, resumeId]);
+
+    // 상태관리 함수
     const onChangeTitle = e => {
         setTitle(e.target.value);
         setInputCount(e.target.value.length);
@@ -80,44 +90,247 @@ const New = ({ isEdit }) => {
     const onChangeContent = e => {
         setIntroduction(e.target.value);
     };
-    const onChange = checked => {
+
+    const onChangeCheckbox = checked => {
         console.log(`switch to ${checked}`);
         setCheck(!check);
     };
-
-    // console.log(resumedata.educations);
-
-    // 내용 post
-    const onSubmit = async e => {
-        e.preventDefault();
-
-        const res = await NewResumeApi(
-            resumeId,
-            title,
-            introduction,
-            resumedata.educations,
-            resumedata.experiences,
-            resumedata.languages,
-            resumedata.awards,
-        );
-        console.log(res);
-        window.scrollTo(0, 0);
-        navigate('/resume');
-        alert('저장이 완료되었습니다.');
+    const openModal = () => {
+        setModalIsOpen(!modalIsOpen);
     };
 
-    //받아온 내용 저장
-    const [contentdata, setContentdata] = useState({});
+    const closeModal = () => {
+        setModalIsOpen(false);
+    };
 
-    //내용 get
-    useEffect(() => {
-        const getContent = async () => {
-            const res = await getResumeContentApi(resumeId);
-            setContentdata(res);
-            console.log(res);
-        };
-        getContent();
-    }, []);
+    const handleJobSelect = job => {
+        setSelectedJob(job);
+        closeModal();
+    };
+
+    // 학력 상태관리
+    const setStartDate = (date, index) => {
+        setEducations(prevEducations =>
+            prevEducations.map((education, idx) => {
+                if (idx === index) {
+                    return { ...education, startDate: date };
+                }
+                return education;
+            }),
+        );
+    };
+
+    const setFinishDate = (date, index) => {
+        setEducations(prevEducations =>
+            prevEducations.map((education, idx) => {
+                if (idx === index) {
+                    return { ...education, finishDate: date };
+                }
+                return education;
+            }),
+        );
+    };
+
+    const setName = (name, index) => {
+        setEducations(prevEducations =>
+            prevEducations.map((education, idx) => {
+                if (idx === index) {
+                    return { ...education, name: name };
+                }
+                return education;
+            }),
+        );
+    };
+
+    const setMajor = (major, index) => {
+        setEducations(prevEducations =>
+            prevEducations.map((education, idx) => {
+                if (idx === index) {
+                    return { ...education, major: major };
+                }
+                return education;
+            }),
+        );
+    };
+
+    // 경력 상태관리
+    const setDepartment = (department, index) => {
+        setExperiences(prevExperiences =>
+            prevExperiences.map((experience, idx) => {
+                if (idx === index) {
+                    return { ...experience, department: department };
+                }
+                return experience;
+            }),
+        );
+    };
+
+    const setPosition = (position, index) => {
+        setExperiences(prevExperiences =>
+            prevExperiences.map((experience, idx) => {
+                if (idx === index) {
+                    return { ...experience, position: position };
+                }
+                return experience;
+            }),
+        );
+    };
+
+    const setStartDate2 = (date, index) => {
+        setExperiences(prevExperiences =>
+            prevExperiences.map((experience, idx) => {
+                if (idx === index) {
+                    return { ...experience, startDate: date };
+                }
+                return experience;
+            }),
+        );
+    };
+
+    const setFinishDate2 = (date, index) => {
+        setExperiences(prevExperiences =>
+            prevExperiences.map((experience, idx) => {
+                if (idx === index) {
+                    return { ...experience, finishDate: date };
+                }
+                return experience;
+            }),
+        );
+    };
+
+    // 어학 상태관리
+    const setGainedDate = (date, index) => {
+        setLanguages(prevLanguages =>
+            prevLanguages.map((language, idx) => {
+                if (idx === index) {
+                    return { ...language, gainedDate: date };
+                }
+                return language;
+            }),
+        );
+    };
+
+    const setTestName = (name, index) => {
+        setLanguages(prevLanguages =>
+            prevLanguages.map((language, idx) => {
+                if (idx === index) {
+                    return { ...language, testName: name };
+                }
+                return language;
+            }),
+        );
+    };
+
+    const setScore = (score, index) => {
+        setLanguages(prevLanguages =>
+            prevLanguages.map((language, idx) => {
+                if (idx === index) {
+                    return { ...language, score: score };
+                }
+                return language;
+            }),
+        );
+    };
+
+    // 수상 상태관리
+    const setStartDate3 = (date, index) => {
+        setAwards(prevAwards =>
+            prevAwards.map((award, idx) => {
+                if (idx === index) {
+                    return { ...award, startDate: date };
+                }
+                return award;
+            }),
+        );
+    };
+
+    const setFinishDate3 = (date, index) => {
+        setAwards(prevAwards =>
+            prevAwards.map((award, idx) => {
+                if (idx === index) {
+                    return { ...award, finishDate: date };
+                }
+                return award;
+            }),
+        );
+    };
+
+    const setActivity = (activity, index) => {
+        setAwards(prevAwards =>
+            prevAwards.map((award, idx) => {
+                if (idx === index) {
+                    return { ...award, activity: activity };
+                }
+                return award;
+            }),
+        );
+    };
+
+    const setContent = (content, index) => {
+        setAwards(prevAwards =>
+            prevAwards.map((award, idx) => {
+                if (idx === index) {
+                    return { ...award, content: content };
+                }
+                return award;
+            }),
+        );
+    };
+
+    // 체크박스 상태 관리 함수
+    const checkOnlyOne = (index, status) => {
+        setEducations(prevEducations =>
+            prevEducations.map((education, idx) => {
+                if (idx === index) {
+                    return { ...education, degreeStatus: status };
+                }
+                return { ...education, degreeStatus: null };
+            }),
+        );
+    };
+
+    const addEducation = () => {
+        setEducations(prev => [...prev, { ...initialEducation }]);
+    };
+
+    const addExperience = () => {
+        setExperiences(prev => [...prev, { ...initialExperience }]);
+    };
+
+    const addLanguage = () => {
+        setLanguages(prev => [...prev, { ...initialLanguage }]);
+    };
+
+    const addAwards = () => {
+        setAwards(prev => [...prev, { ...initialAward }]);
+    };
+
+    const onSubmit = async e => {
+        e.preventDefault();
+        try {
+            const resumeData = {
+                title,
+                introduction,
+                educations,
+                experiences,
+                languages,
+                awards,
+            };
+
+            const response = await NewResumeApi(resumeId, resumeData);
+            console.log('Response:', response);
+
+            if (!response || response.status !== 200) {
+                throw new Error('Invalid response from server');
+            }
+
+            alert('저장이 완료되었습니다.');
+            navigate('/resume');
+        } catch (err) {
+            console.error(err);
+            alert('저장에 실패했습니다!');
+        }
+    };
 
     return (
         <>
@@ -130,7 +343,7 @@ const New = ({ isEdit }) => {
                     <S.SwitchStyle>
                         <Switch
                             defaultChecked={false}
-                            onChange={onChange}
+                            onChange={onChangeCheckbox}
                             checkedChildren='공개'
                             unCheckedChildren='비공개'
                             checked={check}
@@ -158,14 +371,18 @@ const New = ({ isEdit }) => {
                     </S.TitleWapper>
                     <S.ShortInputWrapper>
                         <S.ShortInput
+                            className='read-only'
                             type='text'
                             placeholder='직무를 입력하세요.'
+                            value={selectedJob}
+                            readOnly // 직접 입력을 막기 위해 readOnly 설정
                         />
                         <JobModal
                             isModalOpen={modalIsOpen}
-                            closer={closer}
+                            closer={closeModal}
                             maintext={'직무 검색하기'}
                             data={data}
+                            onItemSelect={handleJobSelect}
                         ></JobModal>
                         <GreenBtn
                             text={'직무 찾기'}
@@ -180,12 +397,9 @@ const New = ({ isEdit }) => {
                         <S.Title>간단한 자기소개</S.Title>
                     </S.TitleWapper>
                     <S.GreenBox>
-                        제1항의 지시를 받은 당해 행정기관은 이에 응하여야 한다.
-                        위원은 정당에 가입하거나 정치에 관여할 수 없다. 위원은
-                        정당에 가입하거나 정치에 관여할 수 없다. 공무원의 직무상
-                        불법행위로 손해를 받은 국민은 법률이 정하는 바에 의하여
-                        국가 또는 공공단체에 정당한 배상을 청구할 수 있다. 이
-                        경우 공무원 자신의 책임은 면제되지 아니한다.
+                        {
+                            '• 본인의 업무 경험을 기반으로 핵심역량과 업무 스킬을 간단히 작성해주세요.\n• 3~5줄로 요약하여 작성하는 것을 추천합니다!'
+                        }
                     </S.GreenBox>
                     <S.TextArea
                         type='text'
@@ -200,18 +414,14 @@ const New = ({ isEdit }) => {
                             <S.Title>학력</S.Title>
                             <S.Star>*</S.Star>
                         </S.TitleWrapper2>
-                        <S.Plus>+ 항목 추가</S.Plus>
+                        <S.Plus onClick={addEducation}>+ 항목 추가</S.Plus>
                     </S.TitleContainer>
-                    <S.GreenBox>
-                        제1항의 지시를 받은 당해 행정기관은 이에 응하여야 한다.
-                        위원은 정당에 가입하거나 정치에 관여할 수 없다.
-                    </S.GreenBox>
+                    <S.GreenBox>{'• 최신순으로 작성해주세요.'}</S.GreenBox>
                     <S.Line />
-                    {Array(educations.length)
-                        .fill(1)
-                        .map((_, index) => (
-                            <div style={{ width: '39.3rem' }}>
-                                <S.GrayBox>
+                    {educations.map((education, index) => (
+                        <div key={index} style={{ width: '39.3rem' }}>
+                            <S.GrayBox>
+                                <S.BoxLeft>
                                     <div>
                                         <S.SmallInput1
                                             type='text'
@@ -242,31 +452,258 @@ const New = ({ isEdit }) => {
                                                     : ''
                                             }
                                         />
+                                    </div>
+                                    <div>
+                                        <S.Label
+                                            htmlFor={`attendingCheckbox-${index}`}
+                                        >
+                                            <S.CheckBox
+                                                type='checkbox'
+                                                name={`degreeStatus-${index}`}
+                                                checked={
+                                                    education.degreeStatus ===
+                                                    '재학중'
+                                                }
+                                                onChange={() =>
+                                                    checkOnlyOne(
+                                                        index,
+                                                        '재학중',
+                                                    )
+                                                }
+                                                id={`attendingCheckbox-${index}`}
+                                            />
+                                            <div>재학중</div>
+                                        </S.Label>
+                                        <S.Label
+                                            htmlFor={`leavingCheckbox-${index}`}
+                                        >
+                                            <S.CheckBox
+                                                type='checkbox'
+                                                name={`degreeStatus-${index}`}
+                                                checked={
+                                                    education.degreeStatus ===
+                                                    '휴학중'
+                                                }
+                                                onChange={() =>
+                                                    checkOnlyOne(
+                                                        index,
+                                                        '휴학중',
+                                                    )
+                                                }
+                                                id={`leavingCheckbox-${index}`}
+                                            />
+                                            <div>휴학중</div>
+                                        </S.Label>
+                                        <S.Label
+                                            htmlFor={`graduateCheckbox-${index}`}
+                                        >
+                                            <S.CheckBox
+                                                type='checkbox'
+                                                name={`degreeStatus-${index}`}
+                                                checked={
+                                                    education.degreeStatus ===
+                                                    '졸업'
+                                                }
+                                                onChange={() =>
+                                                    checkOnlyOne(index, '졸업')
+                                                }
+                                                id={`graduateCheckbox-${index}`}
+                                            />
+                                            <div>졸업</div>
+                                        </S.Label>
+                                    </div>
+                                </S.BoxLeft>
+                                <S.BoxRight>
+                                    <S.School
+                                        type='text'
+                                        placeholder='학교명'
+                                        onChange={e =>
+                                            setDepartment(e.target.value, index)
+                                        }
+                                        defaultValue={
+                                            isEdit
+                                                ? contentdata.data?.experiences[
+                                                      index
+                                                  ].department
+                                                : ''
+                                        }
+                                    />
+                                    <S.SmallInput
+                                        type='text'
+                                        placeholder='전공 및 학위'
+                                        onChange={e =>
+                                            setPosition(e.target.value, index)
+                                        }
+                                        defaultValue={
+                                            isEdit
+                                                ? contentdata.data?.experiences[
+                                                      index
+                                                  ].position
+                                                : ''
+                                        }
+                                    />
+                                </S.BoxRight>
+                            </S.GrayBox>
+                        </div>
+                    ))}
+                    {/* 경력 */}
+                    <S.TitleContainer2>
+                        <S.TitleWrapper2>
+                            <S.Title>경력</S.Title>
+                        </S.TitleWrapper2>
+                        <S.Plus onClick={addExperience}>+ 항목 추가</S.Plus>
+                    </S.TitleContainer2>
+                    <S.GreenBox>
+                        {
+                            '• 담당하신 업무 중 우선순위가 높은 업무를 선별하여 최신순으로 작성해주세요.\n• 신입의 경우, 직무와 관련된 대외활동, 인턴, 계약직 경력 등이 있다면 작성해주세요. \n• 업무 또는 활동 시 담당했던 역할과 과정, 성과에 대해 자세히 작성해주세요. \n• 업무 성과는 되도록 구체적인 숫자 혹은 [%]로 표현해주세요!'
+                        }
+                    </S.GreenBox>
+                    <S.Line />
+                    {Array(experiences.length)
+                        .fill(1)
+                        .map((_, index) => (
+                            <div style={{ width: '39.3rem' }}>
+                                <S.GrayBox>
+                                    <S.BoxLeft>
+                                        <div>
+                                            <S.SmallInput1
+                                                type='text'
+                                                placeholder='2000.00'
+                                                onChange={e =>
+                                                    setStartDate2(
+                                                        e.target.value,
+                                                    )
+                                                }
+                                                defaultValue={
+                                                    isEdit
+                                                        ? contentdata.data
+                                                              ?.experiences[0]
+                                                              .startDate
+                                                        : ''
+                                                }
+                                            />
+                                            <span>- </span>
+                                            <S.SmallInput1
+                                                type='text'
+                                                placeholder='2000.00'
+                                                onChange={e =>
+                                                    setFinishDate2(
+                                                        e.target.value,
+                                                    )
+                                                }
+                                                defaultValue={
+                                                    isEdit
+                                                        ? contentdata.data
+                                                              ?.experiences[0]
+                                                              .finishDate
+                                                        : ''
+                                                }
+                                            />
+                                        </div>
+                                        <S.Label>
+                                            <S.CheckBox
+                                                type='checkbox'
+                                                name='isAttending'
+                                                // checked={degree === '졸업'}
+                                                // onChange={() =>
+                                                //     checkOnlyOne('졸업')
+                                                // }
+                                                // id='graduateCheckbox'
+                                            />
+                                            <div>재직중</div>
+                                        </S.Label>
+                                    </S.BoxLeft>
+                                    <S.BoxRight>
                                         <S.School
                                             type='text'
-                                            placeholder='학교명'
+                                            placeholder='회사명'
                                             onChange={e =>
-                                                setName(e.target.value)
+                                                setDepartment(e.target.value)
                                             }
                                             defaultValue={
                                                 isEdit
                                                     ? contentdata.data
-                                                          ?.educations[index]
-                                                          .name
+                                                          ?.experiences[0]
+                                                          .department
                                                     : ''
                                             }
                                         />
                                         <S.SmallInput
                                             type='text'
-                                            placeholder='전공 및 학위'
+                                            placeholder='부서명 / 직책'
                                             onChange={e =>
-                                                setMajor(e.target.value)
+                                                setPosition(e.target.value)
                                             }
                                             defaultValue={
                                                 isEdit
                                                     ? contentdata.data
-                                                          ?.educations[index]
-                                                          .major
+                                                          ?.experiences[0]
+                                                          .position
+                                                    : ''
+                                            }
+                                        />
+                                    </S.BoxRight>
+                                </S.GrayBox>
+                            </div>
+                        ))}
+
+                    {/* 어학 */}
+                    <S.TitleContainer2>
+                        <S.TitleWrapper2>
+                            <S.Title>어학</S.Title>
+                        </S.TitleWrapper2>
+                        <S.Plus onClick={addLanguage}>+ 항목 추가</S.Plus>
+                    </S.TitleContainer2>
+                    <S.GreenBox>
+                        {
+                            '• 외국어 자격증을 보유한 경우 작성해주세요. \n• 활용 가능한 외국어가 있다면, 어느정도 수준인지 레벨을 선택해주세요.'
+                        }
+                    </S.GreenBox>
+                    <S.Line />
+                    {Array(languages.length)
+                        .fill(1)
+                        .map((_, index) => (
+                            <div style={{ width: '39.3rem' }}>
+                                <S.GrayBox>
+                                    <div>
+                                        <S.SmallInput
+                                            type='text'
+                                            placeholder='2000.00 (취득년월)'
+                                            onChange={e =>
+                                                setGainedDate(e.target.value)
+                                            }
+                                            defaultValue={
+                                                isEdit
+                                                    ? contentdata.data
+                                                          ?.languages[0]
+                                                          .gainedDate
+                                                    : ''
+                                            }
+                                        />
+                                        <S.School
+                                            type='text'
+                                            placeholder='언어'
+                                            onChange={e =>
+                                                setTestName(e.target.value)
+                                            }
+                                            defaultValue={
+                                                isEdit
+                                                    ? contentdata.data
+                                                          ?.languages[0]
+                                                          .testName
+                                                    : ''
+                                            }
+                                        />
+                                        <S.SmallInput
+                                            type='text'
+                                            placeholder='어학시험명 / 급수'
+                                            onChange={e =>
+                                                setScore(e.target.value)
+                                            }
+                                            defaultValue={
+                                                isEdit
+                                                    ? contentdata.data
+                                                          ?.languages[0].score
                                                     : ''
                                             }
                                         />
@@ -274,185 +711,84 @@ const New = ({ isEdit }) => {
                                 </S.GrayBox>
                             </div>
                         ))}
-                    {/* 경력 */}
-                    <S.TitleContainer2>
-                        <S.TitleWrapper2>
-                            <S.Title>경력</S.Title>
-                        </S.TitleWrapper2>
-                        <S.Plus>+ 항목 추가</S.Plus>
-                    </S.TitleContainer2>
-                    <S.GreenBox>
-                        제1항의 지시를 받은 당해 행정기관은 이에 응하여야 한다.
-                        위원은 정당에 가입하거나 정치에 관여할 수 없다. 위원은
-                        정당에 가입하거나 정치에 관여할 수 없다. 공무원의 직무상
-                        불법행위로 손해를 받은 국민은 법률이 정하는 바에 의하여
-                        국가 또는 공공단체에 정당한 배상을 청구할 수 있다. 이
-                        경우 공무원 자신의 책임은 면제되지 아니한다.
-                    </S.GreenBox>
-                    <S.Line />
-                    <S.GrayBox>
-                        <div>
-                            <S.SmallInput1
-                                type='text'
-                                placeholder='2000.00'
-                                onChange={e => setStartDate2(e.target.value)}
-                                defaultValue={
-                                    isEdit
-                                        ? contentdata.data?.experiences[0]
-                                              .startDate
-                                        : ''
-                                }
-                            />
-                            <span>- </span>
-                            <S.SmallInput1
-                                type='text'
-                                placeholder='2000.00'
-                                onChange={e => setFinishDate2(e.target.value)}
-                                defaultValue={
-                                    isEdit
-                                        ? contentdata.data?.experiences[0]
-                                              .finishDate
-                                        : ''
-                                }
-                            />
-                            <S.School
-                                type='text'
-                                placeholder='회사명'
-                                onChange={e => setDepartment(e.target.value)}
-                                defaultValue={
-                                    isEdit
-                                        ? contentdata.data?.experiences[0]
-                                              .department
-                                        : ''
-                                }
-                            />
-                            <S.SmallInput
-                                type='text'
-                                placeholder='부서명 / 직책'
-                                onChange={e => setPosition(e.target.value)}
-                                defaultValue={
-                                    isEdit
-                                        ? contentdata.data?.experiences[0]
-                                              .position
-                                        : ''
-                                }
-                            />
-                        </div>
-                    </S.GrayBox>
-                    {/* 어학 */}
-                    <S.TitleContainer2>
-                        <S.TitleWrapper2>
-                            <S.Title>어학</S.Title>
-                        </S.TitleWrapper2>
-                        <S.Plus>+ 항목 추가</S.Plus>
-                    </S.TitleContainer2>
-                    <S.GreenBox>
-                        제1항의 지시를 받은 당해 행정기관은 이에 응하여야 한다.
-                        위원은 정당에 가입하거나 정치에 관여할 수 없다. 위원은
-                        정당에 가입하거나 정치에 관여할 수 없다. 공무원의 직무상
-                        불법행위로 손해를 받은 국민은 법률이 정하는 바에 의하여
-                        국가 또는 공공단체에 정당한 배상을 청구할 수 있다. 이
-                        경우 공무원 자신의 책임은 면제되지 아니한다.
-                    </S.GreenBox>
-                    <S.Line />
-                    <S.GrayBox>
-                        <div>
-                            <S.SmallInput
-                                type='text'
-                                placeholder='2000.00 (취득년월)'
-                                onChange={e => setGainedDate(e.target.value)}
-                                defaultValue={
-                                    isEdit
-                                        ? contentdata.data?.languages[0]
-                                              .gainedDate
-                                        : ''
-                                }
-                            />
-                            <S.School
-                                type='text'
-                                placeholder='언어'
-                                onChange={e => setTestName(e.target.value)}
-                                defaultValue={
-                                    isEdit
-                                        ? contentdata.data?.languages[0]
-                                              .testName
-                                        : ''
-                                }
-                            />
-                            <S.SmallInput
-                                type='text'
-                                placeholder='어학시험명 / 급수'
-                                onChange={e => setScore(e.target.value)}
-                                defaultValue={
-                                    isEdit
-                                        ? contentdata.data?.languages[0].score
-                                        : ''
-                                }
-                            />
-                        </div>
-                    </S.GrayBox>
                     {/* 수상 및 기타 */}
                     <S.TitleContainer2>
                         <S.TitleWrapper2>
                             <S.Title>수상 및 기타</S.Title>
                         </S.TitleWrapper2>
-                        <S.Plus>+ 항목 추가</S.Plus>
+                        <S.Plus onClick={addAwards}>+ 항목 추가</S.Plus>
                     </S.TitleContainer2>
                     <S.GreenBox>
-                        제1항의 지시를 받은 당해 행정기관은 이에 응하여야 한다.
-                        위원은 정당에 가입하거나 정치에 관여할 수 없다. 위원은
-                        정당에 가입하거나 정치에 관여할 수 없다. 공무원의 직무상
-                        불법행위로 손해를 받은 국민은 법률이 정하는 바에 의하여
-                        국가 또는 공공단체에 정당한 배상을 청구할 수 있다. 이
-                        경우 공무원 자신의 책임은 면제되지 아니한다.
+                        {
+                            '• 수상 이력, 직무 관련 자격증, 수료한 교육이나 참석한 외부활동 등이 있다면 간략히 작성해주세요.\n• 지원하는 회사에서 요구하는 경우가 아니라면 운전면허증과 같은 자격증은 생략하는 것이 좋습니다!'
+                        }
                     </S.GreenBox>
 
                     <S.Line />
-                    <S.GrayBox>
-                        <div>
-                            <S.SmallInput1
-                                type='text'
-                                placeholder='2000.00'
-                                onChange={e => setStartDate3(e.target.value)}
-                                defaultValue={
-                                    isEdit
-                                        ? contentdata.data?.awards[0].startDate
-                                        : ''
-                                }
-                            />
-                            <span>- </span>
-                            <S.SmallInput1
-                                type='text'
-                                placeholder='2000.00'
-                                onChange={e => setFinishDate3(e.target.value)}
-                                defaultValue={
-                                    isEdit
-                                        ? contentdata.data?.awards[0].finishDate
-                                        : ''
-                                }
-                            />
-                            <S.School
-                                type='text'
-                                placeholder='활동명 / 대회명'
-                                onChange={e => setActivity(e.target.value)}
-                                defaultValue={
-                                    isEdit
-                                        ? contentdata.data?.awards[0].activity
-                                        : ''
-                                }
-                            />
-                            <S.SmallInput
-                                type='text'
-                                placeholder='활동 내용 / 수상 내역'
-                                onChange={e => setContent(e.target.value)}
-                                defaultValue={
-                                    isEdit
-                                        ? contentdata.data?.awards[0].content
-                                        : ''
-                                }
-                            />
-                        </div>
-                    </S.GrayBox>
+                    {Array(awards.length)
+                        .fill(1)
+                        .map((_, index) => (
+                            <div style={{ width: '39.3rem' }}>
+                                <S.GrayBox>
+                                    <div>
+                                        <S.SmallInput1
+                                            type='text'
+                                            placeholder='2000.00'
+                                            onChange={e =>
+                                                setStartDate3(e.target.value)
+                                            }
+                                            defaultValue={
+                                                isEdit
+                                                    ? contentdata.data
+                                                          ?.awards[0].startDate
+                                                    : ''
+                                            }
+                                        />
+                                        <span>- </span>
+                                        <S.SmallInput1
+                                            type='text'
+                                            placeholder='2000.00'
+                                            onChange={e =>
+                                                setFinishDate3(e.target.value)
+                                            }
+                                            defaultValue={
+                                                isEdit
+                                                    ? contentdata.data
+                                                          ?.awards[0].finishDate
+                                                    : ''
+                                            }
+                                        />
+                                        <S.School
+                                            type='text'
+                                            placeholder='활동명 / 대회명'
+                                            onChange={e =>
+                                                setActivity(e.target.value)
+                                            }
+                                            defaultValue={
+                                                isEdit
+                                                    ? contentdata.data
+                                                          ?.awards[0].activity
+                                                    : ''
+                                            }
+                                        />
+                                        <S.SmallInput
+                                            type='text'
+                                            placeholder='활동 내용 / 수상 내역'
+                                            onChange={e =>
+                                                setContent(e.target.value)
+                                            }
+                                            defaultValue={
+                                                isEdit
+                                                    ? contentdata.data
+                                                          ?.awards[0].content
+                                                    : ''
+                                            }
+                                        />
+                                    </div>
+                                </S.GrayBox>
+                            </div>
+                        ))}
+
                     <GreenBtn
                         text={'이력서 저장'}
                         width={10.75}
