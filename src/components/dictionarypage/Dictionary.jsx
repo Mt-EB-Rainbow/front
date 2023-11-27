@@ -161,7 +161,7 @@ const Dictionary = () => {
             <S.Line />
             <S.ResultContainer>
                 {jobInfo.length === 0 && (
-                    <S.Content>검색 결과가 없습니다.</S.Content>
+                    <S.Text>조건과 일치하는 검색 결과가 없어요.</S.Text>
                 )}
                 {jobInfo.length !== 0 && ( // jobInfo는 직무 정보 객체들이 담긴 배열
                     <>
