@@ -18,21 +18,62 @@ const Training = () => {
     const PROJECTS_PER_PAGE = 12;
     const videoLength = totalTrainings;
 
-    // select option
-    let categoryData = [];
-
-    for (let i = 0; i < training.length; i++) {
-        categoryData.push(training[i].majorCategoryName);
-    }
-    // category 중복 제거
-    categoryData = categoryData.filter(
-        (value, index, self) => self.indexOf(value) === index,
-    );
+    const categoryData = [
+        '전체',
+        '취업',
+        '창업',
+        '자격증,',
+        '외국어',
+        '정보화',
+        'BIZ일반',
+    ];
 
     // console.log(training[0].onlineTrainingTime);
     const educationData = {
-        // 취업: ['전체', '교육, 컨설팅', '상담'],
+        전체: ['전체'],
+        취업: [
+            '전체',
+            'NCS',
+            'IT, 웹',
+            '상담',
+            '정보화',
+            '취업준비',
+            '사회복지, 보건',
+            '영업',
+            '직장 예절',
+            '경영, 사무',
+            '마케팅, 무역, 유통',
+            '비즈일반',
+            '디자인',
+            '서비스',
+        ],
         창업: ['전체', '창업 공통', '창업 사례', '창업 전략'],
+        자격증: [
+            '전체',
+            '컴퓨터 활용능력',
+            '사무자동화산업기사',
+            '요양보호사',
+            '손해평가사',
+            '직업상담사',
+            'ITQ',
+            '코딩',
+            '유통관리사',
+            '텔레마케팅관리사',
+            '사회복지사',
+            '전산회계',
+            '바리스타',
+            '청소년상담사',
+            'CS리더스관리사',
+            '한국사',
+            '전산세무',
+            '공인중개사',
+            '워드프로세서',
+            'GTQ(그래픽기술자격)',
+            '한국어',
+            '제과제빵',
+            '관광통역안내사',
+            '스포츠지도사',
+        ],
         BIZ일반: [
             '전체',
             '기획, 경영',
@@ -97,7 +138,7 @@ const Training = () => {
                                         marginRight: '0.5rem',
                                     }}
                                 >
-                                    <Select
+                                    <S.SelectUi
                                         defaultValue='카테고리'
                                         style={{
                                             width: '10.4rem',
@@ -110,7 +151,7 @@ const Training = () => {
                                             value: ct,
                                         }))}
                                     />
-                                    <Select
+                                    <S.SelectUi
                                         defaultValue='교육 분야'
                                         style={{
                                             width: '10.4rem',
@@ -119,12 +160,12 @@ const Training = () => {
                                         }}
                                         value={education}
                                         onChange={onEducationChange}
-                                        // options={educationData[category].map(
-                                        //     edu => ({
-                                        //         label: edu,
-                                        //         value: edu,
-                                        //     }),
-                                        // )}
+                                        options={educationData[category].map(
+                                            edu => ({
+                                                label: edu,
+                                                value: edu,
+                                            }),
+                                        )}
                                     />
                                 </Space>
                                 <GreenBtn

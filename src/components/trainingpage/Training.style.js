@@ -1,4 +1,4 @@
-import { Pagination } from 'antd';
+import { Pagination, Select } from 'antd';
 import styled from 'styled-components';
 
 export const Container = styled.div`
@@ -101,5 +101,17 @@ export const PaginationUi = styled(Pagination)`
     .anticon-double-right svg,
     .anticon-double-left svg {
         color: var(--gray);
+    }
+`;
+
+export const SelectUi = styled(Select)`
+    &.ant-select .ant-select-focused {
+        border-color: var(--dark-green);
+    }
+    &.ant-select .ant-select-selector:selected {
+        border-color: var(--dark-green);
+    }
+    &.ant-select-focused:focused {
+        border: 1px solid var(--dark-green);
     }
 `;

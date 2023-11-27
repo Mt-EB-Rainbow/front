@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { XMLParser, XMLValidator } from 'fast-xml-parser';
+import client from './client';
 
 const https = axios.create();
 https.defaults.baseURL = 'https://www.dream.go.kr/';
@@ -22,6 +23,7 @@ https.defaults.baseURL = 'https://www.dream.go.kr/';
         ]
     }
 */
+// 꿈이음 api
 export const TrainingApi = async (authKey, type, startPage, display) => {
     try {
         const res = await https
@@ -41,6 +43,35 @@ export const TrainingApi = async (authKey, type, startPage, display) => {
                 }
             });
         return res;
+    } catch (err) {
+        console.log(err);
+    }
+};
+
+// 검색 결과 api
+export const TrainingSearchApi = async (type, keyword) => {
+    try {
+        const res = await client
+            .get(`training?type=${type}&keyword=${keyword}`)
+            .then(response => {
+                console.log(response);
+            });
+        return res;
+    } catch (err) {
+        console.log(err);
+    }
+};
+
+// 필터링 결과 api
+export const TrainingFilterApi = async (type, category, education) => {
+    try {
+        const res = await client
+            .get(
+                `training?type=${type}&category=${category}&education=${education}`,
+            )
+            .then(response => {
+                console.log(response);
+            });
     } catch (err) {
         console.log(err);
     }
