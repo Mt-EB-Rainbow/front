@@ -1,11 +1,13 @@
 import client from './client';
 import { convertDateFieldsInArray } from '../util/DateFormatter';
+import { resumedata } from '../components/resume/mockData';
 
 // 이력서 작성 시작
 export const ResumeApi = async memberId => {
     try {
+        console.log(memberId);
         const res = await client.post('/resume', {
-            memberId: Number(memberId),
+            memberId: memberId,
         });
 
         console.log(res);

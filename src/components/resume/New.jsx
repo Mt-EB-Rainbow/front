@@ -663,9 +663,7 @@ const New = ({ isEdit }) => {
                                             }
                                             defaultValue={
                                                 isEdit
-                                                    ? contentdata.data
-                                                          ?.experiences[0]
-                                                          .position
+                                                    ? experiences[0].position
                                                     : ''
                                             }
                                         />
