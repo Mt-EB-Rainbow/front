@@ -128,6 +128,7 @@ const Training = () => {
     const [isNameDisable, setIsNameDisable] = useState(true); // 이름으로 검색 버튼 비활성화
     const [isIdDisable, setIsIdDisable] = useState(true); // id로 검색 버튼 비활성화
     const { state } = useLocation(); // 추천 직무 교육에서 넘어온 검색 jobId
+    const [isSearch, SetIsSearch] = useState(false);
 
     const onCategoryChange = value => {
         setCategory(value);
@@ -154,6 +155,7 @@ const Training = () => {
         console.log(res);
         setTraining(res.educations);
         setTotalTrainings(res.educations.length);
+        SetIsSearch(true);
     };
 
     const SearchByName = async name => {
@@ -161,6 +163,7 @@ const Training = () => {
         console.log(res);
         setTraining(res.educations);
         setTotalTrainings(res.educations.length);
+        SetIsSearch(true);
     };
 
     const SearchById = async id => {
@@ -168,6 +171,7 @@ const Training = () => {
         console.log(res);
         setTraining(res.educations);
         setTotalTrainings(res.educations.length);
+        SetIsSearch(true);
     };
 
     useEffect(() => {
@@ -178,8 +182,10 @@ const Training = () => {
             setIsNameDisable(false);
             setLoading(false);
         } else {
-            setLoading(true);
-            fetchSites();
+            if (!isSearch) {
+                setLoading(true);
+                fetchSites();
+            }
         }
     }, [currentPage]);
 
