@@ -42,7 +42,7 @@ const Resume = () => {
                         placeholder={'제목 및 내용으로 검색'}
                     />
                     {/* id 역순으로 반환 */}
-                    {resumeResponses ? (
+                    {resumeResponses.length !== 0 ? (
                         <>
                             {[...resumeResponses]
                                 .sort((a, b) => b.resumeId - a.resumeId)

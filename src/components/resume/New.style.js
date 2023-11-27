@@ -193,9 +193,15 @@ export const CheckBox = styled.input`
     margin-right: 0.24rem;
 `;
 
-export const BoxRight = styled.div``;
+export const BoxRight = styled.div`
+    display: flex;
+    flex-direction: row;
+    margin-left: 2rem;
+    align-items: center;
+`;
 
 export const SmallInput = styled.input`
+    width: 7.4rem;
     color: black;
     font-size: 0.8rem;
     font-style: normal;
@@ -203,7 +209,10 @@ export const SmallInput = styled.input`
     line-height: normal;
     border: none;
     outline: none;
-    width: 7.5rem;
+
+    &::placeholder {
+        color: var(--gray);
+    }
 `;
 export const SmallInput1 = styled.input`
     color: black;
@@ -214,19 +223,36 @@ export const SmallInput1 = styled.input`
     border: none;
     outline: none;
     width: 3.5rem;
+
+    &::placeholder {
+        color: var(--gray);
+    }
 `;
 
 export const School = styled.input`
+    height: 1.2rem;
     color: black;
     font-size: 0.8rem;
     font-style: normal;
-    font-weight: 500;
+    font-weight: 600;
     line-height: normal;
     border: none;
     outline: none;
-    margin-left: 2rem;
+
+    &::placeholder {
+        color: var(--gray);
+    }
 `;
 export const Line = styled.div`
     width: 39.3rem;
     border-bottom: 0.05rem solid var(--gray);
+`;
+
+export const RemoveBtn = styled.div`
+    color: var(--gray);
+    font-size: 0.8rem;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    cursor: pointer;
 `;
