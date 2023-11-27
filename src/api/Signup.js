@@ -1,13 +1,12 @@
 import client from './client';
 
-export const SignApi = async (name, email, pw, nickname, birth) => {
+export const SignApi = async (name, email, pw, isMentor) => {
     try {
         const res = await client.post('/auth/signup', {
             name: String(name),
             email: String(email),
             pw: String(pw),
-            nickname: String(nickname),
-            birth: String(birth),
+            isMentor,
         });
 
         console.log(res);

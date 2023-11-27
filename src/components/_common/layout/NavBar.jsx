@@ -3,10 +3,11 @@ import WhiteBtn from '../Btn/WhiteBtn';
 import { NavBox, Menu } from './NavBar.style';
 import logo from '../../../assets/logo.svg';
 import { SignoutApi } from '../../../api/logout';
+import { CheckMentorApi } from '../../../api/isMentor';
 
 const NavBar = () => {
     const navigate = useNavigate();
-    const isMentor = false;
+
     const isLoggedin = localStorage.getItem('accessToken');
 
     // 로그아웃
@@ -15,15 +16,19 @@ const NavBar = () => {
             const res = await SignoutApi();
             if ((res.status == 200) | (res.status == 201)) {
                 console.log(res);
-                navigate('/')
+                navigate('/');
             }
         } catch (err) {
             console.log(err);
-            alert('오류')
-
+            alert('오류');
         }
+    };
 
-    }
+    //멘토 여부 get
+    const isMentor = async () => {
+        const res = await CheckMentorApi(localStorage.getItem('memberId'));
+        console.log(res);
+    };
 
     const goLogin = () => {
         navigate('/login');
