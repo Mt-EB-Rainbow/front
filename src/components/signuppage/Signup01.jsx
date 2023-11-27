@@ -2,8 +2,11 @@ import { useNavigate } from 'react-router-dom';
 import GreenBtn from '../_common/Btn/GreenBtn';
 import PageTitle from '../_common/PageTitle';
 import * as S from './Signup01.style';
+import { useRecoilState } from 'recoil';
+import { isMentorState } from '../../recoil/loginState';
 
 const Signup01 = () => {
+    const [isMentor, setIsMentor] = useRecoilState(isMentorState);
     const navigate = useNavigate();
 
     const goSignup = () => {
@@ -11,6 +14,7 @@ const Signup01 = () => {
     };
     const goMentorSignup = () => {
         navigate('/mentorsignup');
+        setIsMentor(true);
     };
     return (
         <>
