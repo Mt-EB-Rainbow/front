@@ -362,89 +362,237 @@ const New = ({ isEdit }) => {
         }
     };
 
-    //받아온 내용 저장
-    const [contentdata, setContentdata] = useState({});
-
-    //내용 get
-    useEffect(() => {
-        const getContent = async () => {
-            const res = await getResumeContentApi(resumeId);
-            setContentdata(res);
-            console.log(res);
-        };
-        getContent();
-    }, []);
-
-    // 학력 항목 추가
-    const addEducation = () => {
-        setEducations(prevEducations => [
-            ...prevEducations,
-            {
-                startDate: '',
-                finishDate: '',
-                name: '',
-                major: '',
-                degreeStatus: null, // 여기서 초기값을 설정
-            },
-        ]);
+    const closeModal = () => {
+        setModalIsOpen(false);
     };
 
-    // 경력 항목 추가
-    const addExperience = () => {
-        setExperience(prevExperience => [
-            ...prevExperience,
-            {
-                startDate2: '',
-                finishDate2: '',
-                department: '',
-                position: '',
-            },
-        ]);
+    const handleJobSelect = job => {
+        setSelectedJob(job);
+        closeModal();
     };
 
-    // 언어 항목 추가
-    const addLanguage = () => {
-        setLanguages(prevLanguages => [
-            ...prevLanguages,
-            {
-                gainedDate: '',
-                testName: '',
-                score: '',
-            },
-        ]);
-    };
-
-    // 수상 항목 추가
-    const addAwards = () => {
-        setAwards(prevAwards => [
-            ...prevAwards,
-            {
-                startDate3: '',
-                finishDate3: '',
-                activity: '',
-                content: '',
-            },
-        ]);
-    };
-
-    // 한 번에 하나만 체크
-    const [degree, setDegree] = useState(null);
-
-    const checkOnlyOne = (index, newDegreeStatus) => {
+    // 학력 상태관리
+    const setStartDate = (date, index) => {
         setEducations(prevEducations =>
-            prevEducations.map((edu, eduIndex) =>
-                eduIndex === index
-                    ? { ...edu, degreeStatus: newDegreeStatus }
-                    : edu,
-            ),
+            prevEducations.map((education, idx) => {
+                if (idx === index) {
+                    return { ...education, startDate: date };
+                }
+                return education;
+            }),
         );
     };
 
-    // 직무 선택
-    const [selectedJob, setSelectedJob] = useState(''); // 선택된 직무 상태
+    const setFinishDate = (date, index) => {
+        setEducations(prevEducations =>
+            prevEducations.map((education, idx) => {
+                if (idx === index) {
+                    return { ...education, finishDate: date };
+                }
+                return education;
+            }),
+        );
+    };
 
-    const handleJobSelect = job => {
-        setSelectedJob(job); // 선택된 직무를 상태에 저장
+    const setName = (name, index) => {
+        setEducations(prevEducations =>
+            prevEducations.map((education, idx) => {
+                if (idx === index) {
+                    return { ...education, name: name };
+                }
+                return education;
+            }),
+        );
+    };
+
+    const setMajor = (major, index) => {
+        setEducations(prevEducations =>
+            prevEducations.map((education, idx) => {
+                if (idx === index) {
+                    return { ...education, major: major };
+                }
+                return education;
+            }),
+        );
+    };
+
+    // 경력 상태관리
+    const setDepartment = (department, index) => {
+        setExperiences(prevExperiences =>
+            prevExperiences.map((experience, idx) => {
+                if (idx === index) {
+                    return { ...experience, department: department };
+                }
+                return experience;
+            }),
+        );
+    };
+
+    const setPosition = (position, index) => {
+        setExperiences(prevExperiences =>
+            prevExperiences.map((experience, idx) => {
+                if (idx === index) {
+                    return { ...experience, position: position };
+                }
+                return experience;
+            }),
+        );
+    };
+
+    const setStartDate2 = (date, index) => {
+        setExperiences(prevExperiences =>
+            prevExperiences.map((experience, idx) => {
+                if (idx === index) {
+                    return { ...experience, startDate: date };
+                }
+                return experience;
+            }),
+        );
+    };
+
+    const setFinishDate2 = (date, index) => {
+        setExperiences(prevExperiences =>
+            prevExperiences.map((experience, idx) => {
+                if (idx === index) {
+                    return { ...experience, finishDate: date };
+                }
+                return experience;
+            }),
+        );
+    };
+
+    // 어학 상태관리
+    const setGainedDate = (date, index) => {
+        setLanguages(prevLanguages =>
+            prevLanguages.map((language, idx) => {
+                if (idx === index) {
+                    return { ...language, gainedDate: date };
+                }
+                return language;
+            }),
+        );
+    };
+
+    const setTestName = (name, index) => {
+        setLanguages(prevLanguages =>
+            prevLanguages.map((language, idx) => {
+                if (idx === index) {
+                    return { ...language, testName: name };
+                }
+                return language;
+            }),
+        );
+    };
+
+    const setScore = (score, index) => {
+        setLanguages(prevLanguages =>
+            prevLanguages.map((language, idx) => {
+                if (idx === index) {
+                    return { ...language, score: score };
+                }
+                return language;
+            }),
+        );
+    };
+
+    // 수상 상태관리
+    const setStartDate3 = (date, index) => {
+        setAwards(prevAwards =>
+            prevAwards.map((award, idx) => {
+                if (idx === index) {
+                    return { ...award, startDate: date };
+                }
+                return award;
+            }),
+        );
+    };
+
+    const setFinishDate3 = (date, index) => {
+        setAwards(prevAwards =>
+            prevAwards.map((award, idx) => {
+                if (idx === index) {
+                    return { ...award, finishDate: date };
+                }
+                return award;
+            }),
+        );
+    };
+
+    const setActivity = (activity, index) => {
+        setAwards(prevAwards =>
+            prevAwards.map((award, idx) => {
+                if (idx === index) {
+                    return { ...award, activity: activity };
+                }
+                return award;
+            }),
+        );
+    };
+
+    const setContent = (content, index) => {
+        setAwards(prevAwards =>
+            prevAwards.map((award, idx) => {
+                if (idx === index) {
+                    return { ...award, content: content };
+                }
+                return award;
+            }),
+        );
+    };
+
+    // 체크박스 상태 관리 함수
+    const checkOnlyOne = (index, status) => {
+        setEducations(prevEducations =>
+            prevEducations.map((education, idx) => {
+                if (idx === index) {
+                    return { ...education, degreeStatus: status };
+                }
+                return { ...education, degreeStatus: null };
+            }),
+        );
+    };
+
+    const addEducation = () => {
+        setEducations(prev => [...prev, { ...initialEducation }]);
+    };
+
+    const addExperience = () => {
+        setExperiences(prev => [...prev, { ...initialExperience }]);
+    };
+
+    const addLanguage = () => {
+        setLanguages(prev => [...prev, { ...initialLanguage }]);
+    };
+
+    const addAwards = () => {
+        setAwards(prev => [...prev, { ...initialAward }]);
+    };
+
+    const onSubmit = async e => {
+        e.preventDefault();
+        try {
+            const resumeData = {
+                title,
+                introduction,
+                educations,
+                experiences,
+                languages,
+                awards,
+            };
+
+            const response = await NewResumeApi(resumeId, resumeData);
+            console.log('Response:', response);
+
+            if (!response || response.status !== 200) {
+                throw new Error('Invalid response from server');
+            }
+
+            alert('저장이 완료되었습니다.');
+            navigate('/resume');
+        } catch (err) {
+            console.error(err);
+            alert('저장에 실패했습니다!');
+        }
     };
 
     return (
