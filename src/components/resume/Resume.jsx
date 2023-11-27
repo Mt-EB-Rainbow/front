@@ -70,8 +70,8 @@ const Resume = () => {
                                             {/* {isopened? "공개" : "비공개"} 공개면 dark-gray, 비공개면 gray*/}
                                             <S.Open>공개</S.Open>
                                             {/* 수정 / 삭제 버튼 */}
-                                            <S.Rewrite>수정</S.Rewrite>
-                                            <S.Delete>삭제</S.Delete>
+                                            {/* <S.Rewrite>수정</S.Rewrite>
+                                            <S.Delete>삭제</S.Delete> */}
                                         </S.Right>
                                     </S.Boards>
                                 ))}

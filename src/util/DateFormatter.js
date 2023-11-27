@@ -31,3 +31,25 @@ export const convertDateFieldsInArray = (items, dateFields) => {
         return newItem;
     });
 };
+
+// ISO 형식을 "YYYY.MM" 형식으로 변환
+export const convertISOToCustomDateString = dateString => {
+    const date = new Date(dateString);
+    const year = date.getFullYear();
+    const month = date.getMonth() + 1; // getMonth()는 0에서 시작하므로 1을 더해줍니다.
+
+    return `${year}.${month.toString().padStart(2, '0')}`; // 월이 한 자리 수일 경우 앞에 0을 붙여줍니다.
+};
+
+// 주어진 배열의 각 객체에 대해 날짜 필드를 변환
+export const convertDateFieldsInArrayToCustom = (items, dateFields) => {
+    return items.map(item => {
+        const newItem = { ...item };
+        dateFields.forEach(field => {
+            if (newItem[field]) {
+                newItem[field] = convertISOToCustomDateString(newItem[field]);
+            }
+        });
+        return newItem;
+    });
+};

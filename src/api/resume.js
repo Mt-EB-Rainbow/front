@@ -20,8 +20,6 @@ export const GetResumeApi = async memberId => {
     try {
         const res = await client.get(`/resume/member/${memberId}`);
 
-        console.log(res, ' resume 목록 조회 성공');
-
         return res;
     } catch (err) {
         console.log(err);
@@ -55,8 +53,6 @@ export const NewResumeApi = async (resumeId, resumeData) => {
         languages: convertedLanguages,
         awards: convertedAwards,
     };
-
-    console.log('Sending Resume Data:', convertedData); // 데이터 확인 로그
 
     try {
         const res = await client.post(`/resume/${resumeId}`, convertedData);
