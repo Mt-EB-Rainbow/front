@@ -7,7 +7,6 @@ import './Switch.css';
 import { useNavigate, useParams } from 'react-router-dom';
 import { NewResumeApi, getResumeContentApi } from '../../api/resume';
 import JobModal from './Modal';
-import { convertDateFieldsInArrayToCustom } from '../../util/DateFormatter';
 
 const New = ({ isEdit }) => {
     //mock data
@@ -67,42 +66,11 @@ const New = ({ isEdit }) => {
         if (isEdit) {
             const getContent = async () => {
                 const res = await getResumeContentApi(resumeId);
-
-                // 날짜 필드 변환
-                const dataWithConvertedDates = {
-                    ...res.data,
-                    educations: convertDateFieldsInArrayToCustom(
-                        res.data.educations,
-                        ['startDate', 'finishDate'],
-                    ),
-                    experiences: convertDateFieldsInArrayToCustom(
-                        res.data.experiences,
-                        ['startDate', 'finishDate'],
-                    ),
-                    languages: convertDateFieldsInArrayToCustom(
-                        res.data.languages,
-                        ['gainedDate'],
-                    ),
-                    awards: convertDateFieldsInArrayToCustom(res.data.awards, [
-                        'startDate',
-                        'finishDate',
-                    ]),
-                };
-
-                // 변환된 데이터로 상태 업데이트
-                setContentdata(dataWithConvertedDates);
-                setTitle(dataWithConvertedDates.title);
-                setIntroduction(dataWithConvertedDates.introduction);
-                setEducations(
-                    dataWithConvertedDates.educations || [initialEducation],
-                );
-                setExperiences(
-                    dataWithConvertedDates.experiences || [initialExperience],
-                );
-                setLanguages(
-                    dataWithConvertedDates.languages || [initialLanguage],
-                );
-                setAwards(dataWithConvertedDates.awards || [initialAward]);
+                setContentdata(res.data);
+                setEducations(res.data.educations || [initialEducation]);
+                setExperiences(res.data.experiences || [initialExperience]);
+                setLanguages(res.data.languages || [initialLanguage]);
+                setAwards(res.data.awards || [initialAward]);
             };
             getContent();
         } else {
@@ -350,7 +318,13 @@ const New = ({ isEdit }) => {
             };
 
             const response = await NewResumeApi(resumeId, resumeData);
-            if (!response || response.status !== 200) {
+            // console.log('Response:', response);
+
+            if (
+                !response ||
+                response.status !== 200 ||
+                response.status !== 201
+            ) {
                 throw new Error('Invalid response from server');
             }
 
@@ -387,7 +361,7 @@ const New = ({ isEdit }) => {
                     <S.Input
                         type='text'
                         placeholder='제목을 입력하세요.'
-                        defaultValue={title}
+                        defaultValue={contentdata.data?.title}
                         onChange={onChangeTitle}
                         maxLength='29'
                     />
@@ -436,7 +410,7 @@ const New = ({ isEdit }) => {
                         placeholder='자기소개를 입력하세요.'
                         value={introduction}
                         onChange={onChangeContent}
-                        defaultValue={introduction}
+                        defaultValue={contentdata.data?.introduction}
                     />
                     {/* 학력 */}
                     <S.TitleContainer>
@@ -464,7 +438,8 @@ const New = ({ isEdit }) => {
                                             }}
                                             defaultValue={
                                                 isEdit
-                                                    ? educations[index]
+                                                    ? contentdata.data
+                                                          ?.educations[index]
                                                           .startDate
                                                     : ''
                                             }
@@ -481,7 +456,8 @@ const New = ({ isEdit }) => {
                                             }
                                             defaultValue={
                                                 isEdit
-                                                    ? educations[index]
+                                                    ? contentdata.data
+                                                          ?.educations[index]
                                                           .finishDate
                                                     : ''
                                             }
@@ -555,7 +531,11 @@ const New = ({ isEdit }) => {
                                             setName(e.target.value, index)
                                         }
                                         defaultValue={
-                                            isEdit ? educations[index].name : ''
+                                            isEdit
+                                                ? contentdata.data?.educations[
+                                                      index
+                                                  ].name
+                                                : ''
                                         }
                                     />
                                     <S.SmallInput
@@ -566,7 +546,9 @@ const New = ({ isEdit }) => {
                                         }
                                         defaultValue={
                                             isEdit
-                                                ? educations[index].major
+                                                ? contentdata.data?.educations[
+                                                      index
+                                                  ].major
                                                 : ''
                                         }
                                     />
@@ -605,7 +587,8 @@ const New = ({ isEdit }) => {
                                                 }
                                                 defaultValue={
                                                     isEdit
-                                                        ? experiences[0]
+                                                        ? contentdata.data
+                                                              ?.experiences[0]
                                                               .startDate
                                                         : ''
                                                 }
@@ -622,7 +605,8 @@ const New = ({ isEdit }) => {
                                                 }
                                                 defaultValue={
                                                     isEdit
-                                                        ? experiences[0]
+                                                        ? contentdata.data
+                                                              ?.experiences[0]
                                                               .finishDate
                                                         : ''
                                                 }
@@ -648,7 +632,9 @@ const New = ({ isEdit }) => {
                                             }
                                             defaultValue={
                                                 isEdit
-                                                    ? experiences[0].department
+                                                    ? contentdata.data
+                                                          ?.experiences[0]
+                                                          .department
                                                     : ''
                                             }
                                         />
@@ -704,7 +690,9 @@ const New = ({ isEdit }) => {
                                             }
                                             defaultValue={
                                                 isEdit
-                                                    ? languages[0].gainedDate
+                                                    ? contentdata.data
+                                                          ?.languages[0]
+                                                          .gainedDate
                                                     : ''
                                             }
                                         />
@@ -719,7 +707,9 @@ const New = ({ isEdit }) => {
                                             }
                                             defaultValue={
                                                 isEdit
-                                                    ? languages[0].testName
+                                                    ? contentdata.data
+                                                          ?.languages[0]
+                                                          .testName
                                                     : ''
                                             }
                                         />
@@ -730,7 +720,10 @@ const New = ({ isEdit }) => {
                                                 setScore(e.target.value, index)
                                             }
                                             defaultValue={
-                                                isEdit ? languages[0].score : ''
+                                                isEdit
+                                                    ? contentdata.data
+                                                          ?.languages[0].score
+                                                    : ''
                                             }
                                         />
                                     </div>
@@ -768,7 +761,8 @@ const New = ({ isEdit }) => {
                                             }
                                             defaultValue={
                                                 isEdit
-                                                    ? awards[0].startDate
+                                                    ? contentdata.data
+                                                          ?.awards[0].startDate
                                                     : ''
                                             }
                                         />
@@ -784,7 +778,8 @@ const New = ({ isEdit }) => {
                                             }
                                             defaultValue={
                                                 isEdit
-                                                    ? awards[0].finishDate
+                                                    ? contentdata.data
+                                                          ?.awards[0].finishDate
                                                     : ''
                                             }
                                         />
@@ -798,7 +793,10 @@ const New = ({ isEdit }) => {
                                                 )
                                             }
                                             defaultValue={
-                                                isEdit ? awards[0].activity : ''
+                                                isEdit
+                                                    ? contentdata.data
+                                                          ?.awards[0].activity
+                                                    : ''
                                             }
                                         />
                                         <S.SmallInput
@@ -811,7 +809,10 @@ const New = ({ isEdit }) => {
                                                 )
                                             }
                                             defaultValue={
-                                                isEdit ? awards[0].content : ''
+                                                isEdit
+                                                    ? contentdata.data
+                                                          ?.awards[0].content
+                                                    : ''
                                             }
                                         />
                                     </div>
@@ -819,31 +820,17 @@ const New = ({ isEdit }) => {
                             </div>
                         ))}
 
-                    {isEdit ? (
-                        <GreenBtn
-                            text={'이력서 수정'}
-                            width={10.75}
-                            paddingVertical={0.75}
-                            paddingHorizontal={2.95}
-                            bottom={7.15}
-                            top={6.4}
-                            onClick={onSubmit} /* @todo onUpdate 함수로 변경 */
-                            height={2.7}
-                            radius={5}
-                        />
-                    ) : (
-                        <GreenBtn
-                            text={'이력서 저장'}
-                            width={10.75}
-                            paddingVertical={0.75}
-                            paddingHorizontal={2.95}
-                            bottom={7.15}
-                            top={6.4}
-                            onClick={onSubmit}
-                            height={2.7}
-                            radius={5}
-                        />
-                    )}
+                    <GreenBtn
+                        text={'이력서 저장'}
+                        width={10.75}
+                        paddingVertical={0.75}
+                        paddingHorizontal={2.95}
+                        bottom={7.15}
+                        top={6.4}
+                        onClick={onSubmit}
+                        height={2.7}
+                        radius={5}
+                    />
                 </S.Wrapper>
             </S.Container>
         </>
