@@ -13,26 +13,27 @@ const useTraining = () => {
 
     console.log(true);
 
-    useEffect(() => {
-        const fetchSites = async () => {
-            const startPage = currentPage;
+    const fetchSites = async () => {
+        const startPage = currentPage;
 
-            try {
-                const courses = await TrainingApi(
-                    'KIAO7F5LGGBIAW16CBXXR76IQMEHIOWU',
-                    'A',
-                    startPage,
-                    TRAININGS_PER_PAGE,
-                ).then(
-                    setLoading(false), // 데이터 로딩 완료
-                );
-                setTraining(courses.response.response_body.list.data);
-                setTotalTrainings(courses.response.response_body.result); // 전체 트레이닝 수
-            } catch (err) {
-                console.log(err);
-            }
-        };
-        fetchSites();
+        try {
+            const courses = await TrainingApi(
+                'KIAO7F5LGGBIAW16CBXXR76IQMEHIOWU',
+                'A',
+                startPage,
+                TRAININGS_PER_PAGE,
+            ).then(
+                setLoading(false), // 데이터 로딩 완료
+            );
+            setTraining(courses.response.response_body.list.data);
+            setTotalTrainings(courses.response.response_body.result); // 전체 트레이닝 수
+        } catch (err) {
+            console.log(err);
+        }
+    };
+
+    useEffect(() => {
+        //fetchSites();
     }, [currentPage]);
 
     useEffect(() => {
@@ -50,6 +51,8 @@ const useTraining = () => {
         setTraining,
         totalTrainings,
         setTotalTrainings,
+        fetchSites,
+        setLoading,
         loading,
     };
 };

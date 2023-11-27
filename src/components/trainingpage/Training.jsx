@@ -16,6 +16,8 @@ const Training = () => {
         setTraining,
         totalTrainings,
         setTotalTrainings,
+        fetchSites,
+        setLoading,
         loading,
     } = useTraining();
 
@@ -172,6 +174,9 @@ const Training = () => {
             setInputName(state.jobName);
             SearchById(state.jobId);
             setIsNameDisable(false);
+            setLoading(false);
+        } else {
+            fetchSites();
         }
     }, []);
 
