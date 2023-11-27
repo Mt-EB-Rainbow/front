@@ -357,7 +357,7 @@ const New = ({ isEdit }) => {
             alert('저장이 완료되었습니다.');
             navigate('/resume');
         } catch (err) {
-            console.error(err);
+            console.error(err.data);
             alert('저장에 실패했습니다!');
         }
     };

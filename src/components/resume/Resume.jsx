@@ -62,8 +62,8 @@ const Resume = () => {
                                                 {el.modifiedAt}
                                             </S.JobInfo>
                                             <S.GreenBox>
+                                                {/* @todo 이거 api로 안 넘어와서 수정해야 할듯? */}
                                                 사무보조
-                                                {/* 이거 api로 안 넘어와서 수정해야 할듯? */}
                                             </S.GreenBox>
                                         </S.Info>
                                         <S.Right>
@@ -75,18 +75,6 @@ const Resume = () => {
                                         </S.Right>
                                     </S.Boards>
                                 ))}
-                            <div style={{ marginTop: '5rem' }}>
-                                <GreenBtn
-                                    text={'새 이력서 추가'}
-                                    paddingHorizontal={0.75}
-                                    width={10.75}
-                                    bottom={10}
-                                    onClick={goNew}
-                                    radius={5}
-                                    paddingVertical={2.25}
-                                    height={2.7}
-                                />
-                            </div>
                         </>
                     ) : (
                         <>
