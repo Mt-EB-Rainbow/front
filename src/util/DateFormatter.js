@@ -9,9 +9,7 @@ export const convertCustomDateString = dateString => {
 
 // 주어진 문자열이 유효한 날짜인지 확인하고 ISO 형식으로 변환
 export const convertDateToISO = dateString => {
-    console.log('date string', dateString);
     const formattedDateString = convertCustomDateString(dateString);
-    console.log('formatted date' + formattedDateString);
     if (formattedDateString) {
         const date = new Date(formattedDateString);
         return isNaN(date.getTime()) ? null : date.toISOString();
