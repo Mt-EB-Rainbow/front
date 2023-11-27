@@ -11,7 +11,7 @@ export const Wrapper = styled.div`
     flex-direction: column;
     align-items: center;
     width: 29.1rem;
-    height: auto;
+    height: 100vh;
 `;
 
 export const TextName = styled.div`

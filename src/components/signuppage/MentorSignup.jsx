@@ -4,6 +4,9 @@ import GreenBtn from '../_common/Btn/GreenBtn';
 import { useState } from 'react';
 import { Select } from 'antd';
 import { useNavigate } from 'react-router-dom';
+import { useRecoilState } from 'recoil';
+import { isMentorState } from '../../recoil/loginState';
+import { SignApi } from '../../api/Signup';
 
 const MentorSignup = () => {
     const navigate = useNavigate();
@@ -15,6 +18,27 @@ const MentorSignup = () => {
 
     const go03 = () => {
         navigate('/mentorsignup03');
+    };
+
+    // 멘토 확인 state
+    const [isMentor, setIsMentor] = useRecoilState(isMentorState);
+
+    //회원가입하기
+    const Sign = async e => {
+        e.preventDefault();
+        try {
+            const res = await SignApi(name, email, pw, isMentor);
+
+            if ((res.status == 200) | (res.status == 201)) {
+                console.log(res);
+                window.scrollTo(0, 0);
+                navigate('/signup03');
+                console.log(isMentor);
+            }
+        } catch (err) {
+            console.log(err);
+            alert('이메일 / 패스워드를 다시 입력해주세요.');
+        }
     };
 
     return (
@@ -44,7 +68,7 @@ const MentorSignup = () => {
                     />
                     <S.Text>비밀번호 재확인</S.Text>
                     <S.InputText type='password' />
-                    <S.Text>직무</S.Text>
+                    {/* <S.Text>직무</S.Text>
                     <Select
                         defaultValue='직무를 선택해 주세요'
                         style={{
@@ -52,7 +76,7 @@ const MentorSignup = () => {
                             height: '2.7rem',
                             fontSize: '1rem',
                         }}
-                    />
+                    /> */}
                     <GreenBtn
                         text={'다음'}
                         paddingVertical={0.75}
@@ -62,7 +86,7 @@ const MentorSignup = () => {
                         radius={5}
                         top={2}
                         bottom={4}
-                        onClick={go03}
+                        onClick={Sign}
                     />
                 </S.Wrapper>
             </S.Container>

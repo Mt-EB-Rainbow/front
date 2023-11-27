@@ -4,6 +4,8 @@ import * as S from './Signup02.style';
 import { useState } from 'react';
 import { SignApi } from '../../api/Signup';
 import PageTitle from '../_common/PageTitle';
+import { useRecoilState } from 'recoil';
+import { isMentorState } from '../../recoil/loginState';
 
 const Signup02 = () => {
     const [name, setName] = useState('');
@@ -11,17 +13,16 @@ const Signup02 = () => {
     const [email, setEmail] = useState('');
     const [pw, setPw] = useState('');
     const [pw2, setPw2] = useState('');
-    const [err, setErr] = useState('')
     const [birth, setBirth] = useState('');
 
     const navigate = useNavigate();
+    const [isMentor, setIsMentor] = useRecoilState(isMentorState);
 
     //회원가입하기
     const Sign = async e => {
         e.preventDefault();
         try {
-            const res = await SignApi(name, email, pw, nickname, birth);
-
+            const res = await SignApi(name, email, pw, isMentor);
 
             if ((res.status == 200) | (res.status == 201)) {
                 console.log(res);
@@ -30,10 +31,8 @@ const Signup02 = () => {
             }
         } catch (err) {
             console.log(err);
-            alert('이메일 / 패스워드를 다시 입력해주세요.')
-
+            alert('이메일 / 패스워드를 다시 입력해주세요.');
         }
-
     };
 
     return (
@@ -50,12 +49,6 @@ const Signup02 = () => {
                         onChange={e => setName(e.target.value)}
                     />
 
-                    <S.Text>닉네임</S.Text>
-                    <S.InputText
-                        value={nickname}
-                        onChange={e => setNickname(e.target.value)}
-                    />
-
                     <S.Text>이메일</S.Text>
                     <S.InputText
                         value={email}
@@ -68,15 +61,10 @@ const Signup02 = () => {
                         onChange={e => setPw(e.target.value)}
                     />
                     <S.Text>비밀번호 재확인</S.Text>
-                    <S.InputText2 type='password' value={pw2}
-                        onChange={(e) => setPw2(e.target.value)} />
-                    <S.Err>{err}</S.Err>
-
-                    <S.Text>생년월일</S.Text>
-                    <S.InputText
-                        placeholder='YYYY-MM-DD'
-                        value={birth}
-                        onChange={e => setBirth(e.target.value)}
+                    <S.InputText2
+                        type='password'
+                        value={pw2}
+                        onChange={e => setPw2(e.target.value)}
                     />
 
                     <GreenBtn
