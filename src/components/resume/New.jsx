@@ -583,7 +583,11 @@ const New = ({ isEdit }) => {
             const response = await NewResumeApi(resumeId, resumeData);
             console.log('Response:', response);
 
-            if (!response || response.status !== 200) {
+            if (
+                !response ||
+                response.status !== 200 ||
+                response.status !== 201
+            ) {
                 throw new Error('Invalid response from server');
             }
 
@@ -1022,7 +1026,10 @@ const New = ({ isEdit }) => {
                                             type='text'
                                             placeholder='2000.00 (취득년월)'
                                             onChange={e =>
-                                                setGainedDate(e.target.value)
+                                                setGainedDate(
+                                                    e.target.value,
+                                                    index,
+                                                )
                                             }
                                             defaultValue={
                                                 isEdit
@@ -1036,7 +1043,10 @@ const New = ({ isEdit }) => {
                                             type='text'
                                             placeholder='언어'
                                             onChange={e =>
-                                                setTestName(e.target.value)
+                                                setTestName(
+                                                    e.target.value,
+                                                    index,
+                                                )
                                             }
                                             defaultValue={
                                                 isEdit
@@ -1050,7 +1060,7 @@ const New = ({ isEdit }) => {
                                             type='text'
                                             placeholder='어학시험명 / 급수'
                                             onChange={e =>
-                                                setScore(e.target.value)
+                                                setScore(e.target.value, index)
                                             }
                                             defaultValue={
                                                 isEdit
