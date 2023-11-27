@@ -11,8 +11,6 @@ const useTraining = () => {
     const [totalTrainings, setTotalTrainings] = useState(0);
     const [loading, setLoading] = useState(true);
 
-    console.log(true);
-
     const fetchSites = async () => {
         const startPage = currentPage;
 
