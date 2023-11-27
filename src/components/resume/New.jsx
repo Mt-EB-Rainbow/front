@@ -350,7 +350,6 @@ const New = ({ isEdit }) => {
             };
 
             const response = await NewResumeApi(resumeId, resumeData);
-            // console.log('Response:', response);
             if (!response || response.status !== 200) {
                 throw new Error('Invalid response from server');
             }
