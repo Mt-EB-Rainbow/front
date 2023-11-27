@@ -7,6 +7,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import useTraining from '../../hooks/training/useTraining';
 import { GetTrainingById, GetTrainingBySearch } from '../../api/TrainingCourse';
+import Pagination from './pagination';
 
 const Training = () => {
     const {
@@ -21,6 +22,7 @@ const Training = () => {
         loading,
     } = useTraining();
 
+    console.log(loading);
     const navigate = useNavigate();
     const PROJECTS_PER_PAGE = 12;
     const videoLength = totalTrainings;
@@ -277,14 +279,15 @@ const Training = () => {
                             ))}
                         </S.Body>
                         <S.Footer>
-                            <S.PaginationUi
+                            {/* <S.PaginationUi
                                 current={currentPage}
                                 total={totalTrainings}
                                 defaultPageSize={PROJECTS_PER_PAGE}
                                 onChange={newPage => {
                                     navigate(`?page=${newPage}`);
                                 }}
-                            />
+                            /> */}
+                            <Pagination total={totalTrainings} />
                         </S.Footer>
                     </S.Board>
                 </S.Wrapper>

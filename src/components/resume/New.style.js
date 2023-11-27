@@ -203,6 +203,7 @@ export const SmallInput = styled.input`
     line-height: normal;
     border: none;
     outline: none;
+    width: 7.5rem;
 `;
 export const SmallInput1 = styled.input`
     color: black;
