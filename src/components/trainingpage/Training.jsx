@@ -1,17 +1,23 @@
-import GreenBtn from '../_common/Btn/GreenBtn';
-import BigSearchInput from '../_common/Input/BigSearchInput';
 import PageTitle from '../_common/PageTitle';
 import * as S from './Training.style';
 import Header from '../trainingpage/Header';
 import VideoCard from '../_common/Card/VideoCard';
 import { Space, Select } from 'antd';
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import useTraining from '../../hooks/training/useTraining';
+import { GetTrainingById, GetTrainingBySearch } from '../../api/TrainingCourse';
 
 const Training = () => {
-    const { currentPage, lastPage, training, totalTrainings, loading } =
-        useTraining();
+    const {
+        currentPage,
+        lastPage,
+        training,
+        setTraining,
+        totalTrainings,
+        setTotalTrainings,
+        loading,
+    } = useTraining();
 
     console.log(loading);
     const navigate = useNavigate();
@@ -22,13 +28,12 @@ const Training = () => {
         '전체',
         '취업',
         '창업',
-        '자격증,',
+        '자격증',
         '외국어',
         '정보화',
         'BIZ일반',
     ];
 
-    // console.log(training[0].onlineTrainingTime);
     const educationData = {
         전체: ['전체'],
         취업: [
@@ -74,6 +79,30 @@ const Training = () => {
             '관광통역안내사',
             '스포츠지도사',
         ],
+        외국어: [
+            '전체',
+            '영어',
+            '중국어',
+            '일본어',
+            '베트남어',
+            '스페인어',
+            '프랑스어',
+            '독일어',
+            '러시아어',
+            '아랍어',
+            '이탈리아어',
+            '인도네시아어',
+            '태국어',
+            '포르투갈어',
+        ],
+        정보화: [
+            '전체',
+            'OA',
+            '프로그래밍',
+            '웹프로그래밍',
+            '멀티미디어',
+            '코딩',
+        ],
         BIZ일반: [
             '전체',
             '기획, 경영',
@@ -90,19 +119,61 @@ const Training = () => {
     };
 
     // Select box
-    const [category, setCategory] = useState(categoryData[0]);
-    const [education, setEducation] = useState(educationData[categoryData[0]]);
+    const [category, setCategory] = useState('전체'); // 선택된 카테고리 string
+    const [education, setEducation] = useState('전체'); // 선택된 교육 분야 string
+    const [inputName, setInputName] = useState(''); // 교육 이름 string
+    const [isNameDisable, setIsNameDisable] = useState(true); // 이름으로 검색 버튼 비활성화
+    const [isIdDisable, setIsIdDisable] = useState(true); // id로 검색 버튼 비활성화
+    const { state } = useLocation(); // 추천 직무 교육에서 넘어온 검색 jobId
+
     const onCategoryChange = value => {
         setCategory(value);
-        setEducation(educationData[category][0]);
-    };
-    const onEducationChange = value => {
-        setEducation(value);
+        setEducation('교육분야');
+        setIsIdDisable(true);
     };
 
-    const doSearch = () => {
-        console.log('검색');
+    const onEducationChange = value => {
+        setEducation(value);
+        setIsIdDisable(false);
     };
+
+    const onInputChange = e => {
+        if (e.target.value.length > 0) {
+            setIsNameDisable(false);
+        } else {
+            setIsNameDisable(true);
+        }
+        setInputName(e.target.value);
+    };
+
+    const SearchByCategory = async (category, classDomain) => {
+        const res = await GetTrainingBySearch(null, category, classDomain);
+        console.log(res);
+        setTraining(res.educations);
+        setTotalTrainings(res.educations.length);
+    };
+
+    const SearchByName = async name => {
+        const res = await GetTrainingBySearch(name, null, null);
+        console.log(res);
+        setTraining(res.educations);
+        setTotalTrainings(res.educations.length);
+    };
+
+    const SearchById = async id => {
+        const res = await GetTrainingById(id);
+        console.log(res);
+        setTraining(res.educations);
+        setTotalTrainings(res.educations.length);
+    };
+
+    useEffect(() => {
+        if (state !== null) {
+            setInputName(state.jobName);
+            SearchById(state.jobId);
+            setIsNameDisable(false);
+        }
+    }, []);
 
     return (
         <>
@@ -113,23 +184,24 @@ const Training = () => {
                         <S.InlineBox>
                             <S.Content>
                                 {/* 검색 */}
-                                <BigSearchInput
-                                    width={22}
+                                <S.Input
                                     placeholder={
-                                        '관심 있는 교육 과정을 검색해 보세요'
+                                        '찾고자 하는 직무 이름을 검색해 보세요'
                                     }
-                                    marginRight={0.5}
-                                    padding={0.5}
+                                    onChange={onInputChange}
+                                    value={inputName}
                                 />
-                                <GreenBtn
-                                    paddingHorizontal={1.5}
-                                    paddingVertical={1}
-                                    text={'검색'}
-                                    onClick={doSearch}
-                                    width={4.75}
-                                    height={3.2}
-                                    radius={0.6}
-                                />
+                                <S.GreenBtn
+                                    disabled={isNameDisable}
+                                    onClick={() => SearchByName(inputName)}
+                                    backgroundColor={
+                                        isNameDisable
+                                            ? 'var(--light-gray)'
+                                            : 'var(--dark-green)'
+                                    }
+                                >
+                                    검색
+                                </S.GreenBtn>
                             </S.Content>
                             <S.Content>
                                 <Space
@@ -168,14 +240,19 @@ const Training = () => {
                                         )}
                                     />
                                 </Space>
-                                <GreenBtn
-                                    padding={1.5}
-                                    text={'검색'}
-                                    onClick={doSearch}
-                                    width={4.75}
-                                    height={3.2}
-                                    radius={0.6}
-                                />
+                                <S.GreenBtn
+                                    disabled={isIdDisable}
+                                    onClick={() =>
+                                        SearchByCategory(category, education)
+                                    }
+                                    backgroundColor={
+                                        isIdDisable
+                                            ? 'var(--light-gray)'
+                                            : 'var(--dark-green)'
+                                    }
+                                >
+                                    검색
+                                </S.GreenBtn>
                             </S.Content>
                         </S.InlineBox>
                     </S.Box>

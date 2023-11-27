@@ -47,7 +47,9 @@ const useTraining = () => {
         currentPage,
         lastPage,
         training,
+        setTraining,
         totalTrainings,
+        setTotalTrainings,
         loading,
     };
 };

@@ -115,3 +115,31 @@ export const SelectUi = styled(Select)`
         border: 1px solid var(--dark-green);
     }
 `;
+
+export const GreenBtn = styled.button`
+    padding: 0 1.5rem;
+    width: 4.75rem;
+    height: 3.2rem;
+    border-radius: 0.6rem;
+    border: none;
+    background-color: ${props => props.backgroundColor};
+    color: var(--white);
+    font-size: 1rem;
+    font-weight: 500;
+`;
+
+export const Input = styled.input`
+    width: 22rem;
+    color: var(--black);
+    border: 1px #d9d9d9 solid;
+    font-size: 1rem;
+    border-radius: 0.6rem;
+    background-color: var(--white);
+    margin-right: 0.5rem;
+    padding: 1rem 0.5rem;
+    outline: none;
+
+    &::placeholder {
+        color: var(--gray);
+    }
+`;
