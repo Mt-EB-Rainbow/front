@@ -285,15 +285,15 @@ const Training = () => {
                             ))}
                         </S.Body>
                         <S.Footer>
-                            {/* <S.PaginationUi
+                            <S.PaginationUi
                                 current={currentPage}
                                 total={totalTrainings}
+                                pageSize={PROJECTS_PER_PAGE}
                                 defaultPageSize={PROJECTS_PER_PAGE}
                                 onChange={newPage => {
                                     navigate(`?page=${newPage}`);
                                 }}
-                            /> */}
-                            <Pagination total={totalTrainings} />
+                            />
                         </S.Footer>
                     </S.Board>
                 </S.Wrapper>
