@@ -92,8 +92,8 @@ const NavBar = () => {
                     <Menu onClick={goDictionary}>직무 백과</Menu>
                     <Menu onClick={goRecommend}>직무 추천</Menu>
                     <Menu onClick={goTraining}>직업 교육</Menu>
-                    <Menu onClick={true ? goMentorBoards : goResume}>
-                        {true ? '이력서 피드백' : '이력서 작성'}
+                    <Menu onClick={mentorStatus ? goMentorBoards : goResume}>
+                        {mentorStatus ? '이력서 피드백' : '이력서 작성'}
                     </Menu>
                     <Menu onClick={goChildcare}>보육시설 조회</Menu>
                     <Menu onClick={goSupport}>취업지원 기관 조회</Menu>
