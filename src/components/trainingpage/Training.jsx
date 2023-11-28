@@ -3,7 +3,7 @@ import * as S from './Training.style';
 import Header from '../trainingpage/Header';
 import VideoCard from '../_common/Card/VideoCard';
 import { Space, Select } from 'antd';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import useTraining from '../../hooks/training/useTraining';
 import { GetTrainingById, GetTrainingBySearch } from '../../api/TrainingCourse';
@@ -21,7 +21,8 @@ const Training = () => {
         setLoading,
         loading,
     } = useTraining();
-
+    console.log(training);
+    console.log(totalTrainings);
     console.log(loading);
     const navigate = useNavigate();
     const PROJECTS_PER_PAGE = 12;
@@ -129,7 +130,8 @@ const Training = () => {
     const [isIdDisable, setIsIdDisable] = useState(true); // id로 검색 버튼 비활성화
     const { state } = useLocation(); // 추천 직무 교육에서 넘어온 검색 jobId
     const [isSearch, SetIsSearch] = useState(false);
-
+    // 검색시 배열 12개씩 잘라 넣는 새 배열
+    const newArr = [];
     const onCategoryChange = value => {
         setCategory(value);
         setEducation('교육분야');
@@ -188,6 +190,17 @@ const Training = () => {
             }
         }
     }, [currentPage]);
+
+    // 검색시 배열 12개씩 자르기
+
+    useMemo(() => {
+        if (isSearch) {
+            for (let i = 0; i < lastPage; i++) {
+                newArr.push(training?.slice(i * 12, i * 12 + 12));
+                console.log(newArr);
+            }
+        }
+    }, [currentPage, training]);
 
     return (
         <>
@@ -273,27 +286,59 @@ const Training = () => {
                     <S.Board>
                         <Header length={videoLength} />
                         <S.Body>
-                            {training?.map((item, index) => (
-                                <S.CardBox key={index}>
-                                    <VideoCard
-                                        thumbnail={item.fileUrl}
-                                        href={item.detailUrl}
-                                        title={item.courseName}
-                                        loading={loading}
-                                    />
-                                </S.CardBox>
-                            ))}
+                            {!isSearch ? (
+                                <>
+                                    {training?.map((item, index) => (
+                                        <S.CardBox key={index}>
+                                            <VideoCard
+                                                thumbnail={item.fileUrl}
+                                                href={item.detailUrl}
+                                                title={item.courseName}
+                                                loading={loading}
+                                            />
+                                        </S.CardBox>
+                                    ))}
+                                </>
+                            ) : (
+                                <>
+                                    {/* 검색시 body */}
+                                    {newArr[currentPage - 1]?.map(
+                                        (item, index) => (
+                                            <S.CardBox key={index}>
+                                                <VideoCard
+                                                    thumbnail={item.fileUrl}
+                                                    href={item.detailUrl}
+                                                    title={item.courseName}
+                                                    loading={loading}
+                                                />
+                                            </S.CardBox>
+                                        ),
+                                    )}
+                                </>
+                            )}
                         </S.Body>
                         <S.Footer>
-                            <S.PaginationUi
-                                current={currentPage}
-                                total={totalTrainings}
-                                pageSize={PROJECTS_PER_PAGE}
-                                defaultPageSize={PROJECTS_PER_PAGE}
-                                onChange={newPage => {
-                                    navigate(`?page=${newPage}`);
-                                }}
-                            />
+                            {!isSearch ? (
+                                <>
+                                    <S.PaginationUi
+                                        current={currentPage}
+                                        total={totalTrainings}
+                                        pageSize={PROJECTS_PER_PAGE}
+                                        //defaultPageSize={PROJECTS_PER_PAGE}
+                                        onChange={newPage => {
+                                            navigate(`?page=${newPage}`);
+                                        }}
+                                    />
+                                </>
+                            ) : (
+                                <>
+                                    {/* 검색시 페이지네이션 */}
+                                    <Pagination
+                                        total={totalTrainings}
+                                        training={training}
+                                    />
+                                </>
+                            )}
                         </S.Footer>
                     </S.Board>
                 </S.Wrapper>
