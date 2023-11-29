@@ -80,6 +80,8 @@ export const ShortInput = styled.input`
     &.read-only {
         background-color: var(--light-gray);
         color: var(--dark-gray);
+        cursor: not-allowed;
+        outline: none;
     }
 `;
 
@@ -222,6 +224,7 @@ export const FindBtn = styled.button`
     border-radius: 0.6rem;
     font-weight: 700;
     border: 1px solid var(--gray);
+    cursor: pointer;
 `;
 export const SmallInput1 = styled.input`
     color: black;

@@ -78,6 +78,7 @@ export const Open = styled.div`
     font-style: normal;
     font-weight: 700;
     margin-bottom: 3.25rem;
+    color: ${props => (props.color ? props.color : 'var(--gray)')};
 `;
 
 export const Rewrite = styled.span`

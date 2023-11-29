@@ -14,6 +14,10 @@ import {
     updateResumeExperience,
     updateResumeLanguage,
     updateResumeAward,
+    deleteResumeEducation,
+    deleteResumeExperience,
+    deleteResumeLanguage,
+    deleteResumeAward,
 } from '../../api/resume';
 import JobModal from './Modal';
 import {
@@ -32,7 +36,7 @@ const New = ({ isEdit }) => {
     const { resumeId } = useParams();
     const navigate = useNavigate();
     const [inputCount, setInputCount] = useState(0);
-    const [check, setCheck] = useState(false);
+    const [check, setCheck] = useState(true); // 이력서 공개 여부 - true면 비공개 false면 공개
     const [title, setTitle] = useState('');
     const [introduction, setIntroduction] = useState('');
     const [educations, setEducations] = useState([]);
@@ -101,9 +105,13 @@ const New = ({ isEdit }) => {
                     ]),
                 };
 
+                console.log(res);
+
                 // 변환된 데이터로 상태 업데이트
                 setContentdata(dataWithConvertedDates);
                 setTitle(dataWithConvertedDates.title);
+                setCheck(dataWithConvertedDates.isPrivate);
+                setSelectedJob(dataWithConvertedDates.jobName);
                 setIntroduction(dataWithConvertedDates.introduction);
                 setEducations(
                     dataWithConvertedDates.educations || [initialEducation],
@@ -136,7 +144,6 @@ const New = ({ isEdit }) => {
     };
 
     const onChangeCheckbox = checked => {
-        // console.log(`switch to ${checked}`);
         setCheck(!check);
     };
 
@@ -367,28 +374,84 @@ const New = ({ isEdit }) => {
     };
 
     // 항목 삭제 함수
-    const removeEducation = index => {
-        setEducations(prevEducations =>
-            prevEducations.filter((_, eduIndex) => eduIndex !== index),
-        );
+    const removeEducation = async (index, e) => {
+        e.preventDefault();
+
+        const education = educations[index];
+        if (education.id) {
+            try {
+                await deleteResumeEducation(education.id);
+                console.log('학력 정보 삭제 성공');
+
+                // 성공적으로 삭제된 경우, UI에서도 해당 항목 제거
+                setEducations(prevEducations =>
+                    prevEducations.filter((_, eduIndex) => eduIndex !== index),
+                );
+                alert('학력 정보가 삭제되었습니다.');
+            } catch (err) {
+                console.error('학력 정보 삭제 실패:', err);
+                alert('학력 정보 삭제에 실패했습니다.');
+            }
+        }
     };
 
-    const removeExperience = index => {
-        setExperiences(prevEducations =>
-            prevEducations.filter((_, exIndex) => exIndex !== index),
-        );
+    const removeExperience = async (index, e) => {
+        e.preventDefault();
+
+        const experience = experiences[index];
+        if (experience.id) {
+            try {
+                await deleteResumeExperience(experience.id);
+
+                // 성공적으로 삭제된 경우, UI에서도 해당 항목 제거
+                setExperiences(prevExperiences =>
+                    prevExperiences.filter((_, exIndex) => exIndex !== index),
+                );
+                alert('경력 정보가 삭제되었습니다.');
+            } catch (err) {
+                console.error('경력 정보 삭제 실패:', err);
+                alert('경력 정보 삭제에 실패했습니다.');
+            }
+        }
     };
 
-    const removeLanguage = index => {
-        setLanguages(prevLanguages =>
-            prevLanguages.filter((_, lanIndex) => lanIndex !== index),
-        );
+    const removeLanguage = async (index, e) => {
+        e.preventDefault();
+
+        const language = languages[index];
+        if (language.id) {
+            try {
+                await deleteResumeLanguage(language.id);
+
+                // 성공적으로 삭제된 경우, UI에서도 해당 항목 제거
+                setLanguages(prevLanguages =>
+                    prevLanguages.filter((_, lanIndex) => lanIndex !== index),
+                );
+                alert('어학 정보가 삭제되었습니다.');
+            } catch (err) {
+                console.error('어학 정보 삭제 실패:', err);
+                alert('어학 정보 삭제에 실패했습니다.');
+            }
+        }
     };
 
-    const removeAwards = index => {
-        setAwards(prevAward =>
-            prevAward.filter((_, awardsIndex) => awardsIndex !== index),
-        );
+    const removeAwards = async (index, e) => {
+        e.preventDefault();
+
+        const award = awards[index];
+        if (award.id) {
+            try {
+                await deleteResumeAward(award.id);
+                // 성공적으로 삭제된 경우, UI에서도 해당 항목 제거
+                setAwards(prevAwards =>
+                    prevAwards.filter((_, awaIndex) => awaIndex !== index),
+                );
+                alert('수상 정보가 삭제되었습니다.');
+            } catch (err) {
+                console.error('수상 정보 삭제 실패:', err);
+                alert('수상 정보 삭제에 실패했습니다.');
+            }
+        }
     };
 
     const onResumeSubmit = async e => {
@@ -502,11 +565,11 @@ const New = ({ isEdit }) => {
                     {/* 공개여부 토글 */}
                     <S.SwitchStyle>
                         <Switch
-                            defaultChecked={false}
+                            defaultChecked={true}
                             onChange={onChangeCheckbox}
                             checkedChildren='공개'
                             unCheckedChildren='비공개'
-                            checked={check}
+                            checked={!check}
                         />
                     </S.SwitchStyle>
 
@@ -534,6 +597,7 @@ const New = ({ isEdit }) => {
                             className='read-only'
                             type='text'
                             placeholder='직무를 입력하세요.'
+                            defaultValue={isEdit ? selectedJob : ''}
                             value={selectedJob}
                             readOnly // 직접 입력을 막기 위해 readOnly 설정
                         />
@@ -717,7 +781,7 @@ const New = ({ isEdit }) => {
                                         />
                                     </div>
                                     <S.RemoveBtn
-                                        onClick={() => removeEducation(index)}
+                                        onClick={e => removeEducation(index, e)}
                                     >
                                         - 항목 삭제
                                     </S.RemoveBtn>
@@ -835,8 +899,8 @@ const New = ({ isEdit }) => {
                                             />
                                         </div>
                                         <S.RemoveBtn
-                                            onClick={() =>
-                                                removeExperience(index)
+                                            onClick={e =>
+                                                removeExperience(index, e)
                                             }
                                         >
                                             - 항목 삭제
@@ -915,7 +979,7 @@ const New = ({ isEdit }) => {
                                         />
                                     </div>
                                     <S.RemoveBtn
-                                        onClick={() => removeLanguage(index)}
+                                        onClick={e => removeLanguage(index, e)}
                                     >
                                         - 항목 삭제
                                     </S.RemoveBtn>
@@ -1011,7 +1075,7 @@ const New = ({ isEdit }) => {
                                         />
                                     </div>
                                     <S.RemoveBtn
-                                        onClick={() => removeAwards(index)}
+                                        onClick={e => removeAwards(index, e)}
                                     >
                                         - 항목 삭제
                                     </S.RemoveBtn>
