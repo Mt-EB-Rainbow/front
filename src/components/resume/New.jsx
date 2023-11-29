@@ -443,14 +443,7 @@ const New = ({ isEdit }) => {
                             data={data}
                             onItemSelect={handleJobSelect}
                         ></JobModal>
-                        <GreenBtn
-                            text={'직무 찾기'}
-                            width={10.75}
-                            paddingHorizontal={2}
-                            height={2.7}
-                            radius={5}
-                            onClick={openModal}
-                        />
+                        <S.FindBtn onClick={openModal}>직무 찾기</S.FindBtn>
                     </S.ShortInputWrapper>
                     <S.TitleWapper>
                         <S.Title>간단한 자기소개</S.Title>
@@ -498,7 +491,9 @@ const New = ({ isEdit }) => {
                                                     : ''
                                             }
                                         />
-                                        <span>- </span>
+                                        <span style={{ marginRight: '0.4rem' }}>
+                                            -
+                                        </span>
                                         <S.SmallInput1
                                             type='text'
                                             placeholder='2000.00'
@@ -535,7 +530,9 @@ const New = ({ isEdit }) => {
                                                 }
                                                 id={`attendingCheckbox-${index}`}
                                             />
-                                            <div>재학중</div>
+                                            <div style={{ width: '2rem' }}>
+                                                재학중
+                                            </div>
                                         </S.Label>
                                         <S.Label
                                             htmlFor={`leavingCheckbox-${index}`}
@@ -555,7 +552,13 @@ const New = ({ isEdit }) => {
                                                 }
                                                 id={`leavingCheckbox-${index}`}
                                             />
-                                            <div>휴학중</div>
+                                            <div
+                                                style={{
+                                                    width: '2rem',
+                                                }}
+                                            >
+                                                휴학중
+                                            </div>
                                         </S.Label>
                                         <S.Label
                                             htmlFor={`graduateCheckbox-${index}`}
@@ -572,7 +575,9 @@ const New = ({ isEdit }) => {
                                                 }
                                                 id={`graduateCheckbox-${index}`}
                                             />
-                                            <div>졸업</div>
+                                            <div style={{ width: '2rem' }}>
+                                                졸업
+                                            </div>
                                         </S.Label>
                                     </div>
                                 </S.BoxLeft>
@@ -581,7 +586,7 @@ const New = ({ isEdit }) => {
                                         style={{
                                             display: 'flex',
                                             flexDirection: 'column',
-                                            marginRight: '12rem',
+                                            width: '23.15rem',
                                         }}
                                     >
                                         <S.School
@@ -637,7 +642,7 @@ const New = ({ isEdit }) => {
                             <div style={{ width: '39.3rem' }}>
                                 <S.GrayBox>
                                     <S.BoxLeft>
-                                        <div style={{ width: '7.86rem' }}>
+                                        <div>
                                             <S.SmallInput1
                                                 type='text'
                                                 placeholder='2000.00'
@@ -654,7 +659,13 @@ const New = ({ isEdit }) => {
                                                         : ''
                                                 }
                                             />
-                                            <span>- </span>
+                                            <span
+                                                style={{
+                                                    marginRight: '0.4rem',
+                                                }}
+                                            >
+                                                -
+                                            </span>
                                             <S.SmallInput1
                                                 type='text'
                                                 placeholder='2000.00'
@@ -685,7 +696,7 @@ const New = ({ isEdit }) => {
                                             style={{
                                                 display: 'flex',
                                                 flexDirection: 'column',
-                                                marginRight: '12rem',
+                                                width: '23.15rem',
                                             }}
                                         >
                                             <S.School
@@ -751,24 +762,28 @@ const New = ({ isEdit }) => {
                         .map((_, index) => (
                             <div style={{ width: '39.3rem' }}>
                                 <S.GrayBox>
-                                    <S.SmallInput
-                                        type='text'
-                                        placeholder='2000.00 (취득년월)'
-                                        onChange={e =>
-                                            setGainedDate(e.target.value, index)
-                                        }
-                                        defaultValue={
-                                            isEdit
-                                                ? languages[0].gainedDate
-                                                : ''
-                                        }
-                                    />
+                                    <S.BoxLeft>
+                                        <S.SmallInput
+                                            type='text'
+                                            placeholder='2000.00 (취득년월)'
+                                            onChange={e =>
+                                                setGainedDate(
+                                                    e.target.value,
+                                                    index,
+                                                )
+                                            }
+                                            defaultValue={
+                                                isEdit
+                                                    ? languages[0].gainedDate
+                                                    : ''
+                                            }
+                                        />
+                                    </S.BoxLeft>
                                     <div
                                         style={{
                                             display: 'flex',
                                             flexDirection: 'column',
-                                            marginLeft: '2rem',
-                                            marginRight: '12.5rem',
+                                            width: '23.15rem',
                                         }}
                                     >
                                         <S.School
@@ -824,7 +839,7 @@ const New = ({ isEdit }) => {
                         .map((_, index) => (
                             <div style={{ width: '39.3rem' }}>
                                 <S.GrayBox>
-                                    <div>
+                                    <S.BoxLeft style={{ flexDirection: 'row' }}>
                                         <S.SmallInput1
                                             type='text'
                                             placeholder='2000.00'
@@ -840,7 +855,9 @@ const New = ({ isEdit }) => {
                                                     : ''
                                             }
                                         />
-                                        <span>- </span>
+                                        <span style={{ marginRight: '0.4rem' }}>
+                                            -
+                                        </span>
                                         <S.SmallInput1
                                             type='text'
                                             placeholder='2000.00'
@@ -856,13 +873,12 @@ const New = ({ isEdit }) => {
                                                     : ''
                                             }
                                         />
-                                    </div>
+                                    </S.BoxLeft>
                                     <div
                                         style={{
                                             display: 'flex',
                                             flexDirection: 'column',
-                                            marginLeft: '2rem',
-                                            marginRight: '12rem',
+                                            width: '23.15rem',
                                         }}
                                     >
                                         <S.School
@@ -907,7 +923,6 @@ const New = ({ isEdit }) => {
                             width={10.75}
                             paddingVertical={0.75}
                             paddingHorizontal={2.95}
-                            bottom={7.15}
                             top={6.4}
                             onClick={onSubmit} /* @todo onUpdate 함수로 변경 */
                             height={2.7}
