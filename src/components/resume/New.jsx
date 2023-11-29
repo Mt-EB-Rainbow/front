@@ -24,6 +24,7 @@ import {
     convertDateFieldsInArray,
 } from '../../util/DateFormatter';
 import { GetCategories } from '../../api/dictionary';
+import CommentList from './CommentList';
 
 const New = ({ isEdit }) => {
     // 직무 조회 리스트 get
@@ -478,76 +479,100 @@ const New = ({ isEdit }) => {
     const onResumeSubmit = async e => {
         e.preventDefault();
         try {
-            // 기본 이력서 정보 업데이트
-            await updateResumeBasicInfo(resumeId, {
-                title,
-                introduction,
-                isPrivate: check,
-                jobName: selectedJob,
-            });
+            if (
+                selectedJob &&
+                title &&
+                educations[0].startDate &&
+                educations[0].finishDate &&
+                educations[0].name &&
+                educations[0].major &&
+                educations[0].educationStatus
+            ) {
+                // 기본 이력서 정보 업데이트
+                await updateResumeBasicInfo(resumeId, {
+                    title,
+                    introduction,
+                    isPrivate: check,
+                    jobName: selectedJob,
+                });
 
-            // 각 섹션 데이터 변환
-            const convertedEducations = convertDateFieldsInArray(educations, [
-                'startDate',
-                'finishDate',
-            ]);
-            const convertedExperiences = convertDateFieldsInArray(experiences, [
-                'startDate',
-                'finishDate',
-            ]);
-            const convertedLanguages = convertDateFieldsInArray(languages, [
-                'gainedDate',
-            ]);
-            const convertedAwards = convertDateFieldsInArray(awards, [
-                'startDate',
-                'finishDate',
-            ]);
+                // 각 섹션 데이터 변환
+                const convertedEducations = convertDateFieldsInArray(
+                    educations,
+                    ['startDate', 'finishDate'],
+                );
+                const convertedExperiences = convertDateFieldsInArray(
+                    experiences,
+                    ['startDate', 'finishDate'],
+                );
+                const convertedLanguages = convertDateFieldsInArray(languages, [
+                    'gainedDate',
+                ]);
+                const convertedAwards = convertDateFieldsInArray(awards, [
+                    'startDate',
+                    'finishDate',
+                ]);
 
-            // 학력 데이터 처리
-            for (const education of convertedEducations) {
-                if (education.educationId) {
-                    await updateResumeEducation(
-                        education.educationId,
-                        education,
-                    );
-                } else {
-                    await postResumeSection(resumeId, 'education', education);
+                // 학력 데이터 처리
+                for (const education of convertedEducations) {
+                    if (education.educationId) {
+                        await updateResumeEducation(
+                            education.educationId,
+                            education,
+                        );
+                    } else {
+                        await postResumeSection(
+                            resumeId,
+                            'education',
+                            education,
+                        );
+                    }
                 }
-            }
 
-            // 경력 데이터 처리
-            for (const experience of convertedExperiences) {
-                if (experience.experienceId) {
-                    await updateResumeExperience(
-                        experience.experienceId,
-                        experience,
-                    );
-                } else {
-                    await postResumeSection(resumeId, 'experience', experience);
+                // 경력 데이터 처리
+                for (const experience of convertedExperiences) {
+                    if (experience.experienceId) {
+                        await updateResumeExperience(
+                            experience.experienceId,
+                            experience,
+                        );
+                    } else {
+                        await postResumeSection(
+                            resumeId,
+                            'experience',
+                            experience,
+                        );
+                    }
                 }
-            }
 
-            // 어학 데이터 처리
-            for (const language of convertedLanguages) {
-                if (language.languageId) {
-                    await updateResumeLanguage(language.languageId, language);
-                } else {
-                    await postResumeSection(resumeId, 'language', language);
+                // 어학 데이터 처리
+                for (const language of convertedLanguages) {
+                    if (language.languageId) {
+                        await updateResumeLanguage(
+                            language.languageId,
+                            language,
+                        );
+                    } else {
+                        await postResumeSection(resumeId, 'language', language);
+                    }
                 }
-            }
 
-            // 수상 경력 데이터 처리
-            for (const award of convertedAwards) {
-                if (award.awardsId) {
-                    await updateResumeAward(award.awardsId, award);
-                } else {
-                    await postResumeSection(resumeId, 'award', award);
+                // 수상 경력 데이터 처리
+                for (const award of convertedAwards) {
+                    if (award.awardsId) {
+                        await updateResumeAward(award.awardsId, award);
+                    } else {
+                        await postResumeSection(resumeId, 'award', award);
+                    }
                 }
-            }
 
-            // 성공 메시지와 페이지 이동
-            alert('저장이 완료되었습니다.');
-            navigate('/resume');
+                // 성공 메시지와 페이지 이동
+                alert('저장이 완료되었습니다.');
+                navigate('/resume');
+            } else {
+                alert('필수 입력사항을 모두 입력해주세요!');
+                return;
+            }
 
             // 이전 코드들인데, 혹시 몰라 남겨두었습니다.
             //     educations,
@@ -577,7 +602,7 @@ const New = ({ isEdit }) => {
             // }
         } catch (err) {
             // 오류 처리
-            alert('저장에 실패했습니다!');
+            alert('저장에 실패했습니다');
             console.error(err);
         }
     };
@@ -649,7 +674,6 @@ const New = ({ isEdit }) => {
                     <S.TextArea
                         type='text'
                         placeholder='자기소개를 입력하세요.'
-                        value={introduction}
                         onChange={onChangeContent}
                         defaultValue={introduction}
                     />
@@ -853,7 +877,7 @@ const New = ({ isEdit }) => {
                                                 }
                                                 defaultValue={
                                                     isEdit
-                                                        ? experiences[0]
+                                                        ? experiences[index]
                                                               .startDate
                                                         : ''
                                                 }
@@ -876,7 +900,7 @@ const New = ({ isEdit }) => {
                                                 }
                                                 defaultValue={
                                                     isEdit
-                                                        ? experiences[0]
+                                                        ? experiences[index]
                                                               .finishDate
                                                         : ''
                                                 }
@@ -909,7 +933,7 @@ const New = ({ isEdit }) => {
                                                 }
                                                 defaultValue={
                                                     isEdit
-                                                        ? experiences[0]
+                                                        ? experiences[index]
                                                               .department
                                                         : ''
                                                 }
@@ -925,7 +949,7 @@ const New = ({ isEdit }) => {
                                                 }
                                                 defaultValue={
                                                     isEdit
-                                                        ? experiences[0]
+                                                        ? experiences[index]
                                                               .position
                                                         : ''
                                                 }
@@ -973,7 +997,8 @@ const New = ({ isEdit }) => {
                                             }
                                             defaultValue={
                                                 isEdit
-                                                    ? languages[0].gainedDate
+                                                    ? languages[index]
+                                                          .gainedDate
                                                     : ''
                                             }
                                         />
@@ -996,7 +1021,7 @@ const New = ({ isEdit }) => {
                                             }
                                             defaultValue={
                                                 isEdit
-                                                    ? languages[0].testName
+                                                    ? languages[index].language
                                                     : ''
                                             }
                                         />
@@ -1007,7 +1032,9 @@ const New = ({ isEdit }) => {
                                                 setScore(e.target.value, index)
                                             }
                                             defaultValue={
-                                                isEdit ? languages[0].score : ''
+                                                isEdit
+                                                    ? languages[index].score
+                                                    : ''
                                             }
                                         />
                                     </div>
@@ -1050,7 +1077,7 @@ const New = ({ isEdit }) => {
                                             }
                                             defaultValue={
                                                 isEdit
-                                                    ? awards[0].startDate
+                                                    ? awards[index].startDate
                                                     : ''
                                             }
                                         />
@@ -1068,7 +1095,7 @@ const New = ({ isEdit }) => {
                                             }
                                             defaultValue={
                                                 isEdit
-                                                    ? awards[0].finishDate
+                                                    ? awards[index].finishDate
                                                     : ''
                                             }
                                         />
@@ -1090,7 +1117,9 @@ const New = ({ isEdit }) => {
                                                 )
                                             }
                                             defaultValue={
-                                                isEdit ? awards[0].activity : ''
+                                                isEdit
+                                                    ? awards[index].activity
+                                                    : ''
                                             }
                                         />
                                         <S.SmallInput
@@ -1103,7 +1132,9 @@ const New = ({ isEdit }) => {
                                                 )
                                             }
                                             defaultValue={
-                                                isEdit ? awards[0].content : ''
+                                                isEdit
+                                                    ? awards[index].content
+                                                    : ''
                                             }
                                         />
                                     </div>
@@ -1142,6 +1173,8 @@ const New = ({ isEdit }) => {
                             radius={5}
                         />
                     )}
+
+                    <CommentList />
                 </S.Wrapper>
             </S.Container>
         </>

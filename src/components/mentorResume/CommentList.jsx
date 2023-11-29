@@ -11,9 +11,9 @@ const CommentList = ({ data }) => {
                 <>
                     <TitleContainer2>
                         <TitleWrapper2>
-                            <Date>김00 멘토님</Date>
+                            <Date>{el.mentorName} 멘토님</Date>
                         </TitleWrapper2>
-                        <Date>{el.createdAt.slice(0,13)}</Date>
+                        <Date>{el.createdAt.slice(0, 13)}</Date>
                     </TitleContainer2>
                     <Feedback key={el.FeedbackId}>{el.content}</Feedback>
                 </>

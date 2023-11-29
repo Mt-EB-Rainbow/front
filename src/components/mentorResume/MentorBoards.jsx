@@ -32,26 +32,32 @@ const MentorBoards = () => {
                     </S.HeaderWrapper>
 
                     {resumeArr.length ? (
-                        resumeArr?.map(el => (
-                            <S.Boards key={el.resumeId}>
-                                <S.Info>
-                                    <S.Name
-                                        onClick={() =>
-                                            navigate(
-                                                `/mentorfeedback/${el.resumeId}`,
-                                            )
-                                        }
-                                        style={{ cursor: 'pointer' }}
-                                    >
-                                        {el.title}
-                                    </S.Name>
-                                    <S.JobInfo>2023.10.01</S.JobInfo>
-                                </S.Info>
-                                <S.Right>
-                                    <S.GreenBox>사무보조</S.GreenBox>
-                                </S.Right>
-                            </S.Boards>
-                        ))
+                        resumeArr?.map(el =>
+                            el.isPrivate ? (
+                                <></>
+                            ) : (
+                                <S.Boards key={el.resumeId}>
+                                    <S.Info>
+                                        <S.Name
+                                            onClick={() =>
+                                                navigate(
+                                                    `/mentorfeedback/${el.resumeId}`,
+                                                )
+                                            }
+                                            style={{ cursor: 'pointer' }}
+                                        >
+                                            {el.title}
+                                        </S.Name>
+                                        <S.JobInfo>2023.10.01</S.JobInfo>
+                                    </S.Info>
+                                    <S.Right>
+                                        <S.GreenBox>
+                                            {el.jobName ? el.jobName : ''}
+                                        </S.GreenBox>
+                                    </S.Right>
+                                </S.Boards>
+                            ),
+                        )
                     ) : (
                         <S.Text>아직 등록된 이력서가 없어요.</S.Text>
                     )}
