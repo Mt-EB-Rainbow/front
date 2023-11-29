@@ -5,9 +5,21 @@ import { useEffect, useState } from 'react';
 import { Switch } from 'antd';
 import './Switch.css';
 import { useNavigate, useParams } from 'react-router-dom';
-import { NewResumeApi, getResumeContentApi } from '../../api/resume';
+import {
+    NewResumeApi,
+    getResumeContentApi,
+    postResumeSection,
+    updateResumeBasicInfo,
+    updateResumeEducation,
+    updateResumeExperience,
+    updateResumeLanguage,
+    updateResumeAward,
+} from '../../api/resume';
 import JobModal from './Modal';
-import { convertDateFieldsInArrayToCustom } from '../../util/DateFormatter';
+import {
+    convertDateFieldsInArrayToCustom,
+    convertDateFieldsInArray,
+} from '../../util/DateFormatter';
 
 const New = ({ isEdit }) => {
     //mock data
@@ -363,31 +375,77 @@ const New = ({ isEdit }) => {
         );
     };
 
-    // 이력서 제출 함수
-    const onSubmit = async e => {
+    const onResumeSubmit = async e => {
         e.preventDefault();
         try {
-            const resumeData = {
+            // 기본 이력서 정보 업데이트
+            await updateResumeBasicInfo(resumeId, {
                 title,
                 introduction,
-                educations,
-                experiences,
-                languages,
-                awards,
-            };
+                isPrivate: check,
+                jobName: selectedJob,
+            });
 
-            const response = await NewResumeApi(resumeId, resumeData);
-            if (!response || response.status !== 200) {
-                throw new Error('Invalid response from server');
+            // 각 섹션 데이터 변환
+            const convertedEducations = convertDateFieldsInArray(educations, [
+                'startDate',
+                'finishDate',
+            ]);
+            const convertedExperiences = convertDateFieldsInArray(experiences, [
+                'startDate',
+                'finishDate',
+            ]);
+            const convertedLanguages = convertDateFieldsInArray(languages, [
+                'gainedDate',
+            ]);
+            const convertedAwards = convertDateFieldsInArray(awards, [
+                'startDate',
+                'finishDate',
+            ]);
+
+            // 학력 데이터 처리
+            for (const education of convertedEducations) {
+                if (education.id) {
+                    await updateResumeEducation(education.id, education);
+                } else {
+                    await postResumeSection(resumeId, 'education', education);
+                }
             }
 
+            // 경력 데이터 처리
+            for (const experience of convertedExperiences) {
+                if (experience.id) {
+                    await updateResumeExperience(experience.id, experience);
+                } else {
+                    await postResumeSection(resumeId, 'experience', experience);
+                }
+            }
+
+            // 어학 데이터 처리
+            for (const language of convertedLanguages) {
+                if (language.id) {
+                    await updateResumeLanguage(language.id, language);
+                } else {
+                    await postResumeSection(resumeId, 'language', language);
+                }
+            }
+
+            // 수상 경력 데이터 처리
+            for (const award of convertedAwards) {
+                if (award.id) {
+                    await updateResumeAward(award.id, award);
+                } else {
+                    await postResumeSection(resumeId, 'award', award);
+                }
+            }
+
+            // 성공 메시지와 페이지 이동
             alert('저장이 완료되었습니다.');
             navigate('/resume');
         } catch (err) {
-            // console.error(err);
-            // alert('저장에 실패했습니다!');
-            alert('저장이 완료되었습니다.');
-            navigate('/resume');
+            // 오류 처리
+            alert('저장에 실패했습니다!');
+            console.error(err);
         }
     };
 
@@ -909,7 +967,9 @@ const New = ({ isEdit }) => {
                             paddingHorizontal={2.95}
                             bottom={7.15}
                             top={6.4}
-                            onClick={onSubmit} /* @todo onUpdate 함수로 변경 */
+                            onClick={
+                                onResumeSubmit
+                            } /* @todo onUpdate 함수로 변경 */
                             height={2.7}
                             radius={5}
                         />
@@ -921,7 +981,7 @@ const New = ({ isEdit }) => {
                             paddingHorizontal={2.95}
                             bottom={7.15}
                             top={6.4}
-                            onClick={onSubmit}
+                            onClick={onResumeSubmit}
                             height={2.7}
                             radius={5}
                         />
