@@ -19,6 +19,7 @@ const NavBar = () => {
             const res = await SignoutApi();
             if ((res.status == 200) | (res.status == 201)) {
                 navigate('/');
+                setMentorStatus(false);
             }
         } catch (err) {
             console.log(err);
@@ -31,7 +32,8 @@ const NavBar = () => {
         const fetchMentorStatus = async memberId => {
             try {
                 const status = await CheckMentorApi(memberId);
-                setMentorStatus(status);
+                console.log(status?.data);
+                setMentorStatus(status?.data);
             } catch (err) {
                 console.error('멘토 상태 확인 중 오류 발생', err);
             }
@@ -40,7 +42,7 @@ const NavBar = () => {
         if (memberId) {
             fetchMentorStatus(memberId);
         }
-    }, []);
+    }, [isLoggedin]);
 
     const goLogin = () => {
         navigate('/login');

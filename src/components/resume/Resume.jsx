@@ -34,7 +34,7 @@ const Resume = () => {
     return (
         <>
             <S.Container>
-                <S.Wrapper exist={resumeResponses.length}>
+                <S.Wrapper exist={resumeResponses.length > 2}>
                     <PageTitle text={'내 이력서 관리'} />
                     <div style={{ height: '6.5rem' }}></div>
                     <BoardsHeader
@@ -42,7 +42,7 @@ const Resume = () => {
                         placeholder={'제목 및 내용으로 검색'}
                     />
                     {/* id 역순으로 반환 */}
-                    {resumeResponses ? (
+                    {resumeResponses.length !== 0 ? (
                         <>
                             {[...resumeResponses]
                                 .sort((a, b) => b.resumeId - a.resumeId)

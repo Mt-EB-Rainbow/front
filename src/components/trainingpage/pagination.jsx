@@ -2,16 +2,24 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
-const Pagination = ({ total }) => {
+const Pagination = ({ total, training }) => {
     const navigate = useNavigate();
     const [startPage, setStartPage] = useState(1);
 
-    // 마지막 페이지 구하기
-    const lastPage = Math.ceil(total / 10);
+    // // 마지막 페이지 구하기
+    const lastPage = Math.ceil(total / 12);
+    // console.log(lastPage);
 
-    const onClickPage = newPage => {
-        // refetch 함수 안에는 variables를 써줘야한다. 하지만 variables를 써줄 필요는 없음
-        navigate(`?page=${newPage}`);
+    // // 배열 12개씩 자르기
+    // const newArr = [];
+    // for (let i = 0; i < lastPage; i++) {
+    //     newArr.push(training?.slice(i * 12, i * 12 + 12));
+    //     console.log(newArr);
+    // }
+    // console.log(newArr);
+
+    const onClickPage = e => {
+        navigate(`?page=${e.currentTarget.id}`);
     };
 
     const onClickPrevPage = () => {
@@ -33,7 +41,7 @@ const Pagination = ({ total }) => {
                 <Wrapper>
                     <PageBtn onClick={onClickPrevPage}>{`<`}</PageBtn>
 
-                    {new Array(10).fill(1).map((_, index) =>
+                    {new Array(12).fill(1).map((_, index) =>
                         index + startPage <= lastPage ? (
                             <PageNum key={index + startPage}>
                                 <span
