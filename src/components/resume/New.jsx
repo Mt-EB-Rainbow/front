@@ -129,7 +129,6 @@ const New = ({ isEdit }) => {
     };
 
     // 모달
-
     const openModal = async () => {
         await getJobList();
         setModalIsOpen(!modalIsOpen);
@@ -156,6 +155,7 @@ const New = ({ isEdit }) => {
             setJob(newJobArray);
         }
     }, [jobcategory]);
+
     // 학력 상태관리
     const setStartDate = (date, index) => {
         setEducations(prevEducations =>
@@ -391,14 +391,26 @@ const New = ({ isEdit }) => {
                 languages,
                 awards,
             };
+            if (
+                selectedJob &&
+                title &&
+                educations[0].startDate &&
+                educations[0].finishDate &&
+                educations[0].name &&
+                educations[0].major &&
+                educations[0].degreeStatus
+            ) {
+                const response = await NewResumeApi(resumeId, resumeData);
+                if (!response || response.status !== 200) {
+                    throw new Error('Invalid response from server');
+                }
 
-            const response = await NewResumeApi(resumeId, resumeData);
-            if (!response || response.status !== 200) {
-                throw new Error('Invalid response from server');
+                alert('저장이 완료되었습니다.');
+                navigate('/resume');
+            } else {
+                alert('필수 입력사항을 모두 입력해주세요!');
+                return;
             }
-
-            alert('저장이 완료되었습니다.');
-            navigate('/resume');
         } catch (err) {
             // console.error(err);
             // alert('저장에 실패했습니다!');
