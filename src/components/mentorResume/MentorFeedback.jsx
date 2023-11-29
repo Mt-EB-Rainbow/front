@@ -10,7 +10,7 @@ import { convertDateFieldsInArrayToCustom } from '../../util/DateFormatter';
 const MentorFeedback = () => {
     const { resumeId } = useParams();
     const [content, setContent] = useState([]);
-    console.log(content);
+    console.log(content.resumeStatus);
     const [inputCount, setInputCount] = useState(0);
     const [check, setCheck] = useState(false);
     const [title, setTitle] = useState('');
@@ -88,7 +88,11 @@ const MentorFeedback = () => {
                         <S.Title>직무 선택</S.Title>
                     </S.TitleWapper>
                     <S.ShortInputWrapper>
-                        <S.Input type='text' placeholder='직무를 입력하세요.' />
+                        <S.Input
+                            type='text'
+                            defaultValue={content.jobName}
+                            readOnly={true}
+                        />
                     </S.ShortInputWrapper>
                     <S.TitleWapper>
                         <S.Title>간단한 자기소개</S.Title>

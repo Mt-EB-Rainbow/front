@@ -48,7 +48,9 @@ const MentorBoards = () => {
                                     <S.JobInfo>2023.10.01</S.JobInfo>
                                 </S.Info>
                                 <S.Right>
-                                    <S.GreenBox>사무보조</S.GreenBox>
+                                    <S.GreenBox>
+                                        {el.jobName ? el.jobName : ''}
+                                    </S.GreenBox>
                                 </S.Right>
                             </S.Boards>
                         ))
