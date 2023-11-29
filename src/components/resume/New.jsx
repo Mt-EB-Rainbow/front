@@ -6,7 +6,6 @@ import { Switch } from 'antd';
 import './Switch.css';
 import { useNavigate, useParams } from 'react-router-dom';
 import {
-    NewResumeApi,
     getResumeContentApi,
     postResumeSection,
     updateResumeBasicInfo,
@@ -53,9 +52,10 @@ const New = ({ isEdit }) => {
     const initialEducation = {
         startDate: '',
         finishDate: '',
+        educationStatus: '',
         name: '',
         major: '',
-        degreeStatus: null,
+        degree: '',
     };
 
     const initialExperience = {
@@ -68,6 +68,7 @@ const New = ({ isEdit }) => {
 
     const initialLanguage = {
         gainedDate: '',
+        language: '',
         testName: '',
         score: '',
     };
@@ -277,11 +278,11 @@ const New = ({ isEdit }) => {
         );
     };
 
-    const setTestName = (name, index) => {
+    const setLanguage = (name, index) => {
         setLanguages(prevLanguages =>
             prevLanguages.map((language, idx) => {
                 if (idx === index) {
-                    return { ...language, testName: name };
+                    return { ...language, language: name };
                 }
                 return language;
             }),
@@ -345,19 +346,26 @@ const New = ({ isEdit }) => {
     };
 
     // 체크박스 상태 관리 함수
-    const checkOnlyOne = (index, status) => {
+    const checkOnlyOne = (index, checkThis, status) => {
+        const checkboxes = document.getElementsByName(
+            `educationStatus-${index}`,
+        );
+        for (let i = 0; i < checkboxes.length; i++) {
+            checkboxes[i].checked = false;
+        }
+        checkThis.checked = true;
         setEducations(prevEducations =>
             prevEducations.map((education, idx) => {
                 if (idx === index) {
-                    return { ...education, degreeStatus: status };
+                    return { ...education, educationStatus: status };
                 }
-                return { ...education, degreeStatus: null };
+                return education;
             }),
         );
     };
 
     // 항목 추가 함수
-    const addEducation = () => {
+    const addEducation = async () => {
         setEducations(prev => [...prev, { ...initialEducation }]);
     };
 
@@ -378,20 +386,25 @@ const New = ({ isEdit }) => {
         e.preventDefault();
 
         const education = educations[index];
-        if (education.id) {
+        if (education.educationId) {
+            // 이미 post된 education이면
             try {
-                await deleteResumeEducation(education.id);
-                console.log('학력 정보 삭제 성공');
-
-                // 성공적으로 삭제된 경우, UI에서도 해당 항목 제거
+                // delete api 실행
+                await deleteResumeEducation(education.educationId);
                 setEducations(prevEducations =>
                     prevEducations.filter((_, eduIndex) => eduIndex !== index),
                 );
-                alert('학력 정보가 삭제되었습니다.');
+                console.log('학력 정보 삭제 성공');
+                //alert('학력 정보가 삭제되었습니다.');
             } catch (err) {
                 console.error('학력 정보 삭제 실패:', err);
                 alert('학력 정보 삭제에 실패했습니다.');
             }
+        } else {
+            // 아직 post되지 않은 education이라면
+            setEducations(prevEducations =>
+                prevEducations.filter((_, eduIndex) => eduIndex !== index),
+            );
         }
     };
 
@@ -399,11 +412,9 @@ const New = ({ isEdit }) => {
         e.preventDefault();
 
         const experience = experiences[index];
-        if (experience.id) {
+        if (experience.experienceId) {
             try {
-                await deleteResumeExperience(experience.id);
-
-                // 성공적으로 삭제된 경우, UI에서도 해당 항목 제거
+                await deleteResumeExperience(experience.experienceId);
                 setExperiences(prevExperiences =>
                     prevExperiences.filter((_, exIndex) => exIndex !== index),
                 );
@@ -412,6 +423,10 @@ const New = ({ isEdit }) => {
                 console.error('경력 정보 삭제 실패:', err);
                 alert('경력 정보 삭제에 실패했습니다.');
             }
+        } else {
+            setExperiences(prevExperiences =>
+                prevExperiences.filter((_, exIndex) => exIndex !== index),
+            );
         }
     };
 
@@ -419,11 +434,9 @@ const New = ({ isEdit }) => {
         e.preventDefault();
 
         const language = languages[index];
-        if (language.id) {
+        if (language.languageId) {
             try {
-                await deleteResumeLanguage(language.id);
-
-                // 성공적으로 삭제된 경우, UI에서도 해당 항목 제거
+                await deleteResumeLanguage(language.languageId);
                 setLanguages(prevLanguages =>
                     prevLanguages.filter((_, lanIndex) => lanIndex !== index),
                 );
@@ -432,6 +445,10 @@ const New = ({ isEdit }) => {
                 console.error('어학 정보 삭제 실패:', err);
                 alert('어학 정보 삭제에 실패했습니다.');
             }
+        } else {
+            setLanguages(prevLanguages =>
+                prevLanguages.filter((_, lanIndex) => lanIndex !== index),
+            );
         }
     };
 
@@ -439,9 +456,9 @@ const New = ({ isEdit }) => {
         e.preventDefault();
 
         const award = awards[index];
-        if (award.id) {
+        if (award.awardsId) {
             try {
-                await deleteResumeAward(award.id);
+                await deleteResumeAward(award.awardsId);
                 // 성공적으로 삭제된 경우, UI에서도 해당 항목 제거
                 setAwards(prevAwards =>
                     prevAwards.filter((_, awaIndex) => awaIndex !== index),
@@ -451,6 +468,10 @@ const New = ({ isEdit }) => {
                 console.error('수상 정보 삭제 실패:', err);
                 alert('수상 정보 삭제에 실패했습니다.');
             }
+        } else {
+            setAwards(prevAwards =>
+                prevAwards.filter((_, awaIndex) => awaIndex !== index),
+            );
         }
     };
 
@@ -484,8 +505,11 @@ const New = ({ isEdit }) => {
 
             // 학력 데이터 처리
             for (const education of convertedEducations) {
-                if (education.id) {
-                    await updateResumeEducation(education.id, education);
+                if (education.educationId) {
+                    await updateResumeEducation(
+                        education.educationId,
+                        education,
+                    );
                 } else {
                     await postResumeSection(resumeId, 'education', education);
                 }
@@ -493,8 +517,11 @@ const New = ({ isEdit }) => {
 
             // 경력 데이터 처리
             for (const experience of convertedExperiences) {
-                if (experience.id) {
-                    await updateResumeExperience(experience.id, experience);
+                if (experience.experienceId) {
+                    await updateResumeExperience(
+                        experience.experienceId,
+                        experience,
+                    );
                 } else {
                     await postResumeSection(resumeId, 'experience', experience);
                 }
@@ -502,8 +529,8 @@ const New = ({ isEdit }) => {
 
             // 어학 데이터 처리
             for (const language of convertedLanguages) {
-                if (language.id) {
-                    await updateResumeLanguage(language.id, language);
+                if (language.languageId) {
+                    await updateResumeLanguage(language.languageId, language);
                 } else {
                     await postResumeSection(resumeId, 'language', language);
                 }
@@ -511,8 +538,8 @@ const New = ({ isEdit }) => {
 
             // 수상 경력 데이터 처리
             for (const award of convertedAwards) {
-                if (award.id) {
-                    await updateResumeAward(award.id, award);
+                if (award.awardsId) {
+                    await updateResumeAward(award.awardsId, award);
                 } else {
                     await postResumeSection(resumeId, 'award', award);
                 }
@@ -535,7 +562,7 @@ const New = ({ isEdit }) => {
             //     educations[0].finishDate &&
             //     educations[0].name &&
             //     educations[0].major &&
-            //     educations[0].degreeStatus
+            //     educations[0].educationStatus
             // ) {
             //     const response = await NewResumeApi(resumeId, resumeData);
             //     if (!response || response.status !== 200) {
@@ -683,15 +710,16 @@ const New = ({ isEdit }) => {
                                         >
                                             <S.CheckBox
                                                 type='checkbox'
-                                                name={`degreeStatus-${index}`}
+                                                name={`educationStatus-${index}`}
                                                 checked={
-                                                    education.degreeStatus ===
-                                                    '재학중'
+                                                    education.educationStatus ===
+                                                    'ATTENDING'
                                                 }
-                                                onChange={() =>
+                                                onChange={e =>
                                                     checkOnlyOne(
                                                         index,
-                                                        '재학중',
+                                                        e.target,
+                                                        'ATTENDING',
                                                     )
                                                 }
                                                 id={`attendingCheckbox-${index}`}
@@ -705,15 +733,16 @@ const New = ({ isEdit }) => {
                                         >
                                             <S.CheckBox
                                                 type='checkbox'
-                                                name={`degreeStatus-${index}`}
+                                                name={`educationStatus-${index}`}
                                                 checked={
-                                                    education.degreeStatus ===
-                                                    '휴학중'
+                                                    education.educationStatus ===
+                                                    'ABSENCE'
                                                 }
-                                                onChange={() =>
+                                                onChange={e =>
                                                     checkOnlyOne(
                                                         index,
-                                                        '휴학중',
+                                                        e.target,
+                                                        'ABSENCE',
                                                     )
                                                 }
                                                 id={`leavingCheckbox-${index}`}
@@ -731,13 +760,17 @@ const New = ({ isEdit }) => {
                                         >
                                             <S.CheckBox
                                                 type='checkbox'
-                                                name={`degreeStatus-${index}`}
+                                                name={`educationStatus-${index}`}
                                                 checked={
-                                                    education.degreeStatus ===
-                                                    '졸업'
+                                                    education.educationStatus ===
+                                                    'GRADUATED'
                                                 }
-                                                onChange={() =>
-                                                    checkOnlyOne(index, '졸업')
+                                                onChange={e =>
+                                                    checkOnlyOne(
+                                                        index,
+                                                        e.target,
+                                                        'GRADUATED',
+                                                    )
                                                 }
                                                 id={`graduateCheckbox-${index}`}
                                             />
@@ -956,7 +989,7 @@ const New = ({ isEdit }) => {
                                             type='text'
                                             placeholder='언어'
                                             onChange={e =>
-                                                setTestName(
+                                                setLanguage(
                                                     e.target.value,
                                                     index,
                                                 )
