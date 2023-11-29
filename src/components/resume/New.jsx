@@ -8,6 +8,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { NewResumeApi, getResumeContentApi } from '../../api/resume';
 import JobModal from './Modal';
 import { convertDateFieldsInArrayToCustom } from '../../util/DateFormatter';
+import { GetCategories } from '../../api/dictionary';
 
 const New = ({ isEdit }) => {
     //mock data
@@ -20,6 +21,24 @@ const New = ({ isEdit }) => {
         '미용사',
     ];
 
+    // 직무 조회 리스트 get
+    const getJobList = async () => {
+        const getJobData = await GetCategories();
+        console.log(getJobData?.categoryResponses);
+        console.log(getJobData?.categoryResponses[0].jobResponses[0].name);
+        setJobcategory(getJobData?.categoryResponses);
+        // 직무 리스트 추출
+        if (jobcategory) {
+            const newJobArray = [];
+            for (let i = 0; i < jobcategory.length; i++) {
+                for (let j = 0; j < jobcategory[i].jobResponses.length; j++) {
+                    newJobArray.push(jobcategory[i].jobResponses[j].name);
+                }
+            }
+            setJob(newJobArray);
+        }
+    };
+
     const { resumeId } = useParams();
     const navigate = useNavigate();
     const [inputCount, setInputCount] = useState(0);
@@ -30,9 +49,12 @@ const New = ({ isEdit }) => {
     const [experiences, setExperiences] = useState([]);
     const [languages, setLanguages] = useState([]);
     const [awards, setAwards] = useState([]);
-    const [selectedJob, setSelectedJob] = useState('');
+    //모달
+    const [selectedJob, setSelectedJob] = useState(''); // 모달에서 선택된 직업
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const [contentdata, setContentdata] = useState({});
+    const [jobcategory, setJobcategory] = useState([]); //모달에 직무 api 연결
+    const [job, setJob] = useState([]); //모달에 띄울 job 리스트
 
     const initialEducation = {
         startDate: '',
@@ -127,8 +149,11 @@ const New = ({ isEdit }) => {
         // console.log(`switch to ${checked}`);
         setCheck(!check);
     };
+
+    // 모달
     const openModal = () => {
         setModalIsOpen(!modalIsOpen);
+        getJobList();
     };
 
     const closeModal = () => {
@@ -440,7 +465,7 @@ const New = ({ isEdit }) => {
                             isModalOpen={modalIsOpen}
                             closer={closeModal}
                             maintext={'직무 검색하기'}
-                            data={data}
+                            data={job}
                             onItemSelect={handleJobSelect}
                         ></JobModal>
                         <GreenBtn
