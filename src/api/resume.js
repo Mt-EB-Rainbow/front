@@ -116,9 +116,9 @@ export const postResumeSection = async (resumeId, section, data) => {
 
 // 학력, 경력, 어학, 수상경력 put 요청
 export const updateResumeEducation = async (educationId, data) => {
-    console.log('education', data);
     try {
         const res = await client.put(`/resume/education/${educationId}`, data);
+        console.log(res);
         return res;
     } catch (err) {
         console.error(`학력 업데이트 중 오류: ${educationId}:`, err);
