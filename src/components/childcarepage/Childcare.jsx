@@ -1,6 +1,6 @@
 import PageTitle from '../_common/PageTitle';
 import * as S from './Childcare.style';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useMemo } from 'react';
 
 //  select 라이브러리
@@ -66,22 +66,19 @@ const Childcare = () => {
     };
 
     //보육시설 get
-    const getchild = async newPage => {
+    const getchild = async () => {
         console.log(district);
         console.log(dong);
         console.log(pageNum);
         setLoading(true);
 
         try {
-            const res = await GetChildApi(district, dong, newPage);
-            console.log(res.data.nurturesResponse);
+            const res = await GetChildApi(district, dong, pageNum);
 
             if ((res.status == 200) | (res.status == 201)) {
-                setNurturesArray(res.data.nurturesResponse);
-                setPageCnt(res.data.pageCnt);
+                setNurturesArray(res?.data?.nurturesResponse);
+                setPageCnt(res?.data?.pageCnt);
                 setLoading(false);
-                const lastValue = res.data.nurturesResponse.pop();
-                console.log(lastValue.rowId);
             }
         } catch (err) {
             console.log(err);
@@ -92,7 +89,6 @@ const Childcare = () => {
             setLoading(false);
         }
     };
-    console.log(pageCnt);
 
     //티오있는 시설 리스트 필터링
     const TO = nurturesArray.filter(el => el.capacity != el.current);
@@ -226,10 +222,9 @@ const Childcare = () => {
                                 <S.PaginationUi
                                     current={pageNum}
                                     total={pageCnt * 10}
-                                    pageSize={10}
-                                    onChange={newPage => {
+                                    onChange={async newPage => {
                                         setPageNum(newPage);
-                                        getchild(newPage);
+                                        getchild();
                                     }}
                                 />
                             </S.Footer>
