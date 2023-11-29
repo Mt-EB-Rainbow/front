@@ -1,7 +1,7 @@
 import GreenBtn from '../_common/Btn/GreenBtn';
 import PageTitle from '../_common/PageTitle';
 import * as S from './New.style';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Switch } from 'antd';
 import './Switch.css';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -20,17 +20,14 @@ import {
     convertDateFieldsInArrayToCustom,
     convertDateFieldsInArray,
 } from '../../util/DateFormatter';
+import { GetCategories } from '../../api/dictionary';
 
 const New = ({ isEdit }) => {
-    //mock data
-    const data = [
-        '보육교사',
-        '상담사',
-        '선생님',
-        '요가강사',
-        '연구원',
-        '미용사',
-    ];
+    // 직무 조회 리스트 get
+    const getJobList = async () => {
+        const getJobData = await GetCategories();
+        setJobcategory(getJobData?.categoryResponses);
+    };
 
     const { resumeId } = useParams();
     const navigate = useNavigate();
@@ -42,9 +39,12 @@ const New = ({ isEdit }) => {
     const [experiences, setExperiences] = useState([]);
     const [languages, setLanguages] = useState([]);
     const [awards, setAwards] = useState([]);
-    const [selectedJob, setSelectedJob] = useState('');
+    //모달
+    const [selectedJob, setSelectedJob] = useState(''); // 모달에서 선택된 직업
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const [contentdata, setContentdata] = useState({});
+    const [jobcategory, setJobcategory] = useState([]); //모달에 직무 api 연결
+    const [job, setJob] = useState([]); //모달에 띄울 job 리스트
 
     const initialEducation = {
         startDate: '',
@@ -139,8 +139,12 @@ const New = ({ isEdit }) => {
         // console.log(`switch to ${checked}`);
         setCheck(!check);
     };
-    const openModal = () => {
+
+    // 모달
+    const openModal = async () => {
+        await getJobList();
         setModalIsOpen(!modalIsOpen);
+        console.log(job);
     };
 
     const closeModal = () => {
@@ -151,6 +155,18 @@ const New = ({ isEdit }) => {
         setSelectedJob(job);
         closeModal();
     };
+
+    useEffect(() => {
+        if (jobcategory) {
+            const newJobArray = [];
+            for (let i = 0; i < jobcategory.length; i++) {
+                for (let j = 0; j < jobcategory[i].jobResponses.length; j++) {
+                    newJobArray.push(jobcategory[i].jobResponses[j].name);
+                }
+            }
+            setJob(newJobArray);
+        }
+    }, [jobcategory]);
 
     // 학력 상태관리
     const setStartDate = (date, index) => {
@@ -442,6 +458,33 @@ const New = ({ isEdit }) => {
             // 성공 메시지와 페이지 이동
             alert('저장이 완료되었습니다.');
             navigate('/resume');
+
+            // 이전 코드들인데, 혹시 몰라 남겨두었습니다.
+            //     educations,
+            //     experiences,
+            //     languages,
+            //     awards,
+            // };
+            // if (
+            //     selectedJob &&
+            //     title &&
+            //     educations[0].startDate &&
+            //     educations[0].finishDate &&
+            //     educations[0].name &&
+            //     educations[0].major &&
+            //     educations[0].degreeStatus
+            // ) {
+            //     const response = await NewResumeApi(resumeId, resumeData);
+            //     if (!response || response.status !== 200) {
+            //         throw new Error('Invalid response from server');
+            //     }
+
+            //     alert('저장이 완료되었습니다.');
+            //     navigate('/resume');
+            // } else {
+            //     alert('필수 입력사항을 모두 입력해주세요!');
+            //     return;
+            // }
         } catch (err) {
             // 오류 처리
             alert('저장에 실패했습니다!');
@@ -494,21 +537,15 @@ const New = ({ isEdit }) => {
                             value={selectedJob}
                             readOnly // 직접 입력을 막기 위해 readOnly 설정
                         />
+
                         <JobModal
                             isModalOpen={modalIsOpen}
                             closer={closeModal}
                             maintext={'직무 검색하기'}
-                            data={data}
                             onItemSelect={handleJobSelect}
+                            data={job}
                         ></JobModal>
-                        <GreenBtn
-                            text={'직무 찾기'}
-                            width={10.75}
-                            paddingHorizontal={2}
-                            height={2.7}
-                            radius={5}
-                            onClick={openModal}
-                        />
+                        <S.FindBtn onClick={openModal}>직무 찾기</S.FindBtn>
                     </S.ShortInputWrapper>
                     <S.TitleWapper>
                         <S.Title>간단한 자기소개</S.Title>
@@ -556,7 +593,9 @@ const New = ({ isEdit }) => {
                                                     : ''
                                             }
                                         />
-                                        <span>- </span>
+                                        <span style={{ marginRight: '0.4rem' }}>
+                                            -
+                                        </span>
                                         <S.SmallInput1
                                             type='text'
                                             placeholder='2000.00'
@@ -593,7 +632,9 @@ const New = ({ isEdit }) => {
                                                 }
                                                 id={`attendingCheckbox-${index}`}
                                             />
-                                            <div>재학중</div>
+                                            <div style={{ width: '2rem' }}>
+                                                재학중
+                                            </div>
                                         </S.Label>
                                         <S.Label
                                             htmlFor={`leavingCheckbox-${index}`}
@@ -613,7 +654,13 @@ const New = ({ isEdit }) => {
                                                 }
                                                 id={`leavingCheckbox-${index}`}
                                             />
-                                            <div>휴학중</div>
+                                            <div
+                                                style={{
+                                                    width: '2rem',
+                                                }}
+                                            >
+                                                휴학중
+                                            </div>
                                         </S.Label>
                                         <S.Label
                                             htmlFor={`graduateCheckbox-${index}`}
@@ -630,7 +677,9 @@ const New = ({ isEdit }) => {
                                                 }
                                                 id={`graduateCheckbox-${index}`}
                                             />
-                                            <div>졸업</div>
+                                            <div style={{ width: '2rem' }}>
+                                                졸업
+                                            </div>
                                         </S.Label>
                                     </div>
                                 </S.BoxLeft>
@@ -639,7 +688,7 @@ const New = ({ isEdit }) => {
                                         style={{
                                             display: 'flex',
                                             flexDirection: 'column',
-                                            marginRight: '12rem',
+                                            width: '23.15rem',
                                         }}
                                     >
                                         <S.School
@@ -695,7 +744,7 @@ const New = ({ isEdit }) => {
                             <div style={{ width: '39.3rem' }}>
                                 <S.GrayBox>
                                     <S.BoxLeft>
-                                        <div style={{ width: '7.86rem' }}>
+                                        <div>
                                             <S.SmallInput1
                                                 type='text'
                                                 placeholder='2000.00'
@@ -712,7 +761,13 @@ const New = ({ isEdit }) => {
                                                         : ''
                                                 }
                                             />
-                                            <span>- </span>
+                                            <span
+                                                style={{
+                                                    marginRight: '0.4rem',
+                                                }}
+                                            >
+                                                -
+                                            </span>
                                             <S.SmallInput1
                                                 type='text'
                                                 placeholder='2000.00'
@@ -743,7 +798,7 @@ const New = ({ isEdit }) => {
                                             style={{
                                                 display: 'flex',
                                                 flexDirection: 'column',
-                                                marginRight: '12rem',
+                                                width: '23.15rem',
                                             }}
                                         >
                                             <S.School
@@ -809,24 +864,28 @@ const New = ({ isEdit }) => {
                         .map((_, index) => (
                             <div style={{ width: '39.3rem' }}>
                                 <S.GrayBox>
-                                    <S.SmallInput
-                                        type='text'
-                                        placeholder='2000.00 (취득년월)'
-                                        onChange={e =>
-                                            setGainedDate(e.target.value, index)
-                                        }
-                                        defaultValue={
-                                            isEdit
-                                                ? languages[0].gainedDate
-                                                : ''
-                                        }
-                                    />
+                                    <S.BoxLeft>
+                                        <S.SmallInput
+                                            type='text'
+                                            placeholder='2000.00 (취득년월)'
+                                            onChange={e =>
+                                                setGainedDate(
+                                                    e.target.value,
+                                                    index,
+                                                )
+                                            }
+                                            defaultValue={
+                                                isEdit
+                                                    ? languages[0].gainedDate
+                                                    : ''
+                                            }
+                                        />
+                                    </S.BoxLeft>
                                     <div
                                         style={{
                                             display: 'flex',
                                             flexDirection: 'column',
-                                            marginLeft: '2rem',
-                                            marginRight: '12.5rem',
+                                            width: '23.15rem',
                                         }}
                                     >
                                         <S.School
@@ -882,7 +941,7 @@ const New = ({ isEdit }) => {
                         .map((_, index) => (
                             <div style={{ width: '39.3rem' }}>
                                 <S.GrayBox>
-                                    <div>
+                                    <S.BoxLeft style={{ flexDirection: 'row' }}>
                                         <S.SmallInput1
                                             type='text'
                                             placeholder='2000.00'
@@ -898,7 +957,9 @@ const New = ({ isEdit }) => {
                                                     : ''
                                             }
                                         />
-                                        <span>- </span>
+                                        <span style={{ marginRight: '0.4rem' }}>
+                                            -
+                                        </span>
                                         <S.SmallInput1
                                             type='text'
                                             placeholder='2000.00'
@@ -914,13 +975,12 @@ const New = ({ isEdit }) => {
                                                     : ''
                                             }
                                         />
-                                    </div>
+                                    </S.BoxLeft>
                                     <div
                                         style={{
                                             display: 'flex',
                                             flexDirection: 'column',
-                                            marginLeft: '2rem',
-                                            marginRight: '12rem',
+                                            width: '23.15rem',
                                         }}
                                     >
                                         <S.School
@@ -965,7 +1025,6 @@ const New = ({ isEdit }) => {
                             width={10.75}
                             paddingVertical={0.75}
                             paddingHorizontal={2.95}
-                            bottom={7.15}
                             top={6.4}
                             onClick={
                                 onResumeSubmit

@@ -72,12 +72,9 @@ export const ShortInput = styled.input`
     font-size: 0.8rem;
     font-style: normal;
     font-weight: 500;
-    line-height: normal;
-    padding: 0.8rem 1rem;
+    padding: 0rem 1rem;
     box-sizing: border-box;
-    outline: none;
     margin-bottom: 2.6rem;
-
     margin-right: 1rem;
 
     &.read-only {
@@ -156,17 +153,19 @@ export const GrayBox = styled.div`
     border-bottom: 0.05rem solid var(--gray);
     height: 3.6rem;
     width: 100%;
-    padding: 0.85rem 2rem;
+    padding: 0.85rem 0rem;
     box-sizing: border-box;
     display: flex;
     flex-direction: row;
+    justify-content: space-between;
     align-items: center;
 `;
 
 export const BoxLeft = styled.div`
     display: flex;
     flex-direction: column;
-
+    margin-left: 2rem;
+    width: 10.25rem;
     & > div {
         display: flex;
         flex-direction: row;
@@ -196,8 +195,8 @@ export const CheckBox = styled.input`
 export const BoxRight = styled.div`
     display: flex;
     flex-direction: row;
-    margin-left: 2rem;
     align-items: center;
+    width: 27rem;
 `;
 
 export const SmallInput = styled.input`
@@ -213,6 +212,16 @@ export const SmallInput = styled.input`
     &::placeholder {
         color: var(--gray);
     }
+`;
+export const FindBtn = styled.button`
+    width: 10.75rem;
+    height: 2.8rem;
+    background-color: var(--white);
+    color: var(--dark-green);
+    font-size: 0.8rem;
+    border-radius: 0.6rem;
+    font-weight: 700;
+    border: 1px solid var(--gray);
 `;
 export const SmallInput1 = styled.input`
     color: black;
@@ -249,7 +258,7 @@ export const Line = styled.div`
 `;
 
 export const RemoveBtn = styled.div`
-    color: var(--gray);
+    color: var(--red);
     font-size: 0.8rem;
     font-style: normal;
     font-weight: 600;
