@@ -4,7 +4,7 @@ import BoardsHeader from '../_common/BoardsHeader';
 import GreenBtn from '../_common/Btn/GreenBtn';
 import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { GetResumeApi, ResumeApi } from '../../api/resume';
+import { GetResumeApi, ResumeApi, deleteResumeApi } from '../../api/resume';
 import { useRecoilValue } from 'recoil';
 import { memberIdState } from '../../recoil/loginState';
 
@@ -20,6 +20,13 @@ const Resume = () => {
         console.log(res);
         window.scrollTo(0, 0);
         navigate(`/new/${res.data?.resumeId}`);
+    };
+
+    const deleteResume = async resumeId => {
+        const res = await deleteResumeApi(resumeId);
+        setResumeResponses(prevResumeList =>
+            prevResumeList.filter(item => item.resumeId !== resumeId),
+        );
     };
 
     useEffect(() => {
@@ -62,16 +69,28 @@ const Resume = () => {
                                                 {el.modifiedAt}
                                             </S.JobInfo>
                                             <S.GreenBox>
-                                                {/* @todo 이거 api로 안 넘어와서 수정해야 할듯? */}
-                                                사무보조
+                                                {el.jobName}
                                             </S.GreenBox>
                                         </S.Info>
                                         <S.Right>
+                                            {el.isPrivate ? (
+                                                <S.Open>비공개</S.Open>
+                                            ) : (
+                                                <S.Open color='var(--dark-gray)'>
+                                                    공개
+                                                </S.Open>
+                                            )}
                                             {/* {isopened? "공개" : "비공개"} 공개면 dark-gray, 비공개면 gray*/}
-                                            <S.Open>공개</S.Open>
                                             {/* 수정 / 삭제 버튼 */}
                                             {/* <S.Rewrite>수정</S.Rewrite>
                                             <S.Delete>삭제</S.Delete> */}
+                                            <S.Delete
+                                                onClick={() =>
+                                                    deleteResume(el.resumeId)
+                                                }
+                                            >
+                                                삭제
+                                            </S.Delete>
                                         </S.Right>
                                     </S.Boards>
                                 ))}

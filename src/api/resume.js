@@ -70,9 +70,7 @@ export const NewResumeApi = async (resumeId, resumeData) => {
 export const getResumeContentApi = async resumeId => {
     try {
         const res = await client.get(`/resume/${Number(resumeId)}`);
-
         console.log(res, ' resume 내용 조회 성공');
-
         return res;
     } catch (err) {
         console.log(err);
@@ -97,6 +95,7 @@ export const updateResumeBasicInfo = async (resumeId, data) => {
     console.log(`data: ${data}`);
     try {
         const res = await client.put(`/resume/${resumeId}`, data);
+        console.log(data);
         return res;
     } catch (err) {
         console.error('이력서 업데이트 중 오류', err);
@@ -106,7 +105,6 @@ export const updateResumeBasicInfo = async (resumeId, data) => {
 
 // 학력, 경력, 어학, 수상경력 post 요청
 export const postResumeSection = async (resumeId, section, data) => {
-    console.log(section, data);
     try {
         const res = await client.post(`/resume/${resumeId}/${section}`, data);
         return res;
@@ -160,6 +158,58 @@ export const updateResumeAward = async (awardsId, data) => {
         return res;
     } catch (err) {
         console.error(`학력 업데이트 중 오류: ${awardsId}:`, err);
+        throw err;
+    }
+};
+
+// 학력, 경력, 어학, 수상경력 delete 요청
+export const deleteResumeEducation = async educationId => {
+    try {
+        const res = await client.delete(`/resume/education/${educationId}`);
+        return res;
+    } catch (err) {
+        console.error('학력 삭제 중 오류:', err);
+        throw err;
+    }
+};
+
+export const deleteResumeExperience = async experienceId => {
+    try {
+        const res = await client.delete(`/resume/experience/${experienceId}`);
+        return res;
+    } catch (err) {
+        console.error('경력 삭제 중 오류:', err);
+        throw err;
+    }
+};
+
+export const deleteResumeLanguage = async languageId => {
+    try {
+        const res = await client.delete(`/resume/language/${languageId}`);
+        return res;
+    } catch (err) {
+        console.error('어학 삭제 중 오류:', err);
+        throw err;
+    }
+};
+
+export const deleteResumeAward = async awardId => {
+    try {
+        const res = await client.delete(`/resume/award/${awardId}`);
+        return res;
+    } catch (err) {
+        console.error('학력 삭제 중 오류:', err);
+        throw err;
+    }
+};
+
+// 이력서 삭제
+export const deleteResumeApi = async resumeId => {
+    try {
+        const res = await client.delete(`/resume/${resumeId}`);
+        return res;
+    } catch (err) {
+        console.error('학력 삭제 중 오류:', err);
         throw err;
     }
 };
