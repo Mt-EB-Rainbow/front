@@ -1,7 +1,7 @@
 import GreenBtn from '../_common/Btn/GreenBtn';
 import PageTitle from '../_common/PageTitle';
 import * as S from './New.style';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Switch } from 'antd';
 import './Switch.css';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -11,32 +11,10 @@ import { convertDateFieldsInArrayToCustom } from '../../util/DateFormatter';
 import { GetCategories } from '../../api/dictionary';
 
 const New = ({ isEdit }) => {
-    //mock data
-    const data = [
-        '보육교사',
-        '상담사',
-        '선생님',
-        '요가강사',
-        '연구원',
-        '미용사',
-    ];
-
     // 직무 조회 리스트 get
     const getJobList = async () => {
         const getJobData = await GetCategories();
-        console.log(getJobData?.categoryResponses);
-        console.log(getJobData?.categoryResponses[0].jobResponses[0].name);
         setJobcategory(getJobData?.categoryResponses);
-        // 직무 리스트 추출
-        if (jobcategory) {
-            const newJobArray = [];
-            for (let i = 0; i < jobcategory.length; i++) {
-                for (let j = 0; j < jobcategory[i].jobResponses.length; j++) {
-                    newJobArray.push(jobcategory[i].jobResponses[j].name);
-                }
-            }
-            setJob(newJobArray);
-        }
     };
 
     const { resumeId } = useParams();
@@ -151,9 +129,11 @@ const New = ({ isEdit }) => {
     };
 
     // 모달
-    const openModal = () => {
+
+    const openModal = async () => {
+        await getJobList();
         setModalIsOpen(!modalIsOpen);
-        getJobList();
+        console.log(job);
     };
 
     const closeModal = () => {
@@ -165,6 +145,17 @@ const New = ({ isEdit }) => {
         closeModal();
     };
 
+    useEffect(() => {
+        if (jobcategory) {
+            const newJobArray = [];
+            for (let i = 0; i < jobcategory.length; i++) {
+                for (let j = 0; j < jobcategory[i].jobResponses.length; j++) {
+                    newJobArray.push(jobcategory[i].jobResponses[j].name);
+                }
+            }
+            setJob(newJobArray);
+        }
+    }, [jobcategory]);
     // 학력 상태관리
     const setStartDate = (date, index) => {
         setEducations(prevEducations =>
@@ -461,13 +452,15 @@ const New = ({ isEdit }) => {
                             value={selectedJob}
                             readOnly // 직접 입력을 막기 위해 readOnly 설정
                         />
+
                         <JobModal
                             isModalOpen={modalIsOpen}
                             closer={closeModal}
                             maintext={'직무 검색하기'}
-                            data={job}
                             onItemSelect={handleJobSelect}
+                            data={job}
                         ></JobModal>
+
                         <GreenBtn
                             text={'직무 찾기'}
                             width={10.75}
