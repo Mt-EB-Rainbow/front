@@ -91,3 +91,75 @@ export const getAllResume = async () => {
         console.log(err);
     }
 };
+
+// 이력서 제목, 자기소개, 공개 여부, 선택 직무 put 요청
+export const updateResumeBasicInfo = async (resumeId, data) => {
+    console.log(`data: ${data}`);
+    try {
+        const res = await client.put(`/resume/${resumeId}`, data);
+        return res;
+    } catch (err) {
+        console.error('이력서 업데이트 중 오류', err);
+        throw err;
+    }
+};
+
+// 학력, 경력, 어학, 수상경력 post 요청
+export const postResumeSection = async (resumeId, section, data) => {
+    console.log(section, data);
+    try {
+        const res = await client.post(`/resume/${resumeId}/${section}`, data);
+        return res;
+    } catch (err) {
+        console.error(`이력서 ${section} 부분 포스팅 중 오류:`, err);
+        throw err;
+    }
+};
+
+// 학력, 경력, 어학, 수상경력 put 요청
+export const updateResumeEducation = async (educationId, data) => {
+    console.log('education', data);
+    try {
+        const res = await client.put(`/resume/education/${educationId}`, data);
+        return res;
+    } catch (err) {
+        console.error(`학력 업데이트 중 오류: ${educationId}:`, err);
+        throw err;
+    }
+};
+
+export const updateResumeExperience = async (experiencesId, data) => {
+    console.log('experience', data);
+    try {
+        const res = await client.put(
+            `/resume/experience/${experiencesId}`,
+            data,
+        );
+        return res;
+    } catch (err) {
+        console.error(`학력 업데이트 중 오류: ${experiencesId}:`, err);
+        throw err;
+    }
+};
+
+export const updateResumeLanguage = async (languagesId, data) => {
+    console.log('language', data);
+    try {
+        const res = await client.put(`/resume/language/${languagesId}`, data);
+        return res;
+    } catch (err) {
+        console.error(`학력 업데이트 중 오류: ${languagesId}:`, err);
+        throw err;
+    }
+};
+
+export const updateResumeAward = async (awardsId, data) => {
+    console.log('award', data);
+    try {
+        const res = await client.put(`/resume/award/${awardsId}`, data);
+        return res;
+    } catch (err) {
+        console.error(`학력 업데이트 중 오류: ${awardsId}:`, err);
+        throw err;
+    }
+};

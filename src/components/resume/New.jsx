@@ -5,9 +5,21 @@ import { useEffect, useMemo, useState } from 'react';
 import { Switch } from 'antd';
 import './Switch.css';
 import { useNavigate, useParams } from 'react-router-dom';
-import { NewResumeApi, getResumeContentApi } from '../../api/resume';
+import {
+    NewResumeApi,
+    getResumeContentApi,
+    postResumeSection,
+    updateResumeBasicInfo,
+    updateResumeEducation,
+    updateResumeExperience,
+    updateResumeLanguage,
+    updateResumeAward,
+} from '../../api/resume';
 import JobModal from './Modal';
-import { convertDateFieldsInArrayToCustom } from '../../util/DateFormatter';
+import {
+    convertDateFieldsInArrayToCustom,
+    convertDateFieldsInArray,
+} from '../../util/DateFormatter';
 import { GetCategories } from '../../api/dictionary';
 
 const New = ({ isEdit }) => {
@@ -379,43 +391,104 @@ const New = ({ isEdit }) => {
         );
     };
 
-    // 이력서 제출 함수
-    const onSubmit = async e => {
+    const onResumeSubmit = async e => {
         e.preventDefault();
         try {
-            const resumeData = {
+            // 기본 이력서 정보 업데이트
+            await updateResumeBasicInfo(resumeId, {
                 title,
                 introduction,
-                educations,
-                experiences,
-                languages,
-                awards,
-            };
-            if (
-                selectedJob &&
-                title &&
-                educations[0].startDate &&
-                educations[0].finishDate &&
-                educations[0].name &&
-                educations[0].major &&
-                educations[0].degreeStatus
-            ) {
-                const response = await NewResumeApi(resumeId, resumeData);
-                if (!response || response.status !== 200) {
-                    throw new Error('Invalid response from server');
-                }
+                isPrivate: check,
+                jobName: selectedJob,
+            });
 
-                alert('저장이 완료되었습니다.');
-                navigate('/resume');
-            } else {
-                alert('필수 입력사항을 모두 입력해주세요!');
-                return;
+            // 각 섹션 데이터 변환
+            const convertedEducations = convertDateFieldsInArray(educations, [
+                'startDate',
+                'finishDate',
+            ]);
+            const convertedExperiences = convertDateFieldsInArray(experiences, [
+                'startDate',
+                'finishDate',
+            ]);
+            const convertedLanguages = convertDateFieldsInArray(languages, [
+                'gainedDate',
+            ]);
+            const convertedAwards = convertDateFieldsInArray(awards, [
+                'startDate',
+                'finishDate',
+            ]);
+
+            // 학력 데이터 처리
+            for (const education of convertedEducations) {
+                if (education.id) {
+                    await updateResumeEducation(education.id, education);
+                } else {
+                    await postResumeSection(resumeId, 'education', education);
+                }
             }
-        } catch (err) {
-            // console.error(err);
-            // alert('저장에 실패했습니다!');
+
+            // 경력 데이터 처리
+            for (const experience of convertedExperiences) {
+                if (experience.id) {
+                    await updateResumeExperience(experience.id, experience);
+                } else {
+                    await postResumeSection(resumeId, 'experience', experience);
+                }
+            }
+
+            // 어학 데이터 처리
+            for (const language of convertedLanguages) {
+                if (language.id) {
+                    await updateResumeLanguage(language.id, language);
+                } else {
+                    await postResumeSection(resumeId, 'language', language);
+                }
+            }
+
+            // 수상 경력 데이터 처리
+            for (const award of convertedAwards) {
+                if (award.id) {
+                    await updateResumeAward(award.id, award);
+                } else {
+                    await postResumeSection(resumeId, 'award', award);
+                }
+            }
+
+            // 성공 메시지와 페이지 이동
             alert('저장이 완료되었습니다.');
             navigate('/resume');
+
+            // 이전 코드들인데, 혹시 몰라 남겨두었습니다.
+            //     educations,
+            //     experiences,
+            //     languages,
+            //     awards,
+            // };
+            // if (
+            //     selectedJob &&
+            //     title &&
+            //     educations[0].startDate &&
+            //     educations[0].finishDate &&
+            //     educations[0].name &&
+            //     educations[0].major &&
+            //     educations[0].degreeStatus
+            // ) {
+            //     const response = await NewResumeApi(resumeId, resumeData);
+            //     if (!response || response.status !== 200) {
+            //         throw new Error('Invalid response from server');
+            //     }
+
+            //     alert('저장이 완료되었습니다.');
+            //     navigate('/resume');
+            // } else {
+            //     alert('필수 입력사항을 모두 입력해주세요!');
+            //     return;
+            // }
+        } catch (err) {
+            // 오류 처리
+            alert('저장에 실패했습니다!');
+            console.error(err);
         }
     };
 
@@ -953,7 +1026,9 @@ const New = ({ isEdit }) => {
                             paddingVertical={0.75}
                             paddingHorizontal={2.95}
                             top={6.4}
-                            onClick={onSubmit} /* @todo onUpdate 함수로 변경 */
+                            onClick={
+                                onResumeSubmit
+                            } /* @todo onUpdate 함수로 변경 */
                             height={2.7}
                             radius={5}
                         />
@@ -965,7 +1040,7 @@ const New = ({ isEdit }) => {
                             paddingHorizontal={2.95}
                             bottom={7.15}
                             top={6.4}
-                            onClick={onSubmit}
+                            onClick={onResumeSubmit}
                             height={2.7}
                             radius={5}
                         />
