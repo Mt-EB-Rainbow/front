@@ -13,7 +13,7 @@ import NoTable from './NoTable';
 
 //로딩
 import { Flex, Spin } from 'antd';
-import './spin.css'
+import './spin.css';
 //api
 import { GetChildApi } from '../../api/child';
 
@@ -66,36 +66,36 @@ const Childcare = () => {
     };
 
     //보육시설 get
-    const getchild = async () => {
+    const getchild = async newPage => {
         console.log(district);
         console.log(dong);
         console.log(pageNum);
-        setLoading(true)
+        setLoading(true);
 
         try {
-            const res = await GetChildApi(district, dong, pageNum);
+            const res = await GetChildApi(district, dong, newPage);
             console.log(res.data.nurturesResponse);
 
             if ((res.status == 200) | (res.status == 201)) {
                 setNurturesArray(res.data.nurturesResponse);
                 setPageCnt(res.data.pageCnt);
                 setLoading(false);
+                const lastValue = res.data.nurturesResponse.pop();
+                console.log(lastValue.rowId);
             }
         } catch (err) {
             console.log(err);
-            setNurturesArray([])
+            setNurturesArray([]);
             //alert('조회결과가 없습니다. 자치구와 행정동을 다시 확인해주세요!');
         } finally {
             // 로딩 상태를 false로 설정하여 로딩바를 숨김
             setLoading(false);
-        };
-    }
+        }
+    };
     console.log(pageCnt);
-
 
     //티오있는 시설 리스트 필터링
     const TO = nurturesArray.filter(el => el.capacity != el.current);
-    console.log(TO);
 
     // 체크 박스
     const onChange = e => {
@@ -132,7 +132,7 @@ const Childcare = () => {
     const data = useMemo(
         () =>
             nurturesArray.map((el, index) => ({
-                num: index + 1,
+                num: el.rowId,
                 name: el.schoolName,
                 full: el.capacity,
                 now: el.current,
@@ -200,22 +200,27 @@ const Childcare = () => {
                             검색 하기
                         </S.CustGreenBtn>
                     </S.GrayBox>
-                    <S.Length>총 {nurturesArray.length}건</S.Length>
+                    <S.Length></S.Length>
                     <S.Line />
                     {nurturesArray.length ? (
                         <>
-                            {loading ?
+                            {loading ? (
                                 <S.Text>
-                                    <Flex align="center" gap="middle">
-
-                                        <Spin size="large" style={{ color: "var(--dark-green)" }} />
+                                    <Flex align='center' gap='middle'>
+                                        <Spin
+                                            size='large'
+                                            style={{
+                                                color: 'var(--dark-green)',
+                                            }}
+                                        />
                                     </Flex>
                                 </S.Text>
-                                :
+                            ) : (
                                 <Table
                                     columns={columns}
                                     data={current ? TOdata : data}
-                                />}
+                                />
+                            )}
 
                             <S.Footer>
                                 <S.PaginationUi
@@ -224,7 +229,7 @@ const Childcare = () => {
                                     pageSize={10}
                                     onChange={newPage => {
                                         setPageNum(newPage);
-                                        getchild();
+                                        getchild(newPage);
                                     }}
                                 />
                             </S.Footer>
@@ -237,6 +242,5 @@ const Childcare = () => {
         </>
     );
 };
-
 
 export default Childcare;
