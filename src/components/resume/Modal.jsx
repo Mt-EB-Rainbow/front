@@ -3,16 +3,15 @@ import styled from 'styled-components';
 import GreenBtn from '../_common/Btn/GreenBtn';
 import search from '../../assets/search.svg';
 import { useState } from 'react';
-import { GetJobInfoList } from '../../api/dictionary';
+import { GetCategories, GetJobInfoList } from '../../api/dictionary';
 
 const JobModal = React.memo(props => {
     const { isModalOpen, closer, maintext, onClick1, data } = props;
-    console.log(data.length);
+
     const [text, setText] = useState('');
     const [change, setChange] = useState(false);
     //검색결과 api data
     const [searchData, setSearchData] = useState([]);
-
     const handleItemClick = item => {
         if (props.onItemSelect) {
             props.onItemSelect(item);
@@ -85,7 +84,7 @@ const JobModal = React.memo(props => {
                             </>
                         ) : (
                             <>
-                                {data.map((el, index) => (
+                                {data?.map((el, index) => (
                                     <Data
                                         key={index}
                                         onClick={() => handleItemClick(el)}
@@ -168,6 +167,7 @@ const ModalBlock = styled.div`
     height: 27.3rem;
     flex-shrink: 0;
     border: none;
+    border-radius: 2rem;
     padding: 2.8rem 4.5rem;
     flex-shrink: 0;
     overflow-y: auto;
