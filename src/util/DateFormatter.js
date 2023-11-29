@@ -24,7 +24,7 @@ export const convertDateFieldsInArray = (items, dateFields) => {
         const newItem = { ...item };
         dateFields.forEach(field => {
             if (newItem[field]) {
-                newItem[field] = convertDateToISO(newItem[field]);
+                newItem[field] = convertCustomDateString(newItem[field]);
             }
             console.log(newItem[field]);
         });
