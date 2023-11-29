@@ -6,7 +6,6 @@ import { Switch } from 'antd';
 import './Switch.css';
 import { useNavigate, useParams } from 'react-router-dom';
 import {
-    NewResumeApi,
     getResumeContentApi,
     postResumeSection,
     updateResumeBasicInfo,
@@ -345,13 +344,18 @@ const New = ({ isEdit }) => {
     };
 
     // 체크박스 상태 관리 함수
-    const checkOnlyOne = (index, status) => {
+    const checkOnlyOne = (index, checkThis, status) => {
+        const checkboxes = document.getElementsByName(`degreeStatus-${index}`);
+        for (let i = 0; i < checkboxes.length; i++) {
+            checkboxes[i].checked = false;
+        }
+        checkThis.checked = true;
         setEducations(prevEducations =>
             prevEducations.map((education, idx) => {
                 if (idx === index) {
                     return { ...education, degreeStatus: status };
                 }
-                return { ...education, degreeStatus: null };
+                return { ...education };
             }),
         );
     };
@@ -688,9 +692,10 @@ const New = ({ isEdit }) => {
                                                     education.degreeStatus ===
                                                     '재학중'
                                                 }
-                                                onChange={() =>
+                                                onChange={e =>
                                                     checkOnlyOne(
                                                         index,
+                                                        e.target,
                                                         '재학중',
                                                     )
                                                 }
@@ -710,9 +715,10 @@ const New = ({ isEdit }) => {
                                                     education.degreeStatus ===
                                                     '휴학중'
                                                 }
-                                                onChange={() =>
+                                                onChange={e =>
                                                     checkOnlyOne(
                                                         index,
+                                                        e.target,
                                                         '휴학중',
                                                     )
                                                 }
@@ -736,8 +742,12 @@ const New = ({ isEdit }) => {
                                                     education.degreeStatus ===
                                                     '졸업'
                                                 }
-                                                onChange={() =>
-                                                    checkOnlyOne(index, '졸업')
+                                                onChange={e =>
+                                                    checkOnlyOne(
+                                                        index,
+                                                        e.target,
+                                                        '졸업',
+                                                    )
                                                 }
                                                 id={`graduateCheckbox-${index}`}
                                             />
